@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">TaskTimeTrackerApp</string>
+    <string name="entries">Entries</string>
+    <string name="task_time_tracker">Task Time Tracker</string>
+    <string name="track_your_time_spent_on_tasks">Track your time spent on tasks</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="task_1">Task 1</string>
+    <string name="task_2">Task 2</string>
+    <string name="tasks">Tasks</string>
+    <string name="task_4">Task 4</string>
+    <string name="projects">Projects</string>
+    <string name="task_3">Task 3</string>
+    <string name="title_activity_task_overview">TaskOverviewActivity</string>
+    <string name="tasks_overview">Tasks Overview</string>
+    <string name="title_activity_add_task">AddTaskActivity</string>
+    <string name="add_task">Add Task</string>
+    <string name="title_activity_detail_task">DetailTaskActivity</string>
 </resources>
