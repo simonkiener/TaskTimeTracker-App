@@ -15,4 +15,8 @@
     <string name="title_activity_add_task">AddTaskActivity</string>
     <string name="add_task">Add Task</string>
     <string name="title_activity_detail_task">DetailTaskActivity</string>
+    <string name="title_activity_entries_overview">EntriesOverviewActivity</string>
+    <string name="task_prompt">Task</string>
+    <string name="project_prompt">Project</string>
+    <string name="entries_overview">Entries Overview</string>
 </resources>

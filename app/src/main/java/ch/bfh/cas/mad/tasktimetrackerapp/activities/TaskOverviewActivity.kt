@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ch.bfh.cas.mad.tasktimetrackerapp.DataStore
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.Task
 import ch.bfh.cas.mad.tasktimetrackerapp.TaskAdapter
@@ -30,17 +31,7 @@ class TaskOverviewActivity : ComponentActivity() {
 
         addButton = findViewById(R.id.fabAddTask)
 
-        val tasks = listOf(
-            Task(UUID.randomUUID(), "Task1", 1),
-            Task(UUID.randomUUID(), "Task2", 1),
-            Task(UUID.randomUUID(), "Task3", 1),
-            Task(UUID.randomUUID(), "Task4", 1),
-            Task(UUID.randomUUID(), "Task5", 1),
-            Task(UUID.randomUUID(), "Task6", 1),
-            Task(UUID.randomUUID(), "Task7", 1),
-            Task(UUID.randomUUID(), "Task8", 1),
-            Task(UUID.randomUUID(), "Task9", 1),
-            Task(UUID.randomUUID(), "Task10", 1))
+        val tasks = DataStore.tasks
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewTasks)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = TaskAdapter(tasks)

@@ -62,7 +62,7 @@
         android:id="@+id/btnShowAllEntries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Show all Entries"
+        android:text="Show all Tasks"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
         android:background="@color/actionColor"

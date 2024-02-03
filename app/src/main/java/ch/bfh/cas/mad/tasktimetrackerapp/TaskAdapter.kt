@@ -33,7 +33,7 @@ class TaskAdapter(private val tasks: List<Task>) : RecyclerView.Adapter<TaskAdap
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailTaskActivity::class.java)
-            intent.putExtra("taskName", task.name)
+            intent.putExtra("taskId", task.id)
             holder.itemView.context.startActivity(intent)
         }
     }
