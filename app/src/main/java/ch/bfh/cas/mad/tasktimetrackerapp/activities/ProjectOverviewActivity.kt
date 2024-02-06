@@ -6,26 +6,26 @@ import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.DataStore
+import ch.bfh.cas.mad.tasktimetrackerapp.adapter.ProjectAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.R
-import ch.bfh.cas.mad.tasktimetrackerapp.adapter.TaskAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class TaskOverviewActivity : ComponentActivity() {
+class ProjectOverviewActivity : ComponentActivity() {
 
-    private lateinit var addButton: FloatingActionButton
+    private lateinit var addProjectButton: FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_taskoverview)
+        setContentView(R.layout.activity_projectoverview)
 
-        addButton = findViewById(R.id.fabAddTask)
+        addProjectButton = findViewById(R.id.AddProject)
 
-        val tasks = DataStore.tasks
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewTasks)
+        val projects = DataStore.projects
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewProjects)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = TaskAdapter(tasks)
+        recyclerView.adapter = ProjectAdapter(projects)
 
-        addButton.setOnClickListener {
-            val intent = Intent(this, AddTaskActivity::class.java)
+        addProjectButton.setOnClickListener {
+            val intent = Intent(this, AddProjectActivity::class.java)
             startActivity(intent)
         }
     }

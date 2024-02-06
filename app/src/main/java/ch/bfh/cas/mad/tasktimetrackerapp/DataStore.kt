@@ -34,14 +34,43 @@ object DataStore {
         Entry(taskId = 1, description = "Entry 2", duration = 120),
         Entry(taskId = 2, description = "Entry 3", duration = 90),
         Entry(taskId = 3, description = "Entry 4", duration = 30),
-        Entry(taskId = 4, description = "Entry 5", duration = 45),
-        Entry(taskId = 5, description = "Entry 6", duration = 60),
-        Entry(taskId = 6, description = "Entry 7", duration = 120),
-        Entry(taskId = 7, description = "Entry 8", duration = 90),
-        Entry(taskId = 8, description = "Entry 9", duration = 30),
-        Entry(taskId = 9, description = "Entry 10", duration = 45),
-        Entry(taskId = 10, description = "Entry 11", duration = 60),
-        Entry(taskId = 11, description = "Entry 12", duration = 120),
+        Entry(taskId = 3, description = "Entry 5", duration = 45),
+        Entry(taskId = 3, description = "Entry 6", duration = 60),
+        Entry(taskId = 4, description = "Entry 7", duration = 120),
+        Entry(taskId = 4, description = "Entry 8", duration = 90),
+        Entry(taskId = 5, description = "Entry 9", duration = 30),
+        Entry(taskId = 5, description = "Entry 10", duration = 45),
+        Entry(taskId = 5, description = "Entry 11", duration = 60),
+        Entry(taskId = 6, description = "Entry 12", duration = 120),
+        Entry(taskId = 6, description = "Entry 13", duration = 90),
+        Entry(taskId = 6, description = "Entry 14", duration = 30),
+        Entry(taskId = 6, description = "Entry 15", duration = 45),
+        Entry(taskId = 7, description = "Entry 16", duration = 60),
+        Entry(taskId = 7, description = "Entry 17", duration = 120),
+        Entry(taskId = 7, description = "Entry 18", duration = 90),
+        Entry(taskId = 8, description = "Entry 19", duration = 30),
+        Entry(taskId = 8, description = "Entry 20", duration = 45),
+        Entry(taskId = 8, description = "Entry 21", duration = 60),
+        Entry(taskId = 9, description = "Entry 22", duration = 120),
+        Entry(taskId = 9, description = "Entry 23", duration = 90),
+        Entry(taskId = 9, description = "Entry 24", duration = 30),
+        Entry(taskId = 10, description = "Entry 25", duration = 45),
+        Entry(taskId = 10, description = "Entry 26", duration = 60),
+        Entry(taskId = 11, description = "Entry 27", duration = 120),
+        Entry(taskId = 11, description = "Entry 28", duration = 90),
+        Entry(taskId = 11, description = "Entry 29", duration = 30),
+        Entry(taskId = 12, description = "Entry 30", duration = 45),
+        Entry(taskId = 12, description = "Entry 31", duration = 60),
+        Entry(taskId = 13, description = "Entry 32", duration = 120),
+        Entry(taskId = 13, description = "Entry 33", duration = 90),
+        Entry(taskId = 13, description = "Entry 34", duration = 30),
+        Entry(taskId = 14, description = "Entry 35", duration = 45),
+        Entry(taskId = 14, description = "Entry 36", duration = 60),
+        Entry(taskId = 15, description = "Entry 37", duration = 120),
+        Entry(taskId = 15, description = "Entry 38", duration = 90),
+        Entry(taskId = 15, description = "Entry 39", duration = 30),
+        Entry(taskId = 16, description = "Entry 40", duration = 45),
+        Entry(taskId = 16, description = "Entry 41", duration = 60)
     )
 
     fun getEntriesForTask(taskId: Int): List<Entry> {
@@ -63,5 +92,14 @@ object DataStore {
     fun getProjectForTask(taskId: Int): Project {
         val task = tasks.find { it.id == taskId }
         return projects.find { it.id == task?.projectId } ?: Project("", 0)
+    }
+
+    fun getEntriesForProject(projectId: Int): List<Entry> {
+        val tasksForProject = getTasksForProject(projectId)
+        val entriesForProject = mutableListOf<Entry>()
+        tasksForProject.forEach { task ->
+            entriesForProject.addAll(getEntriesForTask(task.id))
+        }
+        return entriesForProject
     }
 }

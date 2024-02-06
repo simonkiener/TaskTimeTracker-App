@@ -25,6 +25,11 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(this, TaskOverviewActivity::class.java)
             startActivity(intent)
         }
+
+        projectNavigationButton.setOnClickListener {
+            val intent = Intent(this, ProjectOverviewActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
 

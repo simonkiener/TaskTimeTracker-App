@@ -1,4 +1,4 @@
-package ch.bfh.cas.mad.tasktimetrackerapp
+package ch.bfh.cas.mad.tasktimetrackerapp.adapter
 
 import android.content.Intent
 import android.graphics.Color
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ch.bfh.cas.mad.tasktimetrackerapp.R
+import ch.bfh.cas.mad.tasktimetrackerapp.Task
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailTaskActivity
 
 class TaskAdapter(private val tasks: MutableList<Task>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {

@@ -11,9 +11,8 @@ import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.DataStore
-import ch.bfh.cas.mad.tasktimetrackerapp.EntryAdapter
+import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.R
-import ch.bfh.cas.mad.tasktimetrackerapp.TaskAdapter
 import java.util.Calendar
 
 class EntriesOverviewActivity : ComponentActivity() {
