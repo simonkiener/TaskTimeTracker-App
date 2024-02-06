@@ -19,4 +19,5 @@
     <string name="task_prompt">Task</string>
     <string name="project_prompt">Project</string>
     <string name="entries_overview">Entries Overview</string>
+    <string name="title_activity_detail_entry">DetailEntryActivity</string>
 </resources>

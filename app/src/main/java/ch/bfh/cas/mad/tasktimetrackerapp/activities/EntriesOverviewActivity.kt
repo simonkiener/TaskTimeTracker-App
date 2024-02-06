@@ -2,26 +2,18 @@ package ch.bfh.cas.mad.tasktimetrackerapp.activities
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.DataStore
 import ch.bfh.cas.mad.tasktimetrackerapp.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.R
-import ch.bfh.cas.mad.tasktimetrackerapp.ui.theme.TaskTimeTrackerAppTheme
+import ch.bfh.cas.mad.tasktimetrackerapp.TaskAdapter
 import java.util.Calendar
 
 class EntriesOverviewActivity : ComponentActivity() {
@@ -35,16 +27,15 @@ class EntriesOverviewActivity : ComponentActivity() {
         val projects = DataStore.projects.map { it.name }
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewEntries)
-        recyclerView.adapter = entryAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        //TODO: implement Filter for entries by task and project
+        recyclerView.adapter = EntryAdapter(DataStore.entries)
 
 
         val spinnerTask = findViewById<Spinner>(R.id.spinnerTask)
         val spinnerProject = findViewById<Spinner>(R.id.spinnerProject)
-
         val taskAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, tasks)
         val projectAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, projects)
-
-
 
         spinnerTask.adapter = taskAdapter
         spinnerProject.adapter = projectAdapter

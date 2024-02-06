@@ -1,5 +1,6 @@
 package ch.bfh.cas.mad.tasktimetrackerapp
 
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.DataStore.getEntriesForTask
 import ch.bfh.cas.mad.tasktimetrackerapp.DataStore.getProjectName
+import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailEntryActivity
 
 class EntryAdapter(private var entries: List<Entry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
@@ -36,7 +38,13 @@ class EntryAdapter(private var entries: List<Entry>) : RecyclerView.Adapter<Entr
         }
 
         holder.editButton.setOnClickListener {
-            // Implement your edit functionality here
+            holder.editButton.setOnClickListener {
+                val context = holder.itemView.context
+                val intent = Intent(context, DetailEntryActivity::class.java)
+                intent.putExtra("task", entry.description)
+                intent.putExtra("project", getProjectName(entry.taskId))
+                context.startActivity(intent)
+            }
         }
     }
 
@@ -45,6 +53,12 @@ class EntryAdapter(private var entries: List<Entry>) : RecyclerView.Adapter<Entr
     fun filterList(task: String, project: String) {
         val filteredList = entries.filter { it.description == task && DataStore.getProjectName(it.taskId) == project }
         this.entries = filteredList
+        notifyDataSetChanged()
+    }
+
+    fun updateEntries(taskId: Int) {
+        val entries = getEntriesForTask(taskId)
+        this.entries = entries
         notifyDataSetChanged()
     }
 }
