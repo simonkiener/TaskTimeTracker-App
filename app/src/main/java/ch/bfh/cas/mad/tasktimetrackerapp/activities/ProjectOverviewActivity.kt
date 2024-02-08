@@ -13,11 +13,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class ProjectOverviewActivity : ComponentActivity() {
 
     private lateinit var addProjectButton: FloatingActionButton
+    private lateinit var backButton: FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_projectoverview)
 
         addProjectButton = findViewById(R.id.AddProject)
+        backButton = findViewById(R.id.fabBack)
 
         val projects = DataStore.projects
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewProjects)
@@ -27,6 +29,10 @@ class ProjectOverviewActivity : ComponentActivity() {
         addProjectButton.setOnClickListener {
             val intent = Intent(this, AddProjectActivity::class.java)
             startActivity(intent)
+        }
+
+        backButton.setOnClickListener {
+            finish()
         }
     }
 }

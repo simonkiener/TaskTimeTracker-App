@@ -43,14 +43,26 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/AddProject"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="16dp"
             android:src="@drawable/ic_add"
             app:tint="@color/white"
             app:layout_anchorGravity="center"
-            app:fabCustomSize="100dp"
+            app:fabCustomSize="56dp"
+            app:backgroundTint="@color/actionColor"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white"
+            app:layout_anchorGravity="bottom|start|end"
+            app:fabCustomSize="56dp"
             app:backgroundTint="@color/actionColor"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

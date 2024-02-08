@@ -10,6 +10,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class DetailEntryActivity : ComponentActivity() {
 
     private lateinit var editEntryButton: FloatingActionButton
+    private lateinit var backButton: FloatingActionButton
     private lateinit var editTextTaskName: EditText
     private lateinit var editTextProject: EditText
     private lateinit var editTextStartDateTime: EditText
@@ -27,6 +28,7 @@ class DetailEntryActivity : ComponentActivity() {
         editTextStartDateTime = findViewById(R.id.editTextStartDateTime)
         editTextEndDateTime = findViewById(R.id.editTextEndDateTime)
         editEntryButton = findViewById(R.id.EditEntryButton);
+        backButton = findViewById(R.id.fabBack)
 
         editTextTaskName.setText(task)
         editTextProject.setText(project)
@@ -38,6 +40,10 @@ class DetailEntryActivity : ComponentActivity() {
             val editTextProject = findViewById<EditText>(R.id.editTextProject)
             val editTextStartDateTime = findViewById<EditText>(R.id.editTextStartDateTime)
             val editTextEndDateTime = findViewById<EditText>(R.id.editTextEndDateTime)
+        }
+
+        backButton.setOnClickListener {
+            finish()
         }
     }
 }

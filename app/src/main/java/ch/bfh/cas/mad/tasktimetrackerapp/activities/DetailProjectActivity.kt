@@ -15,14 +15,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class DetailProjectActivity : ComponentActivity() {
 
     private lateinit var showAllEntriesButton: Button
+    private lateinit var backButton: FloatingActionButton
     private lateinit var projectName: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detailproject)
 
         showAllEntriesButton = findViewById(R.id.btnShowAllEntries)
-
+        backButton = findViewById(R.id.fabBack)
         projectName = findViewById(R.id.TextViewProjectName)
+
 
         projectName.text = DataStore.getProjectName(intent.getIntExtra("projectId", -1))
 
@@ -36,6 +38,10 @@ class DetailProjectActivity : ComponentActivity() {
             val intent = Intent(this, EntriesOverviewActivity::class.java)
             intent.putExtra("projectId", projectId)
             startActivity(intent)
+        }
+
+        backButton.setOnClickListener {
+            finish()
         }
     }
 }

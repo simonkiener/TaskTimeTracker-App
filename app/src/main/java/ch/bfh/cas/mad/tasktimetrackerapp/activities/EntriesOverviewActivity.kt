@@ -13,12 +13,17 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.DataStore
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.Calendar
 
 class EntriesOverviewActivity : ComponentActivity() {
+
+    private lateinit var backButton: FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entriesoverview)
+
+        backButton = findViewById(R.id.fabBack)
 
         val entryAdapter = EntryAdapter(entries = emptyList())
 
@@ -90,6 +95,10 @@ class EntriesOverviewActivity : ComponentActivity() {
                     textViewEndDate.text = "$selectedDay/${selectedMonth + 1}/$selectedYear"
                 }, year, month, day)
             datePickerDialog.show()
+        }
+
+        backButton.setOnClickListener {
+            finish()
         }
     }
 }
