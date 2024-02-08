@@ -11,7 +11,7 @@ object DataStore {
     )
 
     val tasks = mutableListOf(
-        Task(id = 1, name = "Task 1", projectId = 1),
+        Task(id = 1,name = "Task 1", projectId = 1),
         Task(id = 2,name = "Task 2", projectId = 1),
         Task(id = 3,name = "Task 3", projectId = 2),
         Task(id = 4,name = "Task 4", projectId = 3),

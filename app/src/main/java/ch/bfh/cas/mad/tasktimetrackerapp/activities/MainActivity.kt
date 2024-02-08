@@ -12,14 +12,14 @@ import ch.bfh.cas.mad.tasktimetrackerapp.ui.theme.TaskTimeTrackerAppTheme
 class MainActivity : ComponentActivity() {
     private lateinit var taskNavigationButton: Button
     private lateinit var projectNavigationButton: Button
-    private lateinit var EntriesNavigationButton: Button
+    private lateinit var entriesNavigationButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         taskNavigationButton = findViewById(R.id.main_buttonTasks)
         projectNavigationButton = findViewById(R.id.main_buttonProjects)
-        EntriesNavigationButton = findViewById(R.id.main_buttonEntries)
+        entriesNavigationButton = findViewById(R.id.main_buttonEntries)
 
         taskNavigationButton.setOnClickListener {
             val intent = Intent(this, TaskOverviewActivity::class.java)
@@ -30,6 +30,12 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(this, ProjectOverviewActivity::class.java)
             startActivity(intent)
         }
+
+        entriesNavigationButton.setOnClickListener {
+            val intent = Intent(this, EntriesOverviewActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }
 
