@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.ProjectAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.R
-import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Project
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.ProjectRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.TTTDatabaseProvider
 import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.ProjectOverviewViewModel
@@ -24,7 +23,6 @@ class ProjectOverviewActivity : ComponentActivity() {
     private lateinit var addProjectButton: FloatingActionButton
     private lateinit var backButton: FloatingActionButton
 
-    private var projects: MutableList<Project> = mutableListOf(Project(id = 1, name = "Initial Project"))
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_projectoverview)
@@ -44,9 +42,6 @@ class ProjectOverviewActivity : ComponentActivity() {
                 recyclerViewProjects.adapter = adapter
             }
         }
-        // ToDo: delete only for tests/initializing
-        //viewModel.deleteAllProjects()
-        viewModel.getAllProjects()
 
         addProjectButton.setOnClickListener {
             val intent = Intent(this, AddProjectActivity::class.java)
@@ -56,5 +51,10 @@ class ProjectOverviewActivity : ComponentActivity() {
         backButton.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllProjects()
     }
 }

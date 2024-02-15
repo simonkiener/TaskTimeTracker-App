@@ -7,13 +7,12 @@ class ProjectRepository(
     private val projectDao: ProjectDao
 ) {
     suspend fun getAllProjects(): MutableList<Project> = withContext(Dispatchers.IO) {
-        var storedProjects = getStoredProjects()
+        val storedProjects = projectDao.getAll()
         if (storedProjects.isNotEmpty()) {
             return@withContext storedProjects
         }
-        addNewProject()
-        storedProjects = getStoredProjects()
-        return@withContext storedProjects
+
+        return@withContext emptyList<Project>().toMutableList()
     }
 
     suspend fun deleteAllProjects() {
@@ -22,11 +21,8 @@ class ProjectRepository(
         }
     }
 
-    private suspend fun getStoredProjects(): MutableList<Project> = projectDao.getAll()
-
-    private suspend fun addNewProject()
+    suspend fun addProject(project: Project)
     {
-        val newProject = Project(id = 2, name = "New Test Project 2")
-        projectDao.insert(newProject)
+        projectDao.insert(project = project)
     }
 }
