@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ch.bfh.cas.mad.tasktimetrackerapp.DataStore
-import ch.bfh.cas.mad.tasktimetrackerapp.Entry
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton

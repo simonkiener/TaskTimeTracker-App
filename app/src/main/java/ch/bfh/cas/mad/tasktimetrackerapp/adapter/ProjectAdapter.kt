@@ -7,13 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ch.bfh.cas.mad.tasktimetrackerapp.Project
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Project
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailProjectActivity
 
 //import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailProjectActivity
 
-class ProjectAdapter(private val projects: MutableList<Project>) : RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() {
+class ProjectAdapter(
+    private val projects: MutableList<Project>
+) : RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() {
 
     inner class ProjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.textViewProjectName)
@@ -42,5 +44,5 @@ class ProjectAdapter(private val projects: MutableList<Project>) : RecyclerView.
         }
     }
 
-    override fun getItemCount() = projects.size
+    override fun getItemCount() = projects.size // ToDo: check projects.count()
 }

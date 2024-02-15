@@ -1,13 +1,13 @@
-package ch.bfh.cas.mad.tasktimetrackerapp
+package ch.bfh.cas.mad.tasktimetrackerapp.persistence
 
 object DataStore {
     val projects = mutableListOf(
-        Project("Projekt 1", 1),
-        Project("Projekt 2", 2),
-        Project("Projekt 3", 3),
-        Project("Projekt 4", 4),
-        Project("Projekt 5", 5),
-        Project("Projekt 6", 6)
+        Project("Project 1", 1),
+        Project("Project 2", 2),
+        Project("Project 3", 3),
+        Project("Project 4", 4),
+        Project("Project 5", 5),
+        Project("Project 6", 6)
     )
 
     val tasks = mutableListOf(

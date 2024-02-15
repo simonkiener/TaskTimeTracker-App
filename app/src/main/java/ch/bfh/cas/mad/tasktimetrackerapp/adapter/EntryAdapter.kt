@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ch.bfh.cas.mad.tasktimetrackerapp.DataStore
-import ch.bfh.cas.mad.tasktimetrackerapp.DataStore.getEntriesForTask
-import ch.bfh.cas.mad.tasktimetrackerapp.DataStore.getProjectName
-import ch.bfh.cas.mad.tasktimetrackerapp.Entry
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getEntriesForTask
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getProjectName
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailEntryActivity
 
