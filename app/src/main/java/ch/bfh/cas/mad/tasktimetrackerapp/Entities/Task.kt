@@ -1,4 +1,4 @@
-package ch.bfh.cas.mad.tasktimetrackerapp
+package ch.bfh.cas.mad.tasktimetrackerapp.Entities
 
 import java.util.UUID
 

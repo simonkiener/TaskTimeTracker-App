@@ -1,4 +1,4 @@
-package ch.bfh.cas.mad.tasktimetrackerapp
+package ch.bfh.cas.mad.tasktimetrackerapp.Entities
 
 data class Project (
     val name: String,

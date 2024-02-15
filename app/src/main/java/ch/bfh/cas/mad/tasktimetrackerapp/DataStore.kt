@@ -1,5 +1,9 @@
 package ch.bfh.cas.mad.tasktimetrackerapp
 
+import ch.bfh.cas.mad.tasktimetrackerapp.Entities.Entry
+import ch.bfh.cas.mad.tasktimetrackerapp.Entities.Project
+import ch.bfh.cas.mad.tasktimetrackerapp.Entities.Task
+
 object DataStore {
     val projects = mutableListOf(
         Project("Projekt 1", 1),

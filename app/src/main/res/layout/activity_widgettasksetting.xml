@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/task_time_tracker"
+        android:textSize="32sp"
+        android:gravity="center"
+        android:background="@color/mainColor"
+        android:textColor="#FFFFFF"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Widget Settings"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="24sp"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/fieldSelectSpot1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select a Task for Widget Spot 1"
+        android:inputType="text"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/fieldSelectSpot2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select a Task for Widget Spot 2"
+        android:inputType="text"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/fieldSelectSpot3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select a Task for Widget Spot 3"
+        android:inputType="text"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/fieldSelectSpot4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select a Task for Widget Spot 4"
+        android:inputType="text"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/buttonClearAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear All"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/actionColor"
+        android:textColor="#FFFFFF"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_back"
+        app:tint="@color/white"
+        app:layout_anchorGravity="bottom|start|end"
+        app:fabCustomSize="56dp"
+        app:backgroundTint="@color/actionColor"/>
+
+</LinearLayout>
