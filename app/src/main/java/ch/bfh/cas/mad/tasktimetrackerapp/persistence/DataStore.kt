@@ -2,12 +2,12 @@ package ch.bfh.cas.mad.tasktimetrackerapp.persistence
 
 object DataStore {
     val projects = mutableListOf(
-        Project("Project 1", 1),
-        Project("Project 2", 2),
-        Project("Project 3", 3),
-        Project("Project 4", 4),
-        Project("Project 5", 5),
-        Project("Project 6", 6)
+        Project(1,"Project 1"),
+        Project(2, "Project 2"),
+        Project(3, "Project 3"),
+        Project(4, "Project 4"),
+        Project(5, "Project 5"),
+        Project(6, "Project 6")
     )
 
     val tasks = mutableListOf(
@@ -91,7 +91,7 @@ object DataStore {
 
     fun getProjectForTask(taskId: Int): Project {
         val task = tasks.find { it.id == taskId }
-        return projects.find { it.id == task?.projectId } ?: Project("", 0)
+        return projects.find { it.id == task?.projectId } ?: Project(0, "")
     }
 
     fun getEntriesForProject(projectId: Int): List<Entry> {

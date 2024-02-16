@@ -26,20 +26,23 @@ class ProjectOverviewActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_projectoverview)
+
         val viewModelProvider = ViewModelProvider(
             this,
             ProjectOverviewViewModelFactory(ProjectRepository(TTTDatabaseProvider.get(this).getProjectDao()))
         )
+
         viewModel = viewModelProvider[ProjectOverviewViewModel::class.java]
+
         addProjectButton = findViewById(R.id.AddProject)
         backButton = findViewById(R.id.fabBack)
-        val recyclerViewProjects = findViewById<RecyclerView>(R.id.recyclerViewProjects)
 
-        recyclerViewProjects.layoutManager = LinearLayoutManager(this)
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewProjects)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {
             viewModel.projects.collectLatest { projects ->
                 val adapter = ProjectAdapter(projects = projects)
-                recyclerViewProjects.adapter = adapter
+                recyclerView.adapter = adapter
             }
         }
 
