@@ -13,6 +13,8 @@ class MainActivity : ComponentActivity() {
     private lateinit var taskNavigationButton: Button
     private lateinit var projectNavigationButton: Button
     private lateinit var entriesNavigationButton: Button
+    private lateinit var databaseInitButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,6 +22,7 @@ class MainActivity : ComponentActivity() {
         taskNavigationButton = findViewById(R.id.main_buttonTasks)
         projectNavigationButton = findViewById(R.id.main_buttonProjects)
         entriesNavigationButton = findViewById(R.id.main_buttonEntries)
+        databaseInitButton = findViewById(R.id.main_buttonDatabaseInit)
 
         taskNavigationButton.setOnClickListener {
             val intent = Intent(this, TaskOverviewActivity::class.java)
@@ -36,6 +39,10 @@ class MainActivity : ComponentActivity() {
             startActivity(intent)
         }
 
+        databaseInitButton.setOnClickListener {
+            val intent = Intent(this, InitDatabaseActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
 

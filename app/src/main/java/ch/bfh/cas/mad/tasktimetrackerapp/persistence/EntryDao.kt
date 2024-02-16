@@ -21,5 +21,6 @@ interface EntryDao {
     // Update
 
     // Delete
-
+    @Query("DELETE FROM entry")
+    suspend fun deleteAll()
 }

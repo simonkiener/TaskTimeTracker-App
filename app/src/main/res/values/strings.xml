@@ -9,6 +9,7 @@
     <string name="tasks">Tasks</string>
     <string name="task_4">Task 4</string>
     <string name="projects">Projects</string>
+    <string name="database">Init Database</string>
     <string name="task_3">Task 3</string>
     <string name="title_activity_task_overview">TaskOverviewActivity</string>
     <string name="tasks_overview">Tasks Overview</string>
@@ -23,4 +24,5 @@
     <string name="title_activity_project_overview">ProjectOverviewActivity</string>
     <string name="title_activity_add_project">AddProjectActivity</string>
     <string name="title_activity_detail_project">DetailProjectActivity</string>
+    <string name="title_activity_init_database">Init Database</string>
 </resources>

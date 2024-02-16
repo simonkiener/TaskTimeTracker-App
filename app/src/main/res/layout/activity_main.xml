@@ -87,31 +87,43 @@
         android:id="@+id/main_buttonTasks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tasks"
-        android:padding="20dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="30dp"
-        android:backgroundTint="@color/actionColor"/>
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/actionColor"
+        android:padding="20dp"
+        android:text="@string/tasks" />
 
     <Button
         android:id="@+id/main_buttonProjects"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/projects"
-        android:padding="20dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="30dp"
-        android:backgroundTint="@color/actionColor"/>
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/actionColor"
+        android:padding="20dp"
+        android:text="@string/projects" />
 
     <Button
         android:id="@+id/main_buttonEntries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/entries"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/actionColor"
+        android:padding="20dp"
+        android:text="@string/entries" />
+
+    <Button
+        android:id="@+id/main_buttonDatabaseInit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/database"
         android:padding="20dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="5dp"
         android:backgroundTint="@color/actionColor"/>
 </LinearLayout>
