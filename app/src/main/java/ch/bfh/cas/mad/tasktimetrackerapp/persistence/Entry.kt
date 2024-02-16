@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "entry")
 data class Entry (
-    @PrimaryKey val description: String,
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    val description: String,
     val taskId: Int,
     val duration: Int
 )

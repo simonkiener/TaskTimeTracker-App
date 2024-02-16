@@ -5,34 +5,55 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.R
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.ProjectRepository
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.TTTDatabaseProvider
+import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.ProjectDetailViewModel
+import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.ProjectDetailViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class DetailProjectActivity : ComponentActivity() {
 
+    private lateinit var viewModel: ProjectDetailViewModel
     private lateinit var showAllEntriesButton: Button
     private lateinit var backButton: FloatingActionButton
     private lateinit var projectName: TextView
+    private var projectId: Int = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detailproject)
+
+        val viewModelProvider = ViewModelProvider(
+            this,
+            ProjectDetailViewModelFactory(ProjectRepository(TTTDatabaseProvider.get(this).getProjectDao(), TTTDatabaseProvider.get(this).getEntryDao()))
+        )
+
+        viewModel = viewModelProvider[ProjectDetailViewModel::class.java]
 
         showAllEntriesButton = findViewById(R.id.btnShowAllEntries)
         backButton = findViewById(R.id.fabBack)
         projectName = findViewById(R.id.TextViewProjectName)
 
-
         projectName.text = DataStore.getProjectName(intent.getIntExtra("projectId", -1))
+        projectId = intent.getIntExtra("projectId", -1)
 
-        val projectId = intent.getIntExtra("projectId", -1)
-        val entries = DataStore.getEntriesForProject(projectId)
         val recyclerView = findViewById<RecyclerView>(R.id.entriesRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = EntryAdapter(entries)
+        lifecycleScope.launch {
+            viewModel.entries.collectLatest { entries ->
+                val adapter = EntryAdapter(entries = entries)
+                recyclerView.adapter = adapter
+            }
+        }
 
         showAllEntriesButton.setOnClickListener {
             val intent = Intent(this, EntriesOverviewActivity::class.java)
@@ -43,5 +64,10 @@ class DetailProjectActivity : ComponentActivity() {
         backButton.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getEntriesForProject(projectId)
     }
 }

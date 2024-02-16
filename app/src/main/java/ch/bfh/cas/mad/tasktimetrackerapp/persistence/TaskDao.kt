@@ -12,7 +12,7 @@ interface TaskDao {
     suspend fun insert(task: Task)
 
     // Read
-    @Query("SELECT * from task")
+    @Query("SELECT * FROM task")
     suspend fun getAll(): MutableList<Task>
 
     // Update

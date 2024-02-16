@@ -29,7 +29,7 @@ class ProjectOverviewActivity : ComponentActivity() {
 
         val viewModelProvider = ViewModelProvider(
             this,
-            ProjectOverviewViewModelFactory(ProjectRepository(TTTDatabaseProvider.get(this).getProjectDao()))
+            ProjectOverviewViewModelFactory(ProjectRepository(TTTDatabaseProvider.get(this).getProjectDao(), TTTDatabaseProvider.get(this).getEntryDao()))
         )
 
         viewModel = viewModelProvider[ProjectOverviewViewModel::class.java]

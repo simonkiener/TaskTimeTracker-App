@@ -12,7 +12,7 @@ interface ProjectDao {
     suspend fun insert(project: Project)
 
     // Read
-    @Query("SELECT * from project")
+    @Query("SELECT * FROM project")
     suspend fun getAll(): MutableList<Project>
 
     // Update

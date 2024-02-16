@@ -11,8 +11,12 @@ interface EntryDao {
     suspend fun insert(entry: Entry)
 
     // Read
-    @Query("SELECT * from entry")
-    suspend fun getAllEntries(): List<Entry>
+    @Query("SELECT * FROM entry")
+    suspend fun getAllEntries(): MutableList<Entry>
+
+    // ToDo: change query to get entries from project only
+    @Query("SELECT * FROM entry WHERE taskId = :projectId")
+    suspend fun getAllEntriesForProject(projectId: Int): MutableList<Entry>
 
     // Update
 

@@ -25,7 +25,7 @@ class AddProjectActivity : ComponentActivity() {
 
         val viewModelProvider = ViewModelProvider(
             this,
-            AddProjectViewModelFactory(ProjectRepository(TTTDatabaseProvider.get(this).getProjectDao()))
+            AddProjectViewModelFactory(ProjectRepository(TTTDatabaseProvider.get(this).getProjectDao(), TTTDatabaseProvider.get(this).getEntryDao()))
         )
 
         viewModel = viewModelProvider[AddProjectViewModel::class.java]

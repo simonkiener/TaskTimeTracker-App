@@ -8,18 +8,20 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getEntriesForTask
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getProjectName
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailEntryActivity
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getTaskName
 
-class EntryAdapter(private var entries: List<Entry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
+class EntryAdapter(
+    private var entries: List<Entry>
+) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
     inner class EntryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val entryName: TextView = itemView.findViewById(R.id.entryName)
         val taskName: TextView = itemView.findViewById(R.id.taskName)
-        val projectName: TextView = itemView.findViewById(R.id.projectName)
         val editButton: Button = itemView.findViewById(R.id.editButton)
     }
 
@@ -30,8 +32,8 @@ class EntryAdapter(private var entries: List<Entry>) : RecyclerView.Adapter<Entr
 
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
         val entry = entries[position]
-        holder.taskName.text = entry.description
-        holder.projectName.text = getProjectName(entry.taskId)
+        holder.entryName.text = entry.description
+        holder.taskName.text = getTaskName(entry.taskId)
 
         // Set background color based on position
         if (position % 2 == 0) {
@@ -54,7 +56,7 @@ class EntryAdapter(private var entries: List<Entry>) : RecyclerView.Adapter<Entr
     override fun getItemCount() = entries.size
 
     fun filterList(task: String, project: String) {
-        val filteredList = entries.filter { it.description == task && DataStore.getProjectName(it.taskId) == project }
+        val filteredList = entries.filter { it.description == task && getProjectName(it.taskId) == project }
         this.entries = filteredList
         notifyDataSetChanged()
     }

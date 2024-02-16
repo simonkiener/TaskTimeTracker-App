@@ -11,8 +11,6 @@ import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Project
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailProjectActivity
 
-//import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailProjectActivity
-
 class ProjectAdapter(
     private val projects: MutableList<Project>
 ) : RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() {
