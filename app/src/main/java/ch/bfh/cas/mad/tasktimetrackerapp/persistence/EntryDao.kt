@@ -15,7 +15,8 @@ interface EntryDao {
     suspend fun getAllEntries(): MutableList<Entry>
 
     // ToDo: change query to get entries from project only
-    @Query("SELECT * FROM entry WHERE taskId = :projectId")
+    //@Query("SELECT * FROM entry WHERE taskId = :projectId")
+    @Query("SELECT * FROM entry JOIN task ON entry.taskId = task.id WHERE task.projectId = :projectId")
     suspend fun getAllEntriesForProject(projectId: Int): MutableList<Entry>
 
     // Update
