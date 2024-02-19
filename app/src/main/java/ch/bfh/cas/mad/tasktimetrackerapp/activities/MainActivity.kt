@@ -38,11 +38,7 @@ class MainActivity : ComponentActivity() {
         val sharedPreferences: SharedPreferences = getSharedPreferences("selectedTasks", Context.MODE_PRIVATE)
         val selectedTasks = sharedPreferences.getStringSet("selectedTasks", emptySet())
 
-//        WidgetSpot1.text = selectedTasks?.elementAtOrNull(0) ?: "Select Task in App"
-//        WidgetSpot2.text = selectedTasks?.elementAtOrNull(1) ?: "Select Task in App"
-//        WidgetSpot3.text = selectedTasks?.elementAtOrNull(2) ?: "Select Task in App"
-//        WidgetSpot4.text = selectedTasks?.elementAtOrNull(3) ?: "Select Task in App"
-
+        val widgetButtons = listOf(WidgetSpot1, WidgetSpot2, WidgetSpot3, WidgetSpot4)
 
         taskNavigationButton.setOnClickListener {
             val intent = Intent(this, TaskOverviewActivity::class.java)
@@ -62,6 +58,14 @@ class MainActivity : ComponentActivity() {
         taskAssignmentButton.setOnClickListener {
             val intent = Intent(this, WidgetTaskSettingActivity::class.java)
             startActivity(intent)
+        }
+
+        //Change the background of the buttons if Task is selected to recording
+        widgetButtons.forEach { button ->
+            button.setOnClickListener {
+                widgetButtons.forEach { it.setBackgroundResource(R.drawable.round_button_inactiv) }
+                button.setBackgroundResource(R.drawable.round_button_activ)
+            }
         }
 
     }

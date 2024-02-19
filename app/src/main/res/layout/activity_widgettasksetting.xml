@@ -69,27 +69,48 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"/>
 
-    <Button
-        android:id="@+id/buttonClearAll"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clear All"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/actionColor"
-        android:textColor="#FFFFFF"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_back"
-        app:tint="@color/white"
-        app:layout_anchorGravity="bottom|start|end"
-        app:fabCustomSize="56dp"
-        app:backgroundTint="@color/actionColor"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="16dp"
+            android:layout_marginRight="25dp"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white"
+            app:layout_anchorGravity="bottom|start|end"
+            app:fabCustomSize="56dp"
+            app:backgroundTint="@color/actionColor"
+            android:contentDescription="BackButton" />
+
+        <Button
+            android:id="@+id/buttonClearAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear All"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="15dp"
+            android:background="@color/actionColor"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/AddNewTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add new Task"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="15dp"
+            android:background="@color/actionColor"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
 
 </LinearLayout>

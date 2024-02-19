@@ -22,6 +22,7 @@ class WidgetTaskSettingActivity : ComponentActivity() {
     private lateinit var fieldSpot3: AutoCompleteTextView
     private lateinit var fieldSpot4: AutoCompleteTextView
     private lateinit var clearAllButton: Button
+    private lateinit var addNewTaskButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_widgettasksetting)
@@ -32,6 +33,7 @@ class WidgetTaskSettingActivity : ComponentActivity() {
         fieldSpot3 = findViewById(R.id.fieldSelectSpot4)
         fieldSpot4 = findViewById(R.id.fieldSelectSpot3)
         clearAllButton = findViewById(R.id.buttonClearAll)
+        addNewTaskButton = findViewById(R.id.AddNewTask)
 
         val tasks = DataStore.tasks.map { it.name }
 
@@ -76,6 +78,12 @@ class WidgetTaskSettingActivity : ComponentActivity() {
             fieldSpot2.setText("")
             fieldSpot3.setText("")
             fieldSpot4.setText("")
+        }
+
+        addNewTaskButton.setOnClickListener {
+            Intent(this, AddTaskActivity::class.java).also {
+                startActivity(it)
+            }
         }
     }
 
