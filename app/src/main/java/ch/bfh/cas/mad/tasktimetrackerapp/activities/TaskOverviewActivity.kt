@@ -28,7 +28,7 @@ class TaskOverviewActivity : ComponentActivity() {
 
         val viewModelProvider = ViewModelProvider(
             this,
-            TaskOverviewViewModelFactory(TaskRepository(TTTDatabaseProvider.get(this).getTaskDao()))
+            TaskOverviewViewModelFactory(TaskRepository(TTTDatabaseProvider.get(this).getTaskDao(), TTTDatabaseProvider.get(this).getEntryDao()))
         )
 
         viewModel = viewModelProvider[TaskOverviewViewModel::class.java]

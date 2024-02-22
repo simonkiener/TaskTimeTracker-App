@@ -17,9 +17,19 @@ class ProjectDetailViewModel (
     private var _entries = MutableStateFlow(emptyList<Entry>().toMutableList())
     val entries: MutableStateFlow<MutableList<Entry>> = _entries
 
+    private var _projectName = MutableStateFlow("")
+    val projectName: MutableStateFlow<String> = _projectName
+
     fun getEntriesForProject(projectId: Int) {
         viewModelScope.launch {
             _entries.value = projectRepository.getEntriesForProject(projectId = projectId)
+        }
+    }
+
+    fun getProjectName(projectId: Int) {
+        viewModelScope.launch {
+            val project = projectRepository.getProject(projectId = projectId)
+            _projectName.value = project.name
         }
     }
 }

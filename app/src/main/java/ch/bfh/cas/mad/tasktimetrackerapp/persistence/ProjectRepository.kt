@@ -25,6 +25,10 @@ class ProjectRepository(
         return@withContext emptyList<Entry>().toMutableList()
     }
 
+    suspend fun getProject(projectId: Int):Project {
+        return projectDao.getProject(projectId)
+    }
+
     suspend fun deleteAllProjects() {
         getAllProjects().forEach {
             projectDao.delete(it)

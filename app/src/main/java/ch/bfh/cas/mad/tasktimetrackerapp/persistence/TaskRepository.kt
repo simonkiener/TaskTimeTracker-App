@@ -4,7 +4,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class TaskRepository(
-    private val taskDao: TaskDao
+    private val taskDao: TaskDao,
+    private val entryDao: EntryDao
 ) {
     suspend fun getAllTasks(): MutableList<Task> = withContext(Dispatchers.IO) {
         val storedTasks = taskDao.getAll()
@@ -13,6 +14,19 @@ class TaskRepository(
         }
 
         return@withContext emptyList<Task>().toMutableList()
+    }
+
+    suspend fun getEntriesForTask(taskId: Int): MutableList<Entry> = withContext(Dispatchers.IO) {
+        val storedEntries = entryDao.getAllEntriesForTask(taskId)
+        if (storedEntries.isNotEmpty()) {
+            return@withContext storedEntries
+        }
+
+        return@withContext emptyList<Entry>().toMutableList()
+    }
+
+    suspend fun getTask(taskId: Int):Task {
+        return taskDao.getTask(taskId)
     }
 
     suspend fun deleteAllTasks() {

@@ -59,6 +59,5 @@ class ProjectOverviewActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.getAllProjects()
-        // ToDo: check
     }
 }

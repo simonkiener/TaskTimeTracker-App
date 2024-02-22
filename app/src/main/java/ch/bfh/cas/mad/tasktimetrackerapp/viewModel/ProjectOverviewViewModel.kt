@@ -13,6 +13,10 @@ class ProjectOverviewViewModel (
     private var _projects = MutableStateFlow(emptyList<Project>().toMutableList())
     val projects: MutableStateFlow<MutableList<Project>> = _projects
 
+    // ToDo: create 2nd constructor without parameters?
+    private var _project = MutableStateFlow(Project(0, ""))
+    val project: MutableStateFlow<Project> = _project
+
     fun getAllProjects() {
         viewModelScope.launch {
             _projects.value = projectRepository.getAllProjects()
