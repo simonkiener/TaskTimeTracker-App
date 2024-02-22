@@ -6,8 +6,6 @@ import android.widget.EditText
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelProvider
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Project
-import ch.bfh.cas.mad.tasktimetrackerapp.DataStore
-import ch.bfh.cas.mad.tasktimetrackerapp.Entities.Project
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.ProjectRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.TTTDatabaseProvider

@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.content.edit
-import ch.bfh.cas.mad.tasktimetrackerapp.DataStore
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
