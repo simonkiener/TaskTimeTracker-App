@@ -42,8 +42,6 @@ class DetailProjectActivity : ComponentActivity() {
         backButton = findViewById(R.id.fabBack)
         projectNameView = findViewById(R.id.TextViewProjectName)
 
-        //projectNameView.text = DataStore.getProjectName(intent.getIntExtra("projectId", -1))
-        //projectNameView.text = "fritz"
         projectId = intent.getIntExtra("projectId", -1)
 
         val recyclerView = findViewById<RecyclerView>(R.id.entriesRecyclerView)
@@ -52,9 +50,10 @@ class DetailProjectActivity : ComponentActivity() {
             viewModel.entries.collectLatest { entries ->
                 val adapter = EntryAdapter(entries = entries)
                 recyclerView.adapter = adapter
-            }
-            viewModel.projectName.collectLatest { projectName ->
-                projectNameView.text = projectName
+
+                viewModel.projectName.collectLatest { projectName ->
+                    projectNameView.text = projectName
+                }
             }
         }
 
@@ -72,10 +71,7 @@ class DetailProjectActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         // ToDo: think about merging all together into one single method e.g. "viewModel.ReadProjectData()"
-        viewModel.getProjectName(projectId)
         viewModel.getEntriesForProject(projectId)
-
-        projectNameView.text = viewModel.projectName.value
-        //projectNameView.text = "klaus"
+        viewModel.getProjectName(projectId)
     }
 }
