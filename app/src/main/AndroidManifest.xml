@@ -18,6 +18,11 @@
             android:label="@string/title_activity_init_database"
             android:theme="@style/Theme.TaskTimeTrackerApp" />
         <activity
+            android:name=".activities.WidgetTaskSettingActivity"
+            android:exported="false"
+            android:label="@string/title_activity_widget_task_setting"
+            android:theme="@style/Theme.TaskTimeTrackerApp" />
+        <activity
             android:name=".activities.DetailProjectActivity"
             android:exported="false"
             android:label="@string/title_activity_detail_project"

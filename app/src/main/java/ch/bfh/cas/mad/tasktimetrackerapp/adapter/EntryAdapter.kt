@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getEntriesForTask
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getProjectName
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
+import ch.bfh.cas.mad.tasktimetrackerapp.DataStore
+import ch.bfh.cas.mad.tasktimetrackerapp.DataStore.getEntriesForTask
+import ch.bfh.cas.mad.tasktimetrackerapp.DataStore.getProjectName
+import ch.bfh.cas.mad.tasktimetrackerapp.Entities.Entry
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailEntryActivity
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getTaskName

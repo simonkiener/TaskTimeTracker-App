@@ -41,7 +41,7 @@
             android:text="@string/task_1"
             android:layout_margin="10dp"
             android:textColor="@color/black"
-            android:background="@drawable/round_button"
+            android:background="@drawable/round_button_activ"
             style="?android:attr/buttonBarButtonStyle" />
 
         <Button
@@ -51,7 +51,7 @@
             android:text="@string/task_2"
             android:layout_margin="10dp"
             android:textColor="@color/black"
-            android:background="@drawable/round_button"
+            android:background="@drawable/round_button_inactiv"
             style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 
@@ -59,8 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="30dp">
+        android:layout_gravity="center_horizontal">
 
         <Button
             android:id="@+id/main_buttonTask3"
@@ -69,7 +68,7 @@
             android:text="@string/task_3"
             android:layout_margin="10dp"
             android:textColor="@color/black"
-            android:background="@drawable/round_button"
+            android:background="@drawable/round_button_inactiv"
             style="?android:attr/buttonBarButtonStyle" />
 
         <Button
@@ -79,14 +78,27 @@
             android:text="@string/task_4"
             android:layout_margin="10dp"
             android:textColor="@color/black"
-            android:background="@drawable/round_button"
+            android:background="@drawable/round_button_inactiv"
             style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/TaskAssingmentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_edit"
+        app:tint="@color/white"
+        app:fabCustomSize="56dp"
+        app:backgroundTint="@color/actionColor"/>
 
     <Button
         android:id="@+id/main_buttonTasks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/tasks"
+        android:padding="20dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="5dp"
@@ -98,6 +110,8 @@
         android:id="@+id/main_buttonProjects"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/projects"
+        android:padding="20dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="5dp"

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Task
+import ch.bfh.cas.mad.tasktimetrackerapp.Entities.Task
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailTaskActivity
 
 class TaskAdapter(private val tasks: MutableList<Task>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {

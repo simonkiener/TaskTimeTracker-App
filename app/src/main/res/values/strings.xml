@@ -24,5 +24,6 @@
     <string name="title_activity_project_overview">ProjectOverviewActivity</string>
     <string name="title_activity_add_project">AddProjectActivity</string>
     <string name="title_activity_detail_project">DetailProjectActivity</string>
+    <string name="title_activity_widget_task_setting">WidgetTaskSettingActivity</string>
     <string name="title_activity_init_database">Init Database</string>
 </resources>
