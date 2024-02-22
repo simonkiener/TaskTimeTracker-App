@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.ProjectRepository
@@ -25,7 +24,7 @@ class DetailProjectActivity : ComponentActivity() {
     private lateinit var viewModel: ProjectDetailViewModel
     private lateinit var showAllEntriesButton: Button
     private lateinit var backButton: FloatingActionButton
-    private lateinit var projectName: TextView
+    private lateinit var projectNameView: TextView
     private var projectId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,9 +40,10 @@ class DetailProjectActivity : ComponentActivity() {
 
         showAllEntriesButton = findViewById(R.id.btnShowAllEntries)
         backButton = findViewById(R.id.fabBack)
-        projectName = findViewById(R.id.TextViewProjectName)
+        projectNameView = findViewById(R.id.TextViewProjectName)
 
-        projectName.text = DataStore.getProjectName(intent.getIntExtra("projectId", -1))
+        //projectNameView.text = DataStore.getProjectName(intent.getIntExtra("projectId", -1))
+        //projectNameView.text = "fritz"
         projectId = intent.getIntExtra("projectId", -1)
 
         val recyclerView = findViewById<RecyclerView>(R.id.entriesRecyclerView)
@@ -52,6 +52,9 @@ class DetailProjectActivity : ComponentActivity() {
             viewModel.entries.collectLatest { entries ->
                 val adapter = EntryAdapter(entries = entries)
                 recyclerView.adapter = adapter
+            }
+            viewModel.projectName.collectLatest { projectName ->
+                projectNameView.text = projectName
             }
         }
 
@@ -68,6 +71,11 @@ class DetailProjectActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+        // ToDo: think about merging all together into one single method e.g. "viewModel.ReadProjectData()"
+        viewModel.getProjectName(projectId)
         viewModel.getEntriesForProject(projectId)
+
+        projectNameView.text = viewModel.projectName.value
+        //projectNameView.text = "klaus"
     }
 }
