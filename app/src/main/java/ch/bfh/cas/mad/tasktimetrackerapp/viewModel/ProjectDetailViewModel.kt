@@ -27,8 +27,6 @@ class ProjectDetailViewModel (
     }
 
     fun getProjectName(projectId: Int) {
-        val hans = 123.4
-
         viewModelScope.launch {
             val project = projectRepository.getProject(projectId = projectId)
             _projectName.value = project.name

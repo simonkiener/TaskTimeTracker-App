@@ -5,36 +5,69 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore
-import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.R
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.ProjectRepository
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.TTTDatabaseProvider
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.TaskRepository
+import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.TaskDetailViewModel
+import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.TaskDetailViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class DetailTaskActivity : ComponentActivity() {
 
-    private lateinit var taskName: TextView
+    private lateinit var viewModel: TaskDetailViewModel
     private lateinit var showAllEntriesButton: Button
     private lateinit var backButton: FloatingActionButton
+    private lateinit var taskNameView: TextView
+    private lateinit var projectNameView: TextView
+    private var taskId: Int = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detailtask)
 
-        val taskId = intent.getIntExtra("taskId", 2)
+        val viewModelProvider = ViewModelProvider(
+            this,
+            // ToDo: simplify parameters!
+            TaskDetailViewModelFactory(ProjectRepository(TTTDatabaseProvider.get(this).getProjectDao(), TTTDatabaseProvider.get(this).getEntryDao()), TaskRepository(TTTDatabaseProvider.get(this).getTaskDao(), TTTDatabaseProvider.get(this).getEntryDao()))
+        )
 
-        val task = findViewById<TextView>(R.id.taskName)
+        viewModel = viewModelProvider[TaskDetailViewModel::class.java]
+
         showAllEntriesButton = findViewById<Button>(R.id.btnShowAllEntries)
         backButton = findViewById<FloatingActionButton>(R.id.fabBack)
+        taskNameView = findViewById(R.id.TextViewTaskName)
+        projectNameView = findViewById(R.id.TextViewTaskProjectName)
 
-        task.text = DataStore.getTaskName(taskId)
-        val entriesRecyclerView = findViewById<RecyclerView>(R.id.entriesRecyclerView)
-        entriesRecyclerView.layoutManager = LinearLayoutManager(this)
-        entriesRecyclerView.adapter = EntryAdapter(getEntries(taskId))
+        taskId = intent.getIntExtra("taskId", -1)
+
+        val recyclerView = findViewById<RecyclerView>(R.id.entriesRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        lifecycleScope.launch {
+            viewModel.entries.collectLatest { entries ->
+                val adapter = EntryAdapter(entries = entries)
+                recyclerView.adapter = adapter
+
+                viewModel.taskName.collectLatest { taskName ->
+                    taskNameView.text = taskName
+
+                    viewModel.projectName.collectLatest { projectName ->
+                        projectNameView.text = projectName
+                    }
+                }
+            }
+        }
 
         showAllEntriesButton.setOnClickListener {
             val intent = Intent(this, EntriesOverviewActivity::class.java)
+            intent.putExtra("taskId", taskId)
             startActivity(intent)
         }
 
@@ -43,8 +76,11 @@ class DetailTaskActivity : ComponentActivity() {
         }
     }
 
-    private fun getEntries(taskId: Int): List<Entry> {
-        // Hier sollten Sie die tatsächlichen Einträge abrufen.
-        return DataStore.getEntriesForTask(taskId)
+    override fun onResume() {
+        super.onResume()
+        // ToDo: think about merging all together into one single method e.g. "viewModel.ReadTaskData()"
+        viewModel.getEntriesForTask(taskId)
+        viewModel.getTaskName(taskId)
+        viewModel.getProjectName(taskId)
     }
 }

@@ -29,7 +29,7 @@ class AddTaskActivity : ComponentActivity() {
 
         val viewModelProvider = ViewModelProvider(
             this,
-            AddTaskViewModelFactory(TaskRepository(TTTDatabaseProvider.get(this).getTaskDao()))
+            AddTaskViewModelFactory(TaskRepository(TTTDatabaseProvider.get(this).getTaskDao(), TTTDatabaseProvider.get(this).getEntryDao()))
         )
 
         viewModel = viewModelProvider[AddTaskViewModel::class.java]

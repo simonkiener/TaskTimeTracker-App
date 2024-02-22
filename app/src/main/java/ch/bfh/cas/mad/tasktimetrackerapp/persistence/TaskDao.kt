@@ -12,6 +12,9 @@ interface TaskDao {
     suspend fun insert(task: Task)
 
     // Read
+    @Query("Select * FROM task WHERE id = :taskId")
+    suspend fun getTask(taskId: Int): Task
+
     @Query("SELECT * FROM task")
     suspend fun getAll(): MutableList<Task>
 
