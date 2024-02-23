@@ -1,7 +1,6 @@
 package ch.bfh.cas.mad.tasktimetrackerapp.activities
 
 import android.os.Bundle
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
