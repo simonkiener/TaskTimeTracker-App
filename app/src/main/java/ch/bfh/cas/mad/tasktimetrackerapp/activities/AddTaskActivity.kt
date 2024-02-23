@@ -53,49 +53,38 @@ class AddTaskActivity : ComponentActivity() {
         addTaskButton = findViewById(R.id.addTaskButton)
         backButton = findViewById(R.id.fabBack)
 
-        // ToDo: change getting project Id
         projectName = findViewById(R.id.projectName)
-//        projectName = findViewById(R.id.projectName)
-//        val projects = DataStore.projects.map {it.name }
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, projects)
-//        projectName.setAdapter(adapter)
 
-//        projectName = findViewById(R.id.projectName)
-//        val projects = DataStore.projects
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, projects)
-//        projectName.setAdapter(adapter)
-
-        // Variant 1, have a list of project names, which is correct for dropdown but no feasable for getting project object
-        lifecycleScope.launch {
-            projectViewModel.projects.collectLatest { projects ->
-                val projectNames = projects.map {it.name }
-                val adapter = ArrayAdapter(this@AddTaskActivity, android.R.layout.simple_dropdown_item_1line, projectNames)
-                projectName.setAdapter(adapter)
-
-                projectName.setOnItemClickListener{ _, _, position, _ ->
-                    val item = projects[position]
-                    this@AddTaskActivity.project = item
-                }
-            }
-        }
-
-        // Variant 2, have a list of Project which is better to get item but not shown pretty in dropdown
+        // Variant 1, have a list of project names, which is correct for dropdown but not feasable for getting project object
 //        lifecycleScope.launch {
 //            projectViewModel.projects.collectLatest { projects ->
-//                val projectNames = projects
+//                val projectNames = projects.map {it.name }
 //                val adapter = ArrayAdapter(this@AddTaskActivity, android.R.layout.simple_dropdown_item_1line, projectNames)
 //                projectName.setAdapter(adapter)
 //
-//                projectName.setOnItemClickListener{ parent, _, position, _ ->
-//                    val item = parent.getItemAtPosition(position)
-//                    if (item is Project) {
-//                        val project: Project = item
-//                        this@AddTaskActivity.project = project
-//                    }
+//                projectName.setOnItemClickListener{ _, _, position, _ ->
+//                    val item = projects[position]
+//                    this@AddTaskActivity.project = item
 //                }
 //            }
 //        }
 
+        // Variant 2, have a list of Project which is better to get item but not shown pretty in dropdown
+        lifecycleScope.launch {
+            projectViewModel.projects.collectLatest { projects ->
+                val projectNames = projects
+                val adapter = ArrayAdapter(this@AddTaskActivity, android.R.layout.simple_dropdown_item_1line, projectNames)
+                projectName.setAdapter(adapter)
+
+                projectName.setOnItemClickListener{ parent, _, position, _ ->
+                    val item = parent.getItemAtPosition(position)
+                    if (item is Project) {
+                        val project: Project = item
+                        this@AddTaskActivity.project = project
+                    }
+                }
+            }
+        }
 
         addTaskButton.setOnClickListener {
             val taskName = findViewById<EditText>(R.id.taskName).text.toString()    // ToDo: check for empty string, then try to to have a default value from entity
