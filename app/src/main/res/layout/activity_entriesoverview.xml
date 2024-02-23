@@ -28,18 +28,25 @@
         android:layout_marginBottom="20dp"
         android:textSize="24sp"/>
 
-    <Spinner
-        android:id="@+id/spinnerTask"
+    <AutoCompleteTextView
+        android:id="@+id/projectName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:prompt="@string/task_prompt" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Select or Add Project"
+        android:inputType="text" />
 
-    <Spinner
-        android:id="@+id/spinnerProject"
+    <AutoCompleteTextView
+        android:id="@+id/taskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:prompt="@string/project_prompt"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Select or Add Task"
+        android:inputType="text" />
 
     <TextView
         android:id="@+id/textViewStartDate"

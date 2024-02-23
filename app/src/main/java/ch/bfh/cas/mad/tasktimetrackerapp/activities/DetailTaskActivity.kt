@@ -66,7 +66,7 @@ class DetailTaskActivity : ComponentActivity() {
         }
 
         showAllEntriesButton.setOnClickListener {
-            val intent = Intent(this, EntriesOverviewActivity::class.java)
+            val intent = Intent(this, EntryOverviewActivity::class.java)
             intent.putExtra("taskId", taskId)
             startActivity(intent)
         }

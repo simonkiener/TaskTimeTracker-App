@@ -53,7 +53,7 @@
             android:label="@string/title_activity_detail_entry"
             android:theme="@style/Theme.TaskTimeTrackerApp" />
         <activity
-            android:name=".activities.EntriesOverviewActivity"
+            android:name=".activities.EntryOverviewActivity"
             android:exported="false"
             android:label="@string/title_activity_entries_overview"
             android:theme="@style/Theme.TaskTimeTrackerApp" />
