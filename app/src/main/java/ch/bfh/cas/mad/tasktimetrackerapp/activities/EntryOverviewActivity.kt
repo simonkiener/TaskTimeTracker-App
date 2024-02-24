@@ -37,6 +37,7 @@ class EntryOverviewActivity : ComponentActivity() {
     private lateinit var viewModel: EntryOverviewViewModel
     private lateinit var projectViewModel: ProjectOverviewViewModel
     private lateinit var taskViewModel: TaskOverviewViewModel
+    private lateinit var addButton: FloatingActionButton
     private lateinit var backButton: FloatingActionButton
     private lateinit var projectName: AutoCompleteTextView
     private lateinit var taskName: AutoCompleteTextView
@@ -70,6 +71,7 @@ class EntryOverviewActivity : ComponentActivity() {
         projectViewModel = projectViewModelProvider[ProjectOverviewViewModel::class.java]
         taskViewModel = taskViewModelProvider[TaskOverviewViewModel::class.java]
 
+        addButton = findViewById(R.id.fabAddEntry)
         backButton = findViewById(R.id.fabBack)
 
         projectName = findViewById(R.id.projectName)

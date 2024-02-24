@@ -1,9 +1,5 @@
 package ch.bfh.cas.mad.tasktimetrackerapp.persistence
 
-import java.sql.Date
-import java.sql.Time
-import java.sql.Timestamp
-
 object DataStore {
     val projects = mutableListOf(
         Project(1,"Project 1"),
