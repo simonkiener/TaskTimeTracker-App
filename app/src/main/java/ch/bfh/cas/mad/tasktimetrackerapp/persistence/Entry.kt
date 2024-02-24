@@ -7,6 +7,5 @@ import androidx.room.PrimaryKey
 data class Entry (
     @PrimaryKey(autoGenerate = true) val id: Int,
     val description: String,
-    val taskId: Int,
-    val duration: Int
+    val taskId: Int
 )
