@@ -1,5 +1,9 @@
 package ch.bfh.cas.mad.tasktimetrackerapp.persistence
 
+import java.sql.Date
+import java.sql.Time
+import java.sql.Timestamp
+
 object DataStore {
     val projects = mutableListOf(
         Project(1,"Project 1"),
@@ -30,18 +34,18 @@ object DataStore {
     )
 
     val entries = mutableListOf(
-        Entry(1,  taskId = 1,  description = "Entry 1",  timeStamp = 1234567890),
-        Entry(2,  taskId = 1,  description = "Entry 2",  timeStamp = 1234567890),
-        Entry(3,  taskId = 2,  description = "Entry 3",  timeStamp = 1234567890),
-        Entry(4,  taskId = 3,  description = "Entry 4",  timeStamp = 1234567890),
-        Entry(5,  taskId = 3,  description = "Entry 5",  timeStamp = 1234567890),
-        Entry(6,  taskId = 3,  description = "Entry 6",  timeStamp = 1234567890),
-        Entry(7,  taskId = 4,  description = "Entry 7",  timeStamp = 1234567890),
-        Entry(8,  taskId = 4,  description = "Entry 8",  timeStamp = 1234567890),
-        Entry(9,  taskId = 5,  description = "Entry 9",  timeStamp = 1234567890),
-        Entry(10, taskId = 5,  description = "Entry 10", timeStamp = 1234567890),
-        Entry(11, taskId = 5,  description = "Entry 11", timeStamp = 1234567890),
-        Entry(12, taskId = 6,  description = "Entry 12", timeStamp = 1234567890),
+        Entry(1,  taskId = 1,  description = "Entry 1",  timeStamp = 1708412400000),
+        Entry(2,  taskId = 1,  description = "Entry 2",  timeStamp = 1708417800000),
+        Entry(3,  taskId = 2,  description = "Entry 3",  timeStamp = 1708417800000),
+        Entry(4,  taskId = 3,  description = "Entry 4",  timeStamp = 1708418100000),
+        Entry(5,  taskId = 3,  description = "Entry 5",  timeStamp = 1708427125000),
+        Entry(6,  taskId = 3,  description = "Entry 6",  timeStamp = 1708435125000),
+        Entry(7,  taskId = 4,  description = "Entry 7",  timeStamp = 1708438521000),
+        Entry(8,  taskId = 4,  description = "Entry 8",  timeStamp = 1708438523000),
+        Entry(9,  taskId = 5,  description = "Entry 9",  timeStamp = 1708439999000),
+        Entry(10, taskId = 5,  description = "Entry 10", timeStamp = 1708445678000),
+        Entry(11, taskId = 5,  description = "Entry 11", timeStamp = 1708452328000),
+        Entry(12, taskId = 6,  description = "Entry 12", timeStamp = 1708475839000),
         Entry(13, taskId = 6,  description = "Entry 13", timeStamp = 1234567890),
         Entry(14, taskId = 6,  description = "Entry 14", timeStamp = 1234567890),
         Entry(15, taskId = 6,  description = "Entry 15", timeStamp = 1234567890),
