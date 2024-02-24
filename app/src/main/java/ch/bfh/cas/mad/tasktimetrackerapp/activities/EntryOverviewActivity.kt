@@ -41,10 +41,11 @@ class EntryOverviewActivity : ComponentActivity() {
     private lateinit var backButton: FloatingActionButton
     private lateinit var projectName: AutoCompleteTextView
     private lateinit var taskName: AutoCompleteTextView
+    private lateinit var totalTimeView: TextView
     private lateinit var project: Project
     private lateinit var task: Task
-    private var startDate: Long = -9223372036854775807
-    private var endDate: Long = 9223372036854775807
+    private var startDate: Long = Long.MIN_VALUE
+    private var endDate: Long = Long.MAX_VALUE
     private var projectId: Int = -1
     private var taskId: Int = -1
     private var projectChosen: Boolean = false
@@ -78,6 +79,7 @@ class EntryOverviewActivity : ComponentActivity() {
 
         projectName = findViewById(R.id.projectName)
         taskName = findViewById(R.id.taskName)
+        totalTimeView = findViewById(R.id.textViewTotalTime)
 
         // getEntriesFor...
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewEntries)
@@ -102,6 +104,13 @@ class EntryOverviewActivity : ComponentActivity() {
             taskViewModel.tasks.collectLatest { tasks ->
                 val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, tasks)
                 taskName.setAdapter(adapter)
+            }
+        }
+
+        // getTotalTime
+        lifecycleScope.launch {
+            viewModel.totalTime.collectLatest { totalTime ->
+                totalTimeView.text = getTotalTimeText(totalTime)
             }
         }
 
@@ -235,6 +244,7 @@ class EntryOverviewActivity : ComponentActivity() {
         } else {
             viewModel.getAllEntries(startDate, endDate)
         }
+        viewModel.getTotalTime()
     }
 
     private fun getTasks() {
@@ -248,5 +258,17 @@ class EntryOverviewActivity : ComponentActivity() {
     private fun closeKeyboard(view: View) {
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
+    }
+
+    private fun getTotalTimeText(totalTime: Long): String {
+        if (totalTime > 0) {
+            val minutes = totalTime / 1000 / 60
+            val minutesLeft = minutes.mod(60)
+            val hours = minutes / 60
+
+            return "Total time: " + hours.toString() + "h " + minutesLeft.toString() + "min"
+        }
+
+        return "For total time, choose exactly one task"
     }
 }
