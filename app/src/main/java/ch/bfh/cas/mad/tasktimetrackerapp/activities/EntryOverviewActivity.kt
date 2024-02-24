@@ -2,6 +2,8 @@ package ch.bfh.cas.mad.tasktimetrackerapp.activities
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
@@ -10,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.R
+import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.EntryRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Project
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.ProjectRepository
@@ -29,6 +31,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
+
 class EntryOverviewActivity : ComponentActivity() {
 
     private lateinit var viewModel: EntryOverviewViewModel
@@ -41,6 +44,8 @@ class EntryOverviewActivity : ComponentActivity() {
     private lateinit var task: Task
     private var projectId: Int = -1
     private var taskId: Int = -1
+    private var projectChosen: Boolean = false
+    private var taskChosen: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,8 +101,7 @@ class EntryOverviewActivity : ComponentActivity() {
             }
         }
 
-
-
+        //  ToDo: DATE
         val textViewStartDate = findViewById<TextView>(R.id.textViewStartDate)
         val textViewEndDate = findViewById<TextView>(R.id.textViewEndDate)
 
@@ -121,24 +125,75 @@ class EntryOverviewActivity : ComponentActivity() {
                 }, year, month, day)
             datePickerDialog.show()
         }
+        // DATE
 
-        projectName.setOnItemClickListener{ parent, _, position, _ ->
+        projectName.setOnItemClickListener { parent, view, position, _ ->
+            closeKeyboard(view)
+
             val item = parent.getItemAtPosition(position)
             if (item is Project) {
                 val project: Project = item
                 this@EntryOverviewActivity.project = project
                 this@EntryOverviewActivity.projectId = project.id
                 this@EntryOverviewActivity.taskId = -1
+                taskName.setText("")
+                projectChosen = true
+            }
+
+            getEntries()
+            getTasks()
+        }
+
+        projectName.setOnDismissListener {
+            if (projectChosen) {
+                projectChosen = false
+            } else {
+                projectName.setText("")
+                taskName.setText("")
+                this@EntryOverviewActivity.projectId = -1
+                this@EntryOverviewActivity.taskId = -1
+                closeKeyboard(projectName)
+            }
+
+            getEntries()
+            getTasks()
+        }
+
+        projectName.setOnFocusChangeListener { view, hasFocus ->
+            if (!hasFocus) {
+                closeKeyboard(view)
             }
         }
 
-        taskName.setOnItemClickListener{ parent, _, position, _ ->
+        taskName.setOnItemClickListener { parent, view, position, _ ->
+            closeKeyboard(view)
+
             val item = parent.getItemAtPosition(position)
             if (item is Task) {
                 val task: Task = item
                 this@EntryOverviewActivity.task = task
                 this@EntryOverviewActivity.taskId = task.id
-                this@EntryOverviewActivity.projectId = task.projectId
+                taskChosen = true
+            }
+
+            getEntries()
+        }
+
+        taskName.setOnDismissListener {
+            if (taskChosen) {
+                taskChosen = false
+            } else {
+                taskName.setText("")
+                this@EntryOverviewActivity.taskId = -1
+                closeKeyboard(taskName)
+            }
+
+            getEntries()
+        }
+
+        taskName.setOnFocusChangeListener { view, hasFocus ->
+            if (!hasFocus) {
+                closeKeyboard(view)
             }
         }
 
@@ -149,6 +204,15 @@ class EntryOverviewActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        getEntries()
+
+        projectViewModel.getAllProjects()
+
+        getTasks()
+    }
+
+    private fun getEntries() {
         if (taskId > 0) {
             viewModel.getEntriesForTask(taskId)
         } else if (projectId > 0) {
@@ -156,10 +220,18 @@ class EntryOverviewActivity : ComponentActivity() {
         } else {
             viewModel.getAllEntries()
         }
+    }
 
-        projectViewModel.getAllProjects()
-        taskViewModel.getAllTasks()
+    private fun getTasks() {
+        if (projectId > 0) {
+            taskViewModel.getTasksForProject(projectId)
+        } else {
+            taskViewModel.getAllTasks()
+        }
+    }
 
-
+    private fun closeKeyboard(view: View) {
+        val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
     }
 }
