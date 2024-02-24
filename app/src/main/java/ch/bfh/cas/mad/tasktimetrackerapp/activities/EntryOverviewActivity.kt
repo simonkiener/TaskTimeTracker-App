@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-
 class EntryOverviewActivity : ComponentActivity() {
 
     private lateinit var viewModel: EntryOverviewViewModel
@@ -44,6 +43,8 @@ class EntryOverviewActivity : ComponentActivity() {
     private lateinit var taskName: AutoCompleteTextView
     private lateinit var project: Project
     private lateinit var task: Task
+    private var startDate: Long = -9223372036854775807
+    private var endDate: Long = 9223372036854775807
     private var projectId: Int = -1
     private var taskId: Int = -1
     private var projectChosen: Boolean = false
@@ -104,7 +105,6 @@ class EntryOverviewActivity : ComponentActivity() {
             }
         }
 
-        //  ToDo: DATE
         val textViewStartDate = findViewById<TextView>(R.id.textViewStartDate)
         val textViewEndDate = findViewById<TextView>(R.id.textViewEndDate)
 
@@ -117,6 +117,10 @@ class EntryOverviewActivity : ComponentActivity() {
             val datePickerDialog = DatePickerDialog(this,
                 { _, selectedYear, selectedMonth, selectedDay ->
                     textViewStartDate.text = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                    calendar.set(selectedYear, selectedMonth, selectedDay)
+                    startDate = calendar.timeInMillis
+
+                    getEntries()
                 }, year, month, day)
             datePickerDialog.show()
         }
@@ -125,10 +129,13 @@ class EntryOverviewActivity : ComponentActivity() {
             val datePickerDialog = DatePickerDialog(this,
                 { _, selectedYear, selectedMonth, selectedDay ->
                     textViewEndDate.text = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                    calendar.set(selectedYear, selectedMonth, selectedDay)
+                    endDate = calendar.timeInMillis
+
+                    getEntries()
                 }, year, month, day)
             datePickerDialog.show()
         }
-        // DATE
 
         projectName.setOnItemClickListener { parent, view, position, _ ->
             closeKeyboard(view)
@@ -222,11 +229,11 @@ class EntryOverviewActivity : ComponentActivity() {
 
     private fun getEntries() {
         if (taskId > 0) {
-            viewModel.getEntriesForTask(taskId)
+            viewModel.getEntriesForTask(startDate, endDate, taskId)
         } else if (projectId > 0) {
-            viewModel.getEntriesForProject(projectId)
+            viewModel.getEntriesForProject(startDate, endDate, projectId)
         } else {
-            viewModel.getAllEntries()
+            viewModel.getAllEntries(startDate, endDate)
         }
     }
 
