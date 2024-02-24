@@ -55,6 +55,7 @@ class AddTaskActivity : ComponentActivity() {
         projectName = findViewById(R.id.projectName)
 
         // Variant 1, have a list of project names, which is correct for dropdown but not feasable for getting project object
+        // getAllProjects
 //        lifecycleScope.launch {
 //            projectViewModel.projects.collectLatest { projects ->
 //                val projectNames = projects.map {it.name }
@@ -69,19 +70,20 @@ class AddTaskActivity : ComponentActivity() {
 //        }
 
         // Variant 2, have a list of Project which is better to get item but not shown pretty in dropdown
+        // getAllProjects
         lifecycleScope.launch {
             projectViewModel.projects.collectLatest { projects ->
-                val projectNames = projects
-                val adapter = ArrayAdapter(this@AddTaskActivity, android.R.layout.simple_dropdown_item_1line, projectNames)
+                val adapter = ArrayAdapter(this@AddTaskActivity, android.R.layout.simple_dropdown_item_1line, projects)
                 projectName.setAdapter(adapter)
+            }
+        }
 
-                projectName.setOnItemClickListener{ parent, _, position, _ ->
-                    val item = parent.getItemAtPosition(position)
-                    if (item is Project) {
-                        val project: Project = item
-                        this@AddTaskActivity.project = project
-                    }
-                }
+        // Variant 2, have a list of Project which is better to get item but not shown pretty in dropdown
+        projectName.setOnItemClickListener{ parent, _, position, _ ->
+            val item = parent.getItemAtPosition(position)
+            if (item is Project) {
+                val project: Project = item
+                this@AddTaskActivity.project = project
             }
         }
 

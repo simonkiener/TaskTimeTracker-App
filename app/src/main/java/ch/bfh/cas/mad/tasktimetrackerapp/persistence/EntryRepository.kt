@@ -15,8 +15,17 @@ class EntryRepository(
         return@withContext emptyList<Entry>().toMutableList()
     }
 
+    suspend fun getEntriesForTask(taskId: Int): MutableList<Entry> = withContext(Dispatchers.IO) {
+        val storedEntries = entryDao.getEntriesForTask(taskId)
+        if (storedEntries.isNotEmpty()) {
+            return@withContext storedEntries
+        }
+
+        return@withContext emptyList<Entry>().toMutableList()
+    }
+
     suspend fun getEntriesForProject(projectId: Int): MutableList<Entry> = withContext(Dispatchers.IO) {
-        val storedEntries = entryDao.getAllEntriesForProject(projectId)
+        val storedEntries = entryDao.getEntriesForProject(projectId)
         if (storedEntries.isNotEmpty()) {
             return@withContext storedEntries
         }

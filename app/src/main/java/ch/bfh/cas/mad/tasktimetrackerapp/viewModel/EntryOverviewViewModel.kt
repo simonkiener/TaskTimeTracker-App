@@ -19,6 +19,18 @@ class EntryOverviewViewModel (
         }
     }
 
+    fun getEntriesForTask(taskId: Int) {
+        viewModelScope.launch {
+            _entries.value = entryRepository.getEntriesForTask(taskId)
+        }
+    }
+
+    fun getEntriesForProject(projectId: Int) {
+        viewModelScope.launch {
+            _entries.value = entryRepository.getEntriesForProject(projectId)
+        }
+    }
+
     fun deleteAllEntries() {
         viewModelScope.launch {
             entryRepository.deleteAllEntries()

@@ -17,7 +17,7 @@ class TaskRepository(
     }
 
     suspend fun getEntriesForTask(taskId: Int): MutableList<Entry> = withContext(Dispatchers.IO) {
-        val storedEntries = entryDao.getAllEntriesForTask(taskId)
+        val storedEntries = entryDao.getEntriesForTask(taskId)
         if (storedEntries.isNotEmpty()) {
             return@withContext storedEntries
         }

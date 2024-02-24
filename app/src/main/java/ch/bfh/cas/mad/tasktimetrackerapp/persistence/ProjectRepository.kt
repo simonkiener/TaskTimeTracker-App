@@ -17,7 +17,7 @@ class ProjectRepository(
     }
 
     suspend fun getEntriesForProject(projectId: Int): MutableList<Entry> = withContext(Dispatchers.IO) {
-        val storedEntries = entryDao.getAllEntriesForProject(projectId)
+        val storedEntries = entryDao.getEntriesForProject(projectId)
         if (storedEntries.isNotEmpty()) {
             return@withContext storedEntries
         }
