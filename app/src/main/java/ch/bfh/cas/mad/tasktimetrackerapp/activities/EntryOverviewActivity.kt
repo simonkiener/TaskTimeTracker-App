@@ -1,6 +1,7 @@
 package ch.bfh.cas.mad.tasktimetrackerapp.activities
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -197,6 +198,11 @@ class EntryOverviewActivity : ComponentActivity() {
             if (!hasFocus) {
                 closeKeyboard(view)
             }
+        }
+
+        addButton.setOnClickListener {
+            val intent = Intent(this, AddEntryActivity::class.java)
+            startActivity(intent)
         }
 
         backButton.setOnClickListener {

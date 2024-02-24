@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_task"
+        android:text="@string/add_entry"
         android:gravity="center"
         android:layout_marginTop="5dp"
         android:layout_marginStart="16dp"
@@ -29,30 +29,30 @@
         android:textSize="24sp"/>
 
     <EditText
-        android:id="@+id/taskName"
+        android:id="@+id/entryDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/task_name"
+        android:hint="@string/entry_description"
         android:inputType="text"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"/>
 
     <AutoCompleteTextView
-        android:id="@+id/projectName"
+        android:id="@+id/taskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/select_or_add_project"
+        android:hint="@string/select_task"
         android:inputType="text"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"/>
 
     <Button
-        android:id="@+id/addTaskButton"
+        android:id="@+id/addEntryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_task"
+        android:text="@string/add_entry"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"

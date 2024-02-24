@@ -58,6 +58,12 @@
             android:label="@string/title_activity_entries_overview"
             android:theme="@style/Theme.TaskTimeTrackerApp" />
         <activity
+            android:name=".activities.AddEntryActivity"
+            android:exported="false"
+            android:label="@string/title_activity_add_entry"
+            android:theme="@style/Theme.TaskTimeTrackerApp"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".activities.DetailTaskActivity"
             android:exported="false"
             android:label="@string/title_activity_detail_task"
