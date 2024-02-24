@@ -16,8 +16,17 @@ class TaskRepository(
         return@withContext emptyList<Task>().toMutableList()
     }
 
+    suspend fun getTasksForProject(projectId: Int): MutableList<Task> = withContext(Dispatchers.IO) {
+        val storedTasks = taskDao.getTasksForProject(projectId)
+        if (storedTasks.isNotEmpty()) {
+            return@withContext storedTasks
+        }
+
+        return@withContext emptyList<Task>().toMutableList()
+    }
+
     suspend fun getEntriesForTask(taskId: Int): MutableList<Entry> = withContext(Dispatchers.IO) {
-        val storedEntries = entryDao.getAllEntriesForTask(taskId)
+        val storedEntries = entryDao.getEntriesForTask(taskId)
         if (storedEntries.isNotEmpty()) {
             return@withContext storedEntries
         }

@@ -44,21 +44,25 @@ class DetailProjectActivity : ComponentActivity() {
 
         projectId = intent.getIntExtra("projectId", -1)
 
+        // getEntriesForProject
         val recyclerView = findViewById<RecyclerView>(R.id.entriesRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {
             viewModel.entries.collectLatest { entries ->
                 val adapter = EntryAdapter(entries = entries)
                 recyclerView.adapter = adapter
+            }
+        }
 
-                viewModel.projectName.collectLatest { projectName ->
-                    projectNameView.text = projectName
-                }
+        // getProjectName
+        lifecycleScope.launch {
+            viewModel.projectName.collectLatest { projectName ->
+                projectNameView.text = projectName
             }
         }
 
         showAllEntriesButton.setOnClickListener {
-            val intent = Intent(this, EntriesOverviewActivity::class.java)
+            val intent = Intent(this, EntryOverviewActivity::class.java)
             intent.putExtra("projectId", projectId)
             startActivity(intent)
         }

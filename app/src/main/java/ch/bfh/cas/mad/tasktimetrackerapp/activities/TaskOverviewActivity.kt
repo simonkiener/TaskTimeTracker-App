@@ -36,6 +36,7 @@ class TaskOverviewActivity : ComponentActivity() {
         addButton = findViewById(R.id.fabAddTask)
         backButton = findViewById(R.id.fabBack)
 
+        // getAllTasks
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewTasks)
         recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {

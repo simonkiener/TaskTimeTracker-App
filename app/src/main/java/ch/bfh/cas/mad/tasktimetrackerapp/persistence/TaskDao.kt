@@ -15,6 +15,9 @@ interface TaskDao {
     @Query("Select * FROM task WHERE id = :taskId")
     suspend fun getTask(taskId: Int): Task
 
+    @Query("Select * FROM task WHERE projectId = :projectId")
+    suspend fun getTasksForProject(projectId: Int): MutableList<Task>
+
     @Query("SELECT * FROM task")
     suspend fun getAll(): MutableList<Task>
 
