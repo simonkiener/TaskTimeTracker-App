@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskTimeTrackerApp">
         <receiver android:name=".widget.WidgetProvider"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -20,6 +20,12 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
+        </receiver>
+        <receiver android:name=".widget.BroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
         </receiver>
         <activity
             android:name=".activities.InitDatabaseActivity"
@@ -74,10 +80,15 @@
             android:theme="@style/Theme.TaskTimeTrackerApp" />
         <activity
             android:name=".activities.MainActivity"
+            android:launchMode="singleTop"
             android:exported="true"
             android:theme="@style/Theme.TaskTimeTrackerApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.appwidget.action.ACTION_WIDGET_BUTTON_1" />
+                <action android:name="android.appwidget.action.ACTION_WIDGET_BUTTON_2" />
+                <action android:name="android.appwidget.action.ACTION_WIDGET_BUTTON_3" />
+                <action android:name="android.appwidget.action.ACTION_WIDGET_BUTTON_4" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
