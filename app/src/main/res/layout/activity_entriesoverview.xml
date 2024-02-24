@@ -48,26 +48,35 @@
         android:hint="Select or Add Task"
         android:inputType="text" />
 
-    <TextView
-        android:id="@+id/textViewStartDate"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Date"
         android:gravity="center"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp">
 
-    <TextView
-        android:id="@+id/textViewEndDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="End Date"
-        android:gravity="center"
-        android:layout_marginTop="8dp"/>
+        <TextView
+            android:id="@+id/textViewStartDate"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Start Date" />
+
+        <TextView
+            android:id="@+id/textViewEndDate"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:text="End Date"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textViewTotalTime"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="Total Time"
         android:gravity="center"
         android:layout_marginTop="8dp"/>
