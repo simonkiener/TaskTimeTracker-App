@@ -28,10 +28,10 @@ class WidgetTaskSettingActivity : ComponentActivity() {
         setContentView(R.layout.activity_widgettasksetting)
 
         fabBack = findViewById(R.id.fabBack)
-        fieldSpot1 = findViewById(R.id.fieldSelectSpot2)
-        fieldSpot2 = findViewById(R.id.fieldSelectSpot1)
-        fieldSpot3 = findViewById(R.id.fieldSelectSpot4)
-        fieldSpot4 = findViewById(R.id.fieldSelectSpot3)
+        fieldSpot1 = findViewById(R.id.fieldSelectSpot1)
+        fieldSpot2 = findViewById(R.id.fieldSelectSpot2)
+        fieldSpot3 = findViewById(R.id.fieldSelectSpot3)
+        fieldSpot4 = findViewById(R.id.fieldSelectSpot4)
         clearAllButton = findViewById(R.id.buttonClearAll)
         addNewTaskButton = findViewById(R.id.AddNewTask)
 
