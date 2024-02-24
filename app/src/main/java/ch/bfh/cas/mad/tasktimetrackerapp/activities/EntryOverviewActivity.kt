@@ -126,7 +126,14 @@ class EntryOverviewActivity : ComponentActivity() {
             val datePickerDialog = DatePickerDialog(this,
                 { _, selectedYear, selectedMonth, selectedDay ->
                     textViewStartDate.text = "$selectedDay/${selectedMonth + 1}/$selectedYear"
-                    calendar.set(selectedYear, selectedMonth, selectedDay)
+                    calendar.set(selectedYear, selectedMonth + 1, selectedDay, 0, 0, 0)
+
+                    println("------------------------------------------------")
+                    println("Year: " + selectedYear.toString())
+                    println("Month: " + (selectedMonth + 1).toString())
+                    println("Day: " + selectedDay.toString())
+                    println("------------------------------------------------")
+
                     startDate = calendar.timeInMillis
 
                     getEntries()
@@ -138,7 +145,7 @@ class EntryOverviewActivity : ComponentActivity() {
             val datePickerDialog = DatePickerDialog(this,
                 { _, selectedYear, selectedMonth, selectedDay ->
                     textViewEndDate.text = "$selectedDay/${selectedMonth + 1}/$selectedYear"
-                    calendar.set(selectedYear, selectedMonth, selectedDay)
+                    calendar.set(selectedYear, selectedMonth + 1, selectedDay, 23, 59, 59)
                     endDate = calendar.timeInMillis
 
                     getEntries()
@@ -262,13 +269,15 @@ class EntryOverviewActivity : ComponentActivity() {
 
     private fun getTotalTimeText(totalTime: Long): String {
         if (totalTime > 0) {
-            val minutes = totalTime / 1000 / 60
+            val seconds = totalTime / 1000
+            val minutes = seconds / 60
             val minutesLeft = minutes.mod(60)
             val hours = minutes / 60
+            val secondsLeft = seconds - (minutesLeft * 60) - (hours * 3600)
 
-            return "Total time: " + hours.toString() + "h " + minutesLeft.toString() + "min"
+            return "Total time: " + hours.toString() + "h " + minutesLeft.toString() + "min " + secondsLeft.toString() + "s"
         }
 
-        return "For total time, choose exactly one task"
+        return "There are no entries to summarize"
     }
 }

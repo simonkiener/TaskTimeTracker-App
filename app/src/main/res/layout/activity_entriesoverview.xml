@@ -86,8 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="20dp" >
+        android:layout_marginTop="8dp" >
 
         <Button
             android:id="@+id/buttonPrint"
@@ -107,52 +106,20 @@
             android:layout_marginStart="16dp"/>
     </LinearLayout>
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/recyclerViewEntries"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="1"-->
-<!--        android:scrollbars="vertical"-->
-<!--        android:layout_marginTop="8dp"/>-->
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/fabBack"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|start"-->
-<!--        android:layout_margin="16dp"-->
-<!--        android:src="@drawable/ic_back"-->
-<!--        app:tint="@color/white"-->
-<!--        app:layout_anchorGravity="bottom|start|end"-->
-<!--        app:fabCustomSize="56dp"-->
-<!--        app:backgroundTint="@color/actionColor"/>-->
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewEntries"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:layout_marginTop="8dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewEntries"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAddEntry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_add"
-            app:tint="@color/white"
-            app:layout_anchorGravity="center"
-            app:fabCustomSize="56dp"
-            app:backgroundTint="@color/actionColor"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_marginTop="8dp" >
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabBack"
@@ -161,10 +128,23 @@
             android:layout_gravity="bottom|start"
             android:layout_margin="16dp"
             android:src="@drawable/ic_back"
-            app:tint="@color/white"
-            app:layout_anchorGravity="bottom|start|end"
+            app:backgroundTint="@color/actionColor"
             app:fabCustomSize="56dp"
-            app:backgroundTint="@color/actionColor"/>
+            app:layout_anchorGravity="bottom|start"
+            app:tint="@color/white" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddEntry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center|center"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add"
+            app:backgroundTint="@color/actionColor"
+            app:fabCustomSize="56dp"
+            app:layout_anchorGravity="center|center|center"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+
 </LinearLayout>

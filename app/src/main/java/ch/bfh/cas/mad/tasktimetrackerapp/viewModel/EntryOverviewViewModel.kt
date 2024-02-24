@@ -58,16 +58,17 @@ class EntryOverviewViewModel (
     fun getTotalTime() {
         viewModelScope.launch {
             entries.collectLatest {myEntries ->
-                if (myEntries.size.mod(2) > 0) {
-                    myEntries.removeLast()
-                }
-
                 if (myEntries.size > 0) {
-                    var currentTimeStamp = myEntries[0].timeStamp
+                    var currentTimeStamp = zero
                     var total = zero
+                    var doCount = false
+
                     myEntries.forEach {
-                        total += it.timeStamp - currentTimeStamp
+                        if (doCount) {
+                            total += it.timeStamp - currentTimeStamp
+                        }
                         currentTimeStamp = it.timeStamp
+                        doCount = !doCount
                     }
 
                     _totalTime.value = total

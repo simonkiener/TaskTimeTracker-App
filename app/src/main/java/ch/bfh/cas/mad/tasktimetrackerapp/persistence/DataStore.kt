@@ -41,8 +41,8 @@ object DataStore {
         Entry(9,  taskId = 5,  description = "Entry 9",  timeStamp = 1708439999000),
         Entry(10, taskId = 5,  description = "Entry 10", timeStamp = 1708445678000),
         Entry(11, taskId = 5,  description = "Entry 11", timeStamp = 1708452328000),
-        Entry(12, taskId = 6,  description = "Entry 12", timeStamp = 1708475839000),
-        Entry(13, taskId = 6,  description = "Entry 13", timeStamp = 1234567890),
+        Entry(12, taskId = 6,  description = "Entry 12", timeStamp = 1708725577253),  // entspricht 23.02.2024 aus Datepicker
+        Entry(13, taskId = 6,  description = "Entry 13", timeStamp = 1708811977253),  // entspricht 24.02.2024 aus Datepicker
         Entry(14, taskId = 6,  description = "Entry 14", timeStamp = 1234567890),
         Entry(15, taskId = 6,  description = "Entry 15", timeStamp = 1234567890),
         Entry(16, taskId = 7,  description = "Entry 16", timeStamp = 1234567890),
