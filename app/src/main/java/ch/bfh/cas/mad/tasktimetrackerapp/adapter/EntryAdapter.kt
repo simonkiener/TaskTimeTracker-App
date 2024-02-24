@@ -14,6 +14,7 @@ import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailEntryActivity
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getTaskName
+import java.sql.Timestamp
 
 class EntryAdapter(
     private var entries: List<Entry>
@@ -22,6 +23,7 @@ class EntryAdapter(
     inner class EntryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val entryName: TextView = itemView.findViewById(R.id.entryName)
         val taskName: TextView = itemView.findViewById(R.id.taskName)
+        val timeStamp: TextView = itemView.findViewById(R.id.timeStamp)
         val editButton: Button = itemView.findViewById(R.id.editButton)
     }
 
@@ -33,7 +35,8 @@ class EntryAdapter(
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
         val entry = entries[position]
         holder.entryName.text = entry.description
-        holder.taskName.text = getTaskName(entry.taskId)
+        holder.taskName.text = getTaskName(entry.taskId)  // ToDo: change method to database query
+        holder.timeStamp.text = Timestamp(entry.timeStamp).toString()
 
         // Set background color based on position
         if (position % 2 == 0) {
