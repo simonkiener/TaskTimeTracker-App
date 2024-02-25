@@ -229,7 +229,7 @@ class EntryOverviewActivity : ComponentActivity() {
         }
 
         exportButton.setOnClickListener {
-            val content = arrayOf("Hello World")
+            val content = "Hello World! This is a test PDF."
             val pdfExportHelper = PdfExportHelper(this)
             pdfExportHelper.createAndSavePdf("test.pdf", content)
         }

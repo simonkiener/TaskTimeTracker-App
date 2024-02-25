@@ -8,12 +8,13 @@ import android.graphics.Typeface
 import android.graphics.Color
 import android.os.Environment
 import android.provider.MediaStore
+import android.widget.Toast
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 class PdfExportHelper(private val context: Context) {
 
-    fun createAndSavePdf(fileName: String, textContent: Array<String>) {
+    fun createAndSavePdf(fileName: String, textContent: String) {
         val pdfDocument = PdfDocument()
         val pageInfo = PdfDocument.PageInfo.Builder(300, 600, 1).create()
         val page = pdfDocument.startPage(pageInfo)
@@ -56,7 +57,12 @@ class PdfExportHelper(private val context: Context) {
                     outputStream?.write(pdfContent)
                 }
             } ?: throw IOException("Failed to create new MediaStore record.")
+
+            // Zeige eine Toast-Nachricht an, wenn das Exportieren erfolgreich war
+            Toast.makeText(context, "PDF successfully exported to Download Folder", Toast.LENGTH_SHORT).show()
         } catch (e: IOException) {
+            // Zeige eine Toast-Nachricht an, wenn das Exportieren failed
+            Toast.makeText(context, "PDF export failed", Toast.LENGTH_SHORT).show()
             throw IOException("Failed to save PDF.", e)
         }
     }
