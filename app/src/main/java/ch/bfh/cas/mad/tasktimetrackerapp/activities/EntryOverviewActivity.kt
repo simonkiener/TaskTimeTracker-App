@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-
 class EntryOverviewActivity : ComponentActivity() {
 
     private lateinit var viewModel: EntryOverviewViewModel
@@ -42,8 +41,11 @@ class EntryOverviewActivity : ComponentActivity() {
     private lateinit var backButton: FloatingActionButton
     private lateinit var projectName: AutoCompleteTextView
     private lateinit var taskName: AutoCompleteTextView
+    private lateinit var totalTimeView: TextView
     private lateinit var project: Project
     private lateinit var task: Task
+    private var startDate: Long = Long.MIN_VALUE
+    private var endDate: Long = Long.MAX_VALUE
     private var projectId: Int = -1
     private var taskId: Int = -1
     private var projectChosen: Boolean = false
@@ -77,6 +79,7 @@ class EntryOverviewActivity : ComponentActivity() {
 
         projectName = findViewById(R.id.projectName)
         taskName = findViewById(R.id.taskName)
+        totalTimeView = findViewById(R.id.textViewTotalTime)
 
         // getEntriesFor...
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewEntries)
@@ -104,7 +107,13 @@ class EntryOverviewActivity : ComponentActivity() {
             }
         }
 
-        //  ToDo: DATE
+        // getTotalTime
+        lifecycleScope.launch {
+            viewModel.totalTime.collectLatest { totalTime ->
+                totalTimeView.text = getTotalTimeText(totalTime)
+            }
+        }
+
         val textViewStartDate = findViewById<TextView>(R.id.textViewStartDate)
         val textViewEndDate = findViewById<TextView>(R.id.textViewEndDate)
 
@@ -117,6 +126,17 @@ class EntryOverviewActivity : ComponentActivity() {
             val datePickerDialog = DatePickerDialog(this,
                 { _, selectedYear, selectedMonth, selectedDay ->
                     textViewStartDate.text = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                    calendar.set(selectedYear, selectedMonth + 1, selectedDay, 0, 0, 0)
+
+                    println("------------------------------------------------")
+                    println("Year: " + selectedYear.toString())
+                    println("Month: " + (selectedMonth + 1).toString())
+                    println("Day: " + selectedDay.toString())
+                    println("------------------------------------------------")
+
+                    startDate = calendar.timeInMillis
+
+                    getEntries()
                 }, year, month, day)
             datePickerDialog.show()
         }
@@ -125,10 +145,13 @@ class EntryOverviewActivity : ComponentActivity() {
             val datePickerDialog = DatePickerDialog(this,
                 { _, selectedYear, selectedMonth, selectedDay ->
                     textViewEndDate.text = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                    calendar.set(selectedYear, selectedMonth + 1, selectedDay, 23, 59, 59)
+                    endDate = calendar.timeInMillis
+
+                    getEntries()
                 }, year, month, day)
             datePickerDialog.show()
         }
-        // DATE
 
         projectName.setOnItemClickListener { parent, view, position, _ ->
             closeKeyboard(view)
@@ -222,12 +245,13 @@ class EntryOverviewActivity : ComponentActivity() {
 
     private fun getEntries() {
         if (taskId > 0) {
-            viewModel.getEntriesForTask(taskId)
+            viewModel.getEntriesForTask(startDate, endDate, taskId)
         } else if (projectId > 0) {
-            viewModel.getEntriesForProject(projectId)
+            viewModel.getEntriesForProject(startDate, endDate, projectId)
         } else {
-            viewModel.getAllEntries()
+            viewModel.getAllEntries(startDate, endDate)
         }
+        viewModel.getTotalTime()
     }
 
     private fun getTasks() {
@@ -241,5 +265,19 @@ class EntryOverviewActivity : ComponentActivity() {
     private fun closeKeyboard(view: View) {
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
+    }
+
+    private fun getTotalTimeText(totalTime: Long): String {
+        if (totalTime > 0) {
+            val seconds = totalTime / 1000
+            val minutes = seconds / 60
+            val minutesLeft = minutes.mod(60)
+            val hours = minutes / 60
+            val secondsLeft = seconds - (minutesLeft * 60) - (hours * 3600)
+
+            return "Total time: " + hours.toString() + "h " + minutesLeft.toString() + "min " + secondsLeft.toString() + "s"
+        }
+
+        return "There are no entries to summarize"
     }
 }
