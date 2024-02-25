@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
         }
 
         entriesNavigationButton.setOnClickListener {
-            val intent = Intent(this, EntriesOverviewActivity::class.java)
+            val intent = Intent(this, EntryOverviewActivity::class.java)
             startActivity(intent)
         }
 

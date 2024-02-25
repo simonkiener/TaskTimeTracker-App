@@ -37,6 +37,7 @@ class ProjectOverviewActivity : ComponentActivity() {
         addProjectButton = findViewById(R.id.AddProject)
         backButton = findViewById(R.id.fabBack)
 
+        // getAllProjects
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewProjects)
         recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {

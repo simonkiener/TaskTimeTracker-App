@@ -14,6 +14,7 @@
     <string name="title_activity_task_overview">TaskOverviewActivity</string>
     <string name="tasks_overview">Tasks Overview</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
+    <string name="title_activity_add_entry">AddTaskActivity</string>
     <string name="add_task">Add Task</string>
     <string name="title_activity_detail_task">DetailTaskActivity</string>
     <string name="title_activity_entries_overview">EntriesOverviewActivity</string>
@@ -26,4 +27,9 @@
     <string name="title_activity_detail_project">DetailProjectActivity</string>
     <string name="title_activity_widget_task_setting">WidgetTaskSettingActivity</string>
     <string name="title_activity_init_database">Init Database</string>
+    <string name="add_entry">Add Entry</string>
+    <string name="task_name">Task Name</string>
+    <string name="entry_description">Entry Description</string>
+    <string name="select_or_add_project">Select or Add Project</string>
+    <string name="select_task">Select Task</string>
 </resources>

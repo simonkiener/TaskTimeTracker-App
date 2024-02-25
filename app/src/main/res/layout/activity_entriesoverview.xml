@@ -28,39 +28,55 @@
         android:layout_marginBottom="20dp"
         android:textSize="24sp"/>
 
-    <Spinner
-        android:id="@+id/spinnerTask"
+    <AutoCompleteTextView
+        android:id="@+id/projectName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:prompt="@string/task_prompt" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Select or Add Project"
+        android:inputType="text" />
 
-    <Spinner
-        android:id="@+id/spinnerProject"
+    <AutoCompleteTextView
+        android:id="@+id/taskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:prompt="@string/project_prompt"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Select or Add Task"
+        android:inputType="text" />
 
-    <TextView
-        android:id="@+id/textViewStartDate"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Date"
         android:gravity="center"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp">
 
-    <TextView
-        android:id="@+id/textViewEndDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="End Date"
-        android:gravity="center"
-        android:layout_marginTop="8dp"/>
+        <TextView
+            android:id="@+id/textViewStartDate"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Start Date" />
+
+        <TextView
+            android:id="@+id/textViewEndDate"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:text="End Date"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textViewTotalTime"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="Total Time"
         android:gravity="center"
         android:layout_marginTop="8dp"/>
@@ -70,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp" >
 
         <Button
             android:id="@+id/buttonPrint"
@@ -98,16 +114,37 @@
         android:scrollbars="vertical"
         android:layout_marginTop="8dp"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabBack"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_back"
-        app:tint="@color/white"
-        app:layout_anchorGravity="bottom|start|end"
-        app:fabCustomSize="56dp"
-        app:backgroundTint="@color/actionColor"/>
+        android:gravity="bottom"
+        android:layout_marginTop="8dp" >
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_back"
+            app:backgroundTint="@color/actionColor"
+            app:fabCustomSize="56dp"
+            app:layout_anchorGravity="bottom|start"
+            app:tint="@color/white" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddEntry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center|center"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add"
+            app:backgroundTint="@color/actionColor"
+            app:fabCustomSize="56dp"
+            app:layout_anchorGravity="center|center|center"
+            app:tint="@color/white" />
+
+    </LinearLayout>
 
 </LinearLayout>
