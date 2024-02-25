@@ -1,17 +1,21 @@
 package ch.bfh.cas.mad.tasktimetrackerapp.activities
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
+import android.widget.RemoteViews
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.ui.theme.TaskTimeTrackerAppTheme
 import ch.bfh.cas.mad.tasktimetrackerapp.widget.BroadcastReceiver
+import ch.bfh.cas.mad.tasktimetrackerapp.widget.WidgetProvider
 import ch.bfh.cas.mad.tasktimetrackerapp.widget.WidgetProvider.Companion.ACTION_WIDGET_BUTTON_1
 import ch.bfh.cas.mad.tasktimetrackerapp.widget.WidgetProvider.Companion.ACTION_WIDGET_BUTTON_2
 import ch.bfh.cas.mad.tasktimetrackerapp.widget.WidgetProvider.Companion.ACTION_WIDGET_BUTTON_3
@@ -45,8 +49,6 @@ class MainActivity : ComponentActivity() {
         WidgetSpot2 = findViewById(R.id.main_buttonTask2)
         WidgetSpot3 = findViewById(R.id.main_buttonTask3)
         WidgetSpot4 = findViewById(R.id.main_buttonTask4)
-
-        val sharedPreferences: SharedPreferences = getSharedPreferences("selectedTasks", Context.MODE_PRIVATE)
 
         val widgetButtons = listOf(WidgetSpot1, WidgetSpot2, WidgetSpot3, WidgetSpot4)
 
@@ -84,8 +86,10 @@ class MainActivity : ComponentActivity() {
         //Change the background of the buttons if Task is selected to recording
         widgetButtons.forEach { button ->
             button.setOnClickListener {
-                widgetButtons.forEach { it.setBackgroundResource(R.drawable.round_button_inactiv) }
+                widgetButtons.forEach {it.setBackgroundResource(R.drawable.round_button_inactiv) }
                 button.setBackgroundResource(R.drawable.round_button_activ)
+                updateWidgetViews(RemoteViews(packageName, R.layout.widget_layout), widgetButtons.indexOf(it) + 1)
+
             }
         }
 
@@ -111,6 +115,26 @@ class MainActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(receiver)
+    }
+
+    private fun updateWidgetViews(views: RemoteViews, buttonNumber: Int) {
+        val buttons = listOf(R.id.widget_button1, R.id.widget_button2, R.id.widget_button3, R.id.widget_button4)
+        buttons.forEachIndexed { index, buttonId ->
+            println("ButtonId: $buttonId is set to: ${if (index + 1 == buttonNumber) R.drawable.round_button_activ else R.drawable.round_button_inactiv}")
+            views.setInt(buttonId, "setBackgroundResource", if (index + 1 == buttonNumber) R.drawable.round_button_activ else R.drawable.round_button_inactiv)
+
+            // Get the AppWidgetManager instance
+            val appWidgetManager = AppWidgetManager.getInstance(this)
+
+            // Get the widget ids for your widget
+            val ids = appWidgetManager.getAppWidgetIds(ComponentName(this, WidgetProvider::class.java))
+
+            // Update the widget
+            ids.forEach { id ->
+                appWidgetManager.updateAppWidget(id, views)
+
+            }
+        }
     }
 
 

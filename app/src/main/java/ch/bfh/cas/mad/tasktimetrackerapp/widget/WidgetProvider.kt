@@ -7,6 +7,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.widget.Button
 import android.widget.RemoteViews
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 
@@ -33,22 +34,24 @@ class WidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.widget_layout)
 
             // Intent für jeden Button
-            val button1Intent = Intent(context, WidgetProvider::class.java).apply {
+            val button1Intent = Intent(context, BroadcastReceiver::class.java).apply {
                 action = ACTION_WIDGET_BUTTON_1
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             }
-            val button2Intent = Intent(context, WidgetProvider::class.java).apply {
+            val button2Intent = Intent(context, BroadcastReceiver::class.java).apply {
                 action = ACTION_WIDGET_BUTTON_2
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             }
-            val button3Intent = Intent(context, WidgetProvider::class.java).apply {
+            val button3Intent = Intent(context, BroadcastReceiver::class.java).apply {
                 action = ACTION_WIDGET_BUTTON_3
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             }
-            val button4Intent = Intent(context, WidgetProvider::class.java).apply {
+            val button4Intent = Intent(context, BroadcastReceiver::class.java).apply {
                 action = ACTION_WIDGET_BUTTON_4
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             }
+
+
 
             // PendingIntent für jeden Button
             val pendingIntent1 = PendingIntent.getBroadcast(context, 0, button1Intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)

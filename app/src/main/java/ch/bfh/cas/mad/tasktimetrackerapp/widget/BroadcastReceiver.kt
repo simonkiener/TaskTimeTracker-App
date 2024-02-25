@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.BroadcastReceiver
 
 class BroadcastReceiver: BroadcastReceiver() {
-     override fun onReceive(context: Context?, intent: Intent) {
+     override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 WidgetProvider.ACTION_WIDGET_BUTTON_1 -> {
                     println("Widget_Button 1 pressed")
