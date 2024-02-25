@@ -9,12 +9,13 @@ import android.graphics.Color
 import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 class PdfExportHelper(private val context: Context) {
 
-    fun createAndSavePdf(fileName: String, textContent: String) {
+    fun createAndSavePdf(fileName: String, entries: List<Entry>, projectOrTaskDescription: String) {
         val pdfDocument = PdfDocument()
         val pageInfo = PdfDocument.PageInfo.Builder(300, 600, 1).create()
         val page = pdfDocument.startPage(pageInfo)
@@ -26,8 +27,29 @@ class PdfExportHelper(private val context: Context) {
             isAntiAlias = true
         }
 
-        // Simple text rendering
-        page.canvas.drawText(textContent.toString(), 10f, 25f, paint)
+        // Draw the main header
+        val headerPaint = Paint(paint).apply {
+            textSize = 18f
+            typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            color = Color.parseColor("#4dabf7")
+        }
+        val headerText = "Task  Time Tracker App - Exported Entries"
+        page.canvas.drawText(headerText, 10f, 25f, headerPaint)
+
+        // Draw the project or task header
+        val projectOrTaskHeaderPaint = Paint(headerPaint).apply {
+            textSize = 16f
+        }
+        val projectOrTaskHeaderText = projectOrTaskDescription
+        page.canvas.drawText(projectOrTaskHeaderText, 10f, 50f, projectOrTaskHeaderPaint)
+
+        // Render each entry on a new line
+        var yPosition = 75f
+        for (entry in entries) {
+            val entryData = "ID: ${entry.id}, Description: ${entry.description}, TimeStamp: ${entry.timeStamp}"
+            page.canvas.drawText(entryData, 10f, yPosition, paint)
+            yPosition += paint.descent() - paint.ascent()
+        }
 
         pdfDocument.finishPage(page)
 

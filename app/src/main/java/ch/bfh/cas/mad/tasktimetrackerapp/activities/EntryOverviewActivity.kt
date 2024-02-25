@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.pdfExport.PdfExportHelper
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.EntryRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Project
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.ProjectRepository
@@ -32,7 +33,10 @@ import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.TaskOverviewViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class EntryOverviewActivity : ComponentActivity() {
 
@@ -53,6 +57,10 @@ class EntryOverviewActivity : ComponentActivity() {
     private var taskId: Int = -1
     private var projectChosen: Boolean = false
     private var taskChosen: Boolean = false
+
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
+    val dateStr = dateFormat.format(Date())
+    val fileName = "TTT-Export-$dateStr.pdf"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -229,9 +237,9 @@ class EntryOverviewActivity : ComponentActivity() {
         }
 
         exportButton.setOnClickListener {
-            val content = "Hello World! This is a test PDF."
+            val content = DataStore.entries//viewModel.entries.value.joinToString("\n")
             val pdfExportHelper = PdfExportHelper(this)
-            pdfExportHelper.createAndSavePdf("test.pdf", content)
+            pdfExportHelper.createAndSavePdf(fileName, content, projectName.text.toString() + " - " + taskName.text.toString())
         }
 
         addButton.setOnClickListener {
