@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
+import ch.bfh.cas.mad.tasktimetrackerapp.pdfExport.PdfExportHelper
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.EntryRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Project
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.ProjectRepository
@@ -39,6 +41,7 @@ class EntryOverviewActivity : ComponentActivity() {
     private lateinit var taskViewModel: TaskOverviewViewModel
     private lateinit var addButton: FloatingActionButton
     private lateinit var backButton: FloatingActionButton
+    private lateinit var exportButton: Button
     private lateinit var projectName: AutoCompleteTextView
     private lateinit var taskName: AutoCompleteTextView
     private lateinit var totalTimeView: TextView
@@ -76,6 +79,8 @@ class EntryOverviewActivity : ComponentActivity() {
 
         addButton = findViewById(R.id.fabAddEntry)
         backButton = findViewById(R.id.fabBack)
+
+        exportButton = findViewById(R.id.buttonExport)
 
         projectName = findViewById(R.id.projectName)
         taskName = findViewById(R.id.taskName)
@@ -221,6 +226,12 @@ class EntryOverviewActivity : ComponentActivity() {
             if (!hasFocus) {
                 closeKeyboard(view)
             }
+        }
+
+        exportButton.setOnClickListener {
+            val content = arrayOf("Hello World")
+            val pdfExportHelper = PdfExportHelper(this)
+            pdfExportHelper.createAndSavePdf("test.pdf", content)
         }
 
         addButton.setOnClickListener {
