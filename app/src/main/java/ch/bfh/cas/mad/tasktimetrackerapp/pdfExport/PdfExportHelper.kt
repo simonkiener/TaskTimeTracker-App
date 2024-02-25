@@ -1,58 +1,63 @@
 package ch.bfh.cas.mad.tasktimetrackerapp.pdfExport
 
+import android.content.ContentValues
 import android.content.Context
-import android.graphics.Paint
-import android.graphics.Color
 import android.graphics.pdf.PdfDocument
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.graphics.Color
 import android.os.Environment
-
-import ch.bfh.cas.mad.tasktimetrackerapp.pdfExport.PaintUtil.createTextPaint
-import java.io.File
-import java.io.FileOutputStream
+import android.provider.MediaStore
+import java.io.ByteArrayOutputStream
 import java.io.IOException
-import kotlin.math.roundToInt
 
+class PdfExportHelper(private val context: Context) {
 
-object PdfExportHelper {
-
-    var textPaint: Paint = createTextPaint(12, Color.BLACK ) // 12pt Textgröße, schwarze Farbe
-
-    fun createPdf(context: Context?, content: Array<String?>) {
-        // Erstellen eines neuen PDF-Dokuments
-        val document = PdfDocument()
-
-        // Erstellen einer Seite für das Dokument
+    fun createAndSavePdf(fileName: String, textContent: Array<String>) {
+        val pdfDocument = PdfDocument()
         val pageInfo = PdfDocument.PageInfo.Builder(300, 600, 1).create()
-        val page = document.startPage(pageInfo)
+        val page = pdfDocument.startPage(pageInfo)
 
-        // Hier können Sie den Inhalt auf die Seite zeichnen
-        var yPosition = 20
-        for (line in content) {
-            page.canvas.drawText(
-                line!!,
-                10f,
-                yPosition.toFloat(),
-                textPaint
-            ) // 'paint' ist eine Instanz von Paint, konfiguriert für Ihren Text
-            yPosition += (textPaint.descent() - textPaint.ascent()).roundToInt()        }
-
-        // Beenden der Seite
-        document.finishPage(page)
-
-        // Speichern des Dokuments in einer Datei
-        val directoryPath = Environment.getExternalStorageDirectory().path + "/MeinePDFs/"
-        val file = File(directoryPath, "MeinExport.pdf")
-        try {
-            file.parentFile?.mkdirs() // Stellen Sie sicher, dass das Verzeichnis existiert
-            document.writeTo(FileOutputStream(file))
-            // PDF erfolgreich gespeichert
-        } catch (e: IOException) {
-            e.printStackTrace()
-            // Fehler beim Speichern des PDFs
+        val paint = Paint().apply {
+            color = Color.BLACK
+            textSize = 12f
+            typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
+            isAntiAlias = true
         }
 
-        // Schließen des Dokuments
-        document.close()
+        // Simple text rendering
+        page.canvas.drawText(textContent.toString(), 10f, 25f, paint)
+
+        pdfDocument.finishPage(page)
+
+        val outputStream = ByteArrayOutputStream()
+        try {
+            pdfDocument.writeTo(outputStream)
+            savePdfToDownloads(fileName, outputStream.toByteArray())
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            pdfDocument.close()
+        }
+    }
+
+    private fun savePdfToDownloads(fileName: String, pdfContent: ByteArray) {
+        val values = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+            put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+        }
+
+        val resolver = context.contentResolver
+        val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
+        try {
+            uri?.let {
+                resolver.openOutputStream(it).use { outputStream ->
+                    outputStream?.write(pdfContent)
+                }
+            } ?: throw IOException("Failed to create new MediaStore record.")
+        } catch (e: IOException) {
+            throw IOException("Failed to save PDF.", e)
+        }
     }
 }
-
