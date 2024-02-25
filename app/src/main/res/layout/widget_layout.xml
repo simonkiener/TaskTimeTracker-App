@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:padding="8dp"
-    android:background="#B94F4B4B"> <!-- Red background -->
+    android:background="#B94F4B4B">
 
 
     <Button
@@ -11,35 +11,39 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Task 1"
+        android:text="@string/task_1"
         android:textColor="#FFFFFF"
-        android:background="@drawable/round_button_activ"/>
+        android:background="@drawable/round_button_activ"
+        style="?android:attr/buttonBarButtonStyle" />
 
     <Button
         android:id="@+id/widget_button2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Task 2"
+        android:text="@string/task_2"
         android:textColor="#FFFFFF"
-        android:background="@drawable/round_button_inactiv"/>
+        android:background="@drawable/round_button_inactiv"
+        style="?android:attr/buttonBarButtonStyle" />
 
     <Button
         android:id="@+id/widget_button3"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Task 3"
+        android:text="@string/task_3"
         android:textColor="#FFFFFF"
-        android:background="@drawable/round_button_inactiv"/>
+        android:background="@drawable/round_button_inactiv"
+        style="?android:attr/buttonBarButtonStyle" />
 
     <Button
         android:id="@+id/widget_button4"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Task 4"
+        android:text="@string/task_4"
         android:textColor="#FFFFFF"
-        android:background="@drawable/round_button_inactiv"/>
+        android:background="@drawable/round_button_inactiv"
+        style="?android:attr/buttonBarButtonStyle" />
 
 </LinearLayout>

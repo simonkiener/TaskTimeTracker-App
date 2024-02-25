@@ -28,10 +28,10 @@ class WidgetTaskSettingActivity : ComponentActivity() {
         setContentView(R.layout.activity_widgettasksetting)
 
         fabBack = findViewById(R.id.fabBack)
-        fieldSpot1 = findViewById(R.id.fieldSelectSpot2)
-        fieldSpot2 = findViewById(R.id.fieldSelectSpot1)
-        fieldSpot3 = findViewById(R.id.fieldSelectSpot4)
-        fieldSpot4 = findViewById(R.id.fieldSelectSpot3)
+        fieldSpot1 = findViewById(R.id.fieldSelectSpot1)
+        fieldSpot2 = findViewById(R.id.fieldSelectSpot2)
+        fieldSpot3 = findViewById(R.id.fieldSelectSpot3)
+        fieldSpot4 = findViewById(R.id.fieldSelectSpot4)
         clearAllButton = findViewById(R.id.buttonClearAll)
         addNewTaskButton = findViewById(R.id.AddNewTask)
 
@@ -46,10 +46,10 @@ class WidgetTaskSettingActivity : ComponentActivity() {
         fieldSpot3.setAdapter(adapter)
         fieldSpot4.setAdapter(adapter)
 
-        fieldSpot1.setText(sharedPreferences.getStringSet("selectedTasks", mutableSetOf())?.elementAtOrNull(0) ?: "")
-        fieldSpot2.setText(sharedPreferences.getStringSet("selectedTasks", mutableSetOf())?.elementAtOrNull(1) ?: "")
-        fieldSpot3.setText(sharedPreferences.getStringSet("selectedTasks", mutableSetOf())?.elementAtOrNull(2) ?: "")
-        fieldSpot4.setText(sharedPreferences.getStringSet("selectedTasks", mutableSetOf())?.elementAtOrNull(3) ?: "")
+        fieldSpot1.setText(sharedPreferences.getString("selectedTask1", ""))
+        fieldSpot2.setText(sharedPreferences.getString("selectedTask2", ""))
+        fieldSpot3.setText(sharedPreferences.getString("selectedTask3", ""))
+        fieldSpot4.setText(sharedPreferences.getString("selectedTask4", ""))
 
         fieldSpot1.setOnItemClickListener { _, _, _, _ ->
             checkTaskSelection(fieldSpot1.text.toString(), 0, sharedPreferences, fieldSpot1)
@@ -72,7 +72,10 @@ class WidgetTaskSettingActivity : ComponentActivity() {
 
         clearAllButton.setOnClickListener {
             sharedPreferences.edit {
-                putStringSet("selectedTasks", mutableSetOf())
+                putString("selectedTask1", "")
+                putString("selectedTask2", "")
+                putString("selectedTask3", "")
+                putString("selectedTask4", "")
             }
             fieldSpot1.setText("")
             fieldSpot2.setText("")
@@ -88,28 +91,19 @@ class WidgetTaskSettingActivity : ComponentActivity() {
     }
 
     private fun checkTaskSelection(selectedTask: String, position: Int, sharedPreferences: SharedPreferences, autoCompleteTextView: AutoCompleteTextView) {
-        val selectedTasks = sharedPreferences.getStringSet("selectedTasks", mutableSetOf())?.toMutableList()
-        if (selectedTask in selectedTasks!! && selectedTasks.elementAtOrNull(position) != selectedTask) {
-            Toast.makeText(this, "Dieser Task wurde bereits ausgewählt", Toast.LENGTH_SHORT).show()
-            // Setzen Sie den Text des AutoCompleteTextView zurück
+        val selectedTasks = listOf(
+            sharedPreferences.getString("selectedTask1", ""),
+            sharedPreferences.getString("selectedTask2", ""),
+            sharedPreferences.getString("selectedTask3", ""),
+            sharedPreferences.getString("selectedTask4", "")
+        )
+
+        if (selectedTasks.filterNotNull().contains(selectedTask)) {
             autoCompleteTextView.setText("")
-            sharedPreferences.edit {
-                putStringSet("selectedTasks", selectedTasks.toSet())
-            }
+            Toast.makeText(this, "Task bereits ausgewählt", Toast.LENGTH_SHORT).show()
         } else {
-            // Wenn es bereits einen Task an dieser Position gibt, entfernen Sie ihn
-            if (selectedTasks.size > position) {
-                selectedTasks[position] = selectedTask
-            } else {
-                // Fügen Sie den ausgewählten Task an der richtigen Position hinzu
-                selectedTasks.add(position, selectedTask)
-            }
-            // Speichern Sie die aktualisierte Liste der ausgewählten Tasks
-            sharedPreferences.edit {
-                putStringSet("selectedTasks", selectedTasks.toSet())
-            }
+            sharedPreferences.edit().putString("selectedTask${position + 1}", selectedTask).apply()
         }
-        println("selectedTasks: $selectedTasks")
     }
 
 }
