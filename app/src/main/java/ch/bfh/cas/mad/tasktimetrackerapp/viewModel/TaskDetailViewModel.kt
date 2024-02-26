@@ -35,7 +35,6 @@ class TaskDetailViewModel (
         viewModelScope.launch {
             val task = taskRepository.getTask(taskId = taskId)
             _taskName.value = task.name
-            _projectName.value = "hansemann"
         }
     }
 

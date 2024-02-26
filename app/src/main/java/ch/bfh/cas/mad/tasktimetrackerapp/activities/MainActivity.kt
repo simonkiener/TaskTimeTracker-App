@@ -9,16 +9,35 @@ import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ch.bfh.cas.mad.tasktimetrackerapp.R
+import ch.bfh.cas.mad.tasktimetrackerapp.adapter.ProjectAdapter
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.ProjectRepository
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.TTTDatabaseProvider
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.WidgetTask
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.WidgetTaskRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.ui.theme.TaskTimeTrackerAppTheme
+import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.MainViewModel
+import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.MainViewModelFactory
+import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.ProjectOverviewViewModel
+import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.ProjectOverviewViewModelFactory
+import ch.bfh.cas.mad.tasktimetrackerapp.viewModel.WidgetTaskSettingViewModel
 import ch.bfh.cas.mad.tasktimetrackerapp.widget.BroadcastReceiver
 import ch.bfh.cas.mad.tasktimetrackerapp.widget.WidgetProvider.Companion.ACTION_WIDGET_BUTTON_1
 import ch.bfh.cas.mad.tasktimetrackerapp.widget.WidgetProvider.Companion.ACTION_WIDGET_BUTTON_2
 import ch.bfh.cas.mad.tasktimetrackerapp.widget.WidgetProvider.Companion.ACTION_WIDGET_BUTTON_3
 import ch.bfh.cas.mad.tasktimetrackerapp.widget.WidgetProvider.Companion.ACTION_WIDGET_BUTTON_4
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var viewModel: MainViewModel
+    private lateinit var widgetTasks: List<WidgetTask>
     private lateinit var taskNavigationButton: Button
     private lateinit var projectNavigationButton: Button
     private lateinit var entriesNavigationButton: Button
@@ -36,6 +55,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val viewModelProvider = ViewModelProvider(
+            this,
+            MainViewModelFactory(WidgetTaskRepository(TTTDatabaseProvider.get(this).getWidgetTaskDao()))
+        )
+
+        viewModel = viewModelProvider[MainViewModel::class.java]
+
         taskNavigationButton = findViewById(R.id.main_buttonTasks)
         projectNavigationButton = findViewById(R.id.main_buttonProjects)
         entriesNavigationButton = findViewById(R.id.main_buttonEntries)
@@ -45,6 +71,13 @@ class MainActivity : ComponentActivity() {
         WidgetSpot2 = findViewById(R.id.main_buttonTask2)
         WidgetSpot3 = findViewById(R.id.main_buttonTask3)
         WidgetSpot4 = findViewById(R.id.main_buttonTask4)
+
+        // getAllWidgetTasks
+        lifecycleScope.launch {
+            viewModel.widgetTasks.collectLatest { widgetTasks ->
+                this@MainActivity.widgetTasks = widgetTasks
+            }
+        }
 
         val sharedPreferences: SharedPreferences = getSharedPreferences("selectedTasks", Context.MODE_PRIVATE)
 
@@ -84,10 +117,23 @@ class MainActivity : ComponentActivity() {
         //Change the background of the buttons if Task is selected to recording
         widgetButtons.forEach { button ->
             button.setOnClickListener {
-                widgetButtons.forEach { it.setBackgroundResource(R.drawable.round_button_inactiv) }
-                button.setBackgroundResource(R.drawable.round_button_activ)
+                val isActive = button.isActivated
+                widgetButtons.forEach {
+                    it.setBackgroundResource(R.drawable.round_button_inactiv)
+                    it.isActivated = false
+                }
+
+                if (!isActive) {
+                    button.setBackgroundResource(R.drawable.round_button_activ)
+                    button.isActivated = true
+                }
             }
         }
+
+//        WidgetSpot1.text = widgetTasks[0].taskId.toString()
+//        WidgetSpot2.text = widgetTasks[1].taskId.toString()
+//        WidgetSpot3.text = widgetTasks[2].taskId.toString()
+//        WidgetSpot4.text = widgetTasks[3].taskId.toString()
 
     }
 
