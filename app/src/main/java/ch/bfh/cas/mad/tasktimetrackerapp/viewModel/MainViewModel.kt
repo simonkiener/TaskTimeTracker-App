@@ -13,8 +13,8 @@ class MainViewModel (
     private var _widgetTasks = MutableStateFlow(emptyList<WidgetTask>().toMutableList())
     val widgetTasks: MutableStateFlow<MutableList<WidgetTask>> = _widgetTasks
 
-    private var _taskName = MutableStateFlow("")
-    val taskName: MutableStateFlow<String> = _taskName
+    private var _taskNames = MutableStateFlow(emptyList<String>().toMutableList())
+    val taskNames: MutableStateFlow<MutableList<String>> = _taskNames
 
     fun getAllWidgetTasks() {
         viewModelScope.launch {
@@ -22,11 +22,18 @@ class MainViewModel (
         }
     }
 
-    fun getTaskName(widgetTaskId: Int) {
+    fun getTaskNames(lastWidgetTaskId: Int) {
         viewModelScope.launch {
-            val task = widgetTaskRepository.getTaskForId(widgetTaskId)
-            if (task != null) {
-                _taskName.value = task.name
+            var i = 0
+            while (i < lastWidgetTaskId) {
+                val task = widgetTaskRepository.getTaskForId(i)
+                if (task != null) {
+                    _taskNames.value.add(task.name)
+                } else
+                {
+                    _taskNames.value.add("")
+                }
+                i++
             }
         }
     }

@@ -5,7 +5,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.RemoteViews
@@ -192,14 +191,11 @@ class MainActivity : ComponentActivity() {
 
         // Setzen Sie den Text der Buttons auf die ausgewählten Tasks
         //TODO: Hier evt. schön machen
-        viewModel.getTaskName(1)
-        widgetSpot1.text = viewModel.taskName.value
-        viewModel.getTaskName(2)
-        widgetSpot2.text = viewModel.taskName.value
-        viewModel.getTaskName(3)
-        widgetSpot3.text = viewModel.taskName.value
-        viewModel.getTaskName(4)
-        widgetSpot4.text = viewModel.taskName.value
+        viewModel.getTaskNames(4)
+        widgetSpot1.text = viewModel.taskNames.value[0]
+        widgetSpot2.text = viewModel.taskNames.value[1]
+        widgetSpot3.text = viewModel.taskNames.value[2]
+        widgetSpot4.text = viewModel.taskNames.value[3]
         //update WidgetText
         updateWidgetName(RemoteViews(packageName, R.layout.widget_layout))
     }
