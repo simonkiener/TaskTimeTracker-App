@@ -74,10 +74,10 @@ object DataStore {
     )
 
     val widgetTasks = mutableListOf(
-        WidgetTask(1, 1),
-        WidgetTask(2, 2),
-        WidgetTask(3, 3),
-        WidgetTask(4, 4)
+        WidgetTask(1, 0),
+        WidgetTask(2, 0),
+        WidgetTask(3, 0),
+        WidgetTask(4, 0)
     )
 
     fun getEntriesForTask(taskId: Int): List<Entry> {

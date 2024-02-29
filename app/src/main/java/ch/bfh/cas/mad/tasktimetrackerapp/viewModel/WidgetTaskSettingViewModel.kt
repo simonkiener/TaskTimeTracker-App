@@ -13,6 +13,9 @@ class WidgetTaskSettingViewModel (
     private var _widgetTasks = MutableStateFlow(emptyList<WidgetTask>().toMutableList())
     val widgetTasks: MutableStateFlow<MutableList<WidgetTask>> = _widgetTasks
 
+    private var _taskName = MutableStateFlow("")
+    val taskName: MutableStateFlow<String> = _taskName
+
     fun getAllWidgetTasks() {
         viewModelScope.launch {
             _widgetTasks.value = widgetTaskRepository.getAllWidgetTasks()
@@ -31,9 +34,12 @@ class WidgetTaskSettingViewModel (
         }
     }
 
-//    fun getTaskIdForId(widgetTaskId: Int) {
-//        viewModelScope.launch {
-//            _widgetTask.value = widgetTaskRepository.getTaskForId(widgetTaskId)
-//        }
-//    }
+    fun getTaskName(widgetTaskId: Int) {
+        viewModelScope.launch {
+            val task = widgetTaskRepository.getTaskForId(widgetTaskId)
+            if (task != null) {
+                _taskName.value = task.name
+            }
+        }
+    }
 }

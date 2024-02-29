@@ -14,7 +14,7 @@ class TaskDetailViewModel (
     private val projectRepository: ProjectRepository
 ) : ViewModel() {
     private var _tasks = MutableStateFlow(emptyList<Task>().toMutableList())
-    val projects: MutableStateFlow<MutableList<Task>> = _tasks
+    val tasks: MutableStateFlow<MutableList<Task>> = _tasks
 
     private var _entries = MutableStateFlow(emptyList<Entry>().toMutableList())
     val entries: MutableStateFlow<MutableList<Entry>> = _entries
@@ -24,6 +24,12 @@ class TaskDetailViewModel (
 
     private var _projectName = MutableStateFlow("")
     val projectName: MutableStateFlow<String> = _projectName
+
+    fun getTasks() {
+        viewModelScope.launch {
+            _tasks.value = taskRepository.getAllTasks()
+        }
+    }
 
     fun getEntriesForTask(taskId: Int) {
         viewModelScope.launch {

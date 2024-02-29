@@ -17,19 +17,19 @@ class DatabaseRepository(
         widgetTaskDao.deleteAll()
 
         // Add projects
-        DataStore.projects.forEach {
-            projectDao.insert(it)
-        }
+//        DataStore.projects.forEach {
+//            projectDao.insert(it)
+//        }
 
         // Add tasks
-        DataStore.tasks.forEach {
-            taskDao.insert(it)
-        }
+//        DataStore.tasks.forEach {
+//            taskDao.insert(it)
+//        }
 
         // Add entries
-        DataStore.entries.forEach {
-            entryDao.insert(it)
-        }
+//        DataStore.entries.forEach {
+//            entryDao.insert(it)
+//        }
 
         // Add widgetTasks
         DataStore.widgetTasks.forEach {
