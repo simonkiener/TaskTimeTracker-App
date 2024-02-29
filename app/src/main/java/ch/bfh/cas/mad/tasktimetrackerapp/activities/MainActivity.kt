@@ -183,18 +183,25 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
 
-        val sharedPreferences: SharedPreferences =
-            getSharedPreferences("selectedTasks", Context.MODE_PRIVATE)
-        val selectedTask1 = sharedPreferences.getString("selectedTask1", "")
-        val selectedTask2 = sharedPreferences.getString("selectedTask2", "")
-        val selectedTask3 = sharedPreferences.getString("selectedTask3", "")
-        val selectedTask4 = sharedPreferences.getString("selectedTask4", "")
+//        val sharedPreferences: SharedPreferences =
+//            getSharedPreferences("selectedTasks", Context.MODE_PRIVATE)
+//        val selectedTask1 = sharedPreferences.getString("selectedTask1", "")
+//        val selectedTask2 = sharedPreferences.getString("selectedTask2", "")
+//        val selectedTask3 = sharedPreferences.getString("selectedTask3", "")
+//        val selectedTask4 = sharedPreferences.getString("selectedTask4", "")
 
         // Setzen Sie den Text der Buttons auf die ausgewählten Tasks
-        widgetSpot1.text = selectedTask1 ?: "Select Task in App"
-        widgetSpot2.text = selectedTask2 ?: "Select Task in App"
-        widgetSpot3.text = selectedTask3 ?: "Select Task in App"
-        widgetSpot4.text = selectedTask4 ?: "Select Task in App"
+        //TODO: Hier evt. schön machen
+        viewModel.getTaskName(1)
+        widgetSpot1.text = viewModel.taskName.value
+        viewModel.getTaskName(2)
+        widgetSpot2.text = viewModel.taskName.value
+        viewModel.getTaskName(3)
+        widgetSpot3.text = viewModel.taskName.value
+        viewModel.getTaskName(4)
+        widgetSpot4.text = viewModel.taskName.value
+        //update WidgetText
+        updateWidgetName(RemoteViews(packageName, R.layout.widget_layout))
     }
 
     override fun onDestroy() {
@@ -202,10 +209,18 @@ class MainActivity : ComponentActivity() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(localReceiver)
     }
 
+    private fun updateWidgetName(views: RemoteViews){
+        val buttons = listOf(R.id.widget_button1, R.id.widget_button2, R.id.widget_button3, R.id.widget_button4)
+        buttons.forEachIndexed { index, buttonId ->
+            views.setTextViewText(buttonId, widgetButtons[index].text)
+        }
+    }
+
     private fun updateWidgetViews(views: RemoteViews, buttonNumber: Int) {
         val buttons = listOf(R.id.widget_button1, R.id.widget_button2, R.id.widget_button3, R.id.widget_button4)
         buttons.forEachIndexed { index, buttonId ->
             views.setInt(buttonId, "setBackgroundResource", if (index + 1 == buttonNumber) R.drawable.round_button_activ else R.drawable.round_button_inactiv)
+            views.setTextViewText(buttonId, widgetButtons[index].text)
 
             // Get the AppWidgetManager instance
             val appWidgetManager = AppWidgetManager.getInstance(this)

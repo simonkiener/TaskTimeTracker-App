@@ -58,9 +58,9 @@ class EntryOverviewActivity : ComponentActivity() {
     private var projectChosen: Boolean = false
     private var taskChosen: Boolean = false
 
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
-    val dateStr = dateFormat.format(Date())
-    val fileName = "TTT-Export-$dateStr.pdf"
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
+    private val dateStr = dateFormat.format(Date())
+    private val fileName = "TTT-Export-$dateStr.pdf"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

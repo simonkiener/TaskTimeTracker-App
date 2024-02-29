@@ -41,8 +41,8 @@ class DetailTaskActivity : ComponentActivity() {
 
         viewModel = viewModelProvider[TaskDetailViewModel::class.java]
 
-        showAllEntriesButton = findViewById<Button>(R.id.btnShowAllEntries)
-        backButton = findViewById<FloatingActionButton>(R.id.fabBack)
+        showAllEntriesButton = findViewById(R.id.btnShowAllEntries)
+        backButton = findViewById(R.id.fabBack)
         taskNameView = findViewById(R.id.TextViewTaskName)
         projectNameView = findViewById(R.id.TextViewTaskProjectName)
 

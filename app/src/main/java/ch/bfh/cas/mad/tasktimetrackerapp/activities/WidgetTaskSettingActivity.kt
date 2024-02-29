@@ -72,25 +72,25 @@ class WidgetTaskSettingActivity : ComponentActivity() {
                 fieldSpot2.setAdapter(adapter)
                 fieldSpot3.setAdapter(adapter)
                 fieldSpot4.setAdapter(adapter)
-            }
-        }
 
-        // getTaskForId
-        lifecycleScope.launch {
-            viewModel.widgetTasks.collectLatest { widgetTasks ->
-                var i = 0
-                while (i < 4) {
-                    val currentTask = tasks.filter { it.id == widgetTasks[i].taskId }
-                    i++
-                    when (i) {
-                        1 -> fieldSpot1.setText(currentTask.firstOrNull()?.toString())
-                        2 -> fieldSpot2.setText(currentTask.firstOrNull()?.toString())
-                        3 -> fieldSpot3.setText(currentTask.firstOrNull()?.toString())
-                        4 -> fieldSpot4.setText(currentTask.firstOrNull()?.toString())
+                // getTaskForId
+                viewModel.widgetTasks.collectLatest { widgetTasks ->
+                    var i = 0
+                    while (i < 4 && i < widgetTasks.size) {
+                        val currentTask = tasks.filter { it.id == widgetTasks[i].taskId }
+                        i++
+                        when (i) {
+                            1 -> fieldSpot1.setText(currentTask.firstOrNull()?.toString())
+                            2 -> fieldSpot2.setText(currentTask.firstOrNull()?.toString())
+                            3 -> fieldSpot3.setText(currentTask.firstOrNull()?.toString())
+                            4 -> fieldSpot4.setText(currentTask.firstOrNull()?.toString())
+                        }
                     }
                 }
             }
         }
+
+
 
         fieldSpot1.setOnItemClickListener{ parent, _, position, _ ->
             val item = parent.getItemAtPosition(position)
