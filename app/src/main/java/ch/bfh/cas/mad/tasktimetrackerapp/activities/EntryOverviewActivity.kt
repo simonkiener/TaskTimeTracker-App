@@ -99,7 +99,7 @@ class EntryOverviewActivity : ComponentActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {
             viewModel.entries.collectLatest { entries ->
-                val adapter = EntryAdapter(entries = entries)
+                val adapter = EntryAdapter(entries = entries, tasks = taskViewModel.tasks.value)
                 recyclerView.adapter = adapter
             }
         }

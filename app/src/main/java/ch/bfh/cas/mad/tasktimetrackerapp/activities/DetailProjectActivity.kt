@@ -49,7 +49,7 @@ class DetailProjectActivity : ComponentActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {
             viewModel.entries.collectLatest { entries ->
-                val adapter = EntryAdapter(entries = entries)
+                val adapter = EntryAdapter(entries = entries, tasks = emptyList())  // ToDo: check, if tasks are really needed
                 recyclerView.adapter = adapter
             }
         }

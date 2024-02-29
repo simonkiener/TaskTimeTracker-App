@@ -13,11 +13,12 @@ import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getProjectName
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailEntryActivity
-import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getTaskName
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Task
 import java.sql.Timestamp
 
 class EntryAdapter(
-    private var entries: List<Entry>
+    private var entries: List<Entry>,
+    private var tasks: List<Task>
 ) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
     inner class EntryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -59,6 +60,10 @@ class EntryAdapter(
     }
 
     override fun getItemCount() = entries.size
+
+    private fun getTaskName(taskId: Int): String {
+        return tasks.find { it.id == taskId }?.name ?: ""
+    }
 
     fun filterList(task: String, project: String) {
         val filteredList = entries.filter { it.description == task && getProjectName(it.taskId) == project }
