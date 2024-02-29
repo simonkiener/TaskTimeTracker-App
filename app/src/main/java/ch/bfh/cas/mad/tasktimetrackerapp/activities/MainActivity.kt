@@ -11,9 +11,11 @@ import android.widget.RemoteViews
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.room.InvalidationTracker
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.EntryRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.TTTDatabaseProvider
@@ -50,6 +52,7 @@ class MainActivity : ComponentActivity() {
                 "ACTION_WIDGET_BUTTON_1_RECEIVED" -> {
                     // Call updateWidgetViews
                     val views = RemoteViews(packageName, R.layout.widget_layout)
+                    viewModel.addEntryForWidget(1)
                     updateWidgetViews(views, 1)
                     if(widgetSpot1.isActivated)
                         updateButtonState(widgetSpot1, false)
@@ -59,6 +62,7 @@ class MainActivity : ComponentActivity() {
                 "ACTION_WIDGET_BUTTON_2_RECEIVED" -> {
                     // Call updateWidgetViews
                     val views = RemoteViews(packageName, R.layout.widget_layout)
+                    viewModel.addEntryForWidget(2)
                     updateWidgetViews(views, 2)
                     if(widgetSpot2.isActivated)
                         updateButtonState(widgetSpot2, false)
@@ -68,6 +72,7 @@ class MainActivity : ComponentActivity() {
                 "ACTION_WIDGET_BUTTON_3_RECEIVED" -> {
                     // Call updateWidgetViews
                     val views = RemoteViews(packageName, R.layout.widget_layout)
+                    viewModel.addEntryForWidget(3)
                     updateWidgetViews(views, 3)
                     if(widgetSpot3.isActivated)
                         updateButtonState(widgetSpot3, false)
@@ -77,6 +82,7 @@ class MainActivity : ComponentActivity() {
                 "ACTION_WIDGET_BUTTON_4_RECEIVED" -> {
                     // Call updateWidgetViews
                     val views = RemoteViews(packageName, R.layout.widget_layout)
+                    viewModel.addEntryForWidget(4)
                     updateWidgetViews(views, 4)
                     if(widgetSpot4.isActivated)
                         updateButtonState(widgetSpot4, false)
@@ -162,6 +168,7 @@ class MainActivity : ComponentActivity() {
         widgetButtons.forEach { button ->
             button.setOnClickListener {
                 val isActive = button.isActivated
+                viewModel.addEntryForWidget(widgetButtons.indexOf(button) + 1)
                 widgetButtons.forEach {
                     updateButtonState(it, false)
                     updateWidgetViews(
@@ -182,15 +189,17 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getTaskNames(4)
-        if(viewModel.taskNames.value.isNotEmpty()) {
-            widgetSpot1.text = viewModel.taskNames.value[0]
-            widgetSpot2.text = viewModel.taskNames.value[1]
-            widgetSpot3.text = viewModel.taskNames.value[2]
-            widgetSpot4.text = viewModel.taskNames.value[3]
+        lifecycleScope.launch {
+            viewModel.getTaskNames(4)
+            if (viewModel.taskNames.value.isNotEmpty()) {
+                widgetSpot1.text = viewModel.taskNames.value[0]
+                widgetSpot2.text = viewModel.taskNames.value[1]
+                widgetSpot3.text = viewModel.taskNames.value[2]
+                widgetSpot4.text = viewModel.taskNames.value[3]
+            }
+            //update WidgetText
+            updateWidgetName(RemoteViews(packageName, R.layout.widget_layout))
         }
-        //update WidgetText
-        updateWidgetName(RemoteViews(packageName, R.layout.widget_layout))
     }
 
     override fun onDestroy() {
