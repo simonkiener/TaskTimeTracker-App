@@ -44,10 +44,25 @@ class MainViewModel (
 
     fun addEntryForWidget(widgetTaskId: Int) {
         viewModelScope.launch {
-            val task = widgetTaskRepository.getTaskForId(widgetTaskId)
-            val entry = task?.let { Entry(0, "", it.id, System.currentTimeMillis()) }
-            if (entry != null) {
-                entryRepository.addEntry(entry)
+            // Check if current action is start or stop
+            val entries = entryRepository.getAllEntries()
+            val isStartAction = entries.size.mod(2) == 0
+
+            // get current timestamp for entries to have the same for each entry
+            val timeStamp = System.currentTimeMillis()
+
+            // add stop entry if needed
+            if (!isStartAction) {
+                val lastEntryTaskId = entries.last().taskId
+                val stopEntry = Entry(0, "STOP", lastEntryTaskId, timeStamp)
+                entryRepository.addEntry(stopEntry)
+            }
+
+            // add start entry if needed
+            val currentTask = widgetTaskRepository.getTaskForId(widgetTaskId)
+            if (currentTask != null) {
+                val startEntry = Entry(0, "START", currentTask.id, timeStamp)
+                entryRepository.addEntry(startEntry)
             }
         }
     }
