@@ -34,8 +34,8 @@ class DatabaseRepository(
 //        }
 
         // Add widgetTasks
-//        DataStore.widgetTasks.forEach {
-//            widgetTaskDao.insert(it)
-//        }
+        DataStore.widgetTasks.forEach {
+            widgetTaskDao.insert(it)
+        }
     }
 }
