@@ -76,8 +76,6 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        val sharedPreferences: SharedPreferences = getSharedPreferences("selectedTasks", Context.MODE_PRIVATE)
-
         val widgetButtons = listOf(WidgetSpot1, WidgetSpot2, WidgetSpot3, WidgetSpot4)
 
         val filter = IntentFilter()
