@@ -35,4 +35,8 @@ class WidgetTaskRepository(
     suspend fun clearAllWidgetTasks() {
         widgetTaskDao.deleteAll()
     }
+
+    suspend fun insertWidgetTask(widgetTaskId: Int) {
+        widgetTaskDao.insert(WidgetTask(widgetTaskId, 0))
+    }
 }
