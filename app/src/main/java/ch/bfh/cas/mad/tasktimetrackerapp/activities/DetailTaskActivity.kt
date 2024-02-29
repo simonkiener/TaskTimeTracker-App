@@ -53,7 +53,7 @@ class DetailTaskActivity : ComponentActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {
             viewModel.entries.collectLatest { entries ->
-                val adapter = EntryAdapter(entries = entries)
+                val adapter = EntryAdapter(entries = entries, tasks = viewModel.tasks.value)  // ToDo: check, if tasks are really needed, maybe pass empty list?
                 recyclerView.adapter = adapter
             }
         }
@@ -64,6 +64,13 @@ class DetailTaskActivity : ComponentActivity() {
                 taskNameView.text = taskName
             }
         }
+
+//        // getTasks
+//        lifecycleScope.launch {
+//            viewModel.tasks.collectLatest { tasks ->
+//                val hans = tasks
+//            }
+//        }
 
         // getProjectName
         lifecycleScope.launch {
@@ -89,5 +96,6 @@ class DetailTaskActivity : ComponentActivity() {
         viewModel.getEntriesForTask(taskId)
         viewModel.getTaskName(taskId)
         viewModel.getProjectName(taskId)
+        viewModel.getTasks()
     }
 }

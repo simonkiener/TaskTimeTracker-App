@@ -98,9 +98,15 @@ class EntryOverviewActivity : ComponentActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewEntries)
         recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {
-            viewModel.entries.collectLatest { entries ->
-                val adapter = EntryAdapter(entries = entries)
-                recyclerView.adapter = adapter
+            taskViewModel.tasks.collectLatest { tasks ->
+                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, tasks)
+                taskName.setAdapter(adapter)
+
+                // Innerhalb des Aufrufs, damit alle Daten vorhanden sind für EntryAdapter
+                viewModel.entries.collectLatest { entries ->
+                    val adapter = EntryAdapter(entries = entries, tasks = taskViewModel.tasks.value)
+                    recyclerView.adapter = adapter
+                }
             }
         }
 
@@ -112,13 +118,14 @@ class EntryOverviewActivity : ComponentActivity() {
             }
         }
 
-        // getAllTasks
-        lifecycleScope.launch {
-            taskViewModel.tasks.collectLatest { tasks ->
-                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, tasks)
-                taskName.setAdapter(adapter)
-            }
-        }
+        // Im Aufruf beim holen der entries für die recycler view, sonst werden die tasks nicht immer geholt!?!?
+//        // getAllTasks
+//        lifecycleScope.launch {
+//            taskViewModel.tasks.collectLatest { tasks ->
+//                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, tasks)
+//                taskName.setAdapter(adapter)
+//            }
+//        }
 
         // getTotalTime
         lifecycleScope.launch {
