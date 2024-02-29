@@ -125,21 +125,23 @@ class MainActivity : ComponentActivity() {
                 widgetButtons.forEach {
                     it.setBackgroundResource(R.drawable.round_button_inactiv)
                     it.isActivated = false
+                    updateWidgetViews(
+                        RemoteViews(packageName, R.layout.widget_layout),
+                        0
+                    )
                 }
 
                 if (!isActive) {
                     button.setBackgroundResource(R.drawable.round_button_activ)
                     button.isActivated = true
+                    updateWidgetViews(
+                        RemoteViews(packageName, R.layout.widget_layout),
+                        widgetButtons.indexOf(it) + 1
+                    )
                 }
-                updateWidgetViews(RemoteViews(packageName, R.layout.widget_layout), widgetButtons.indexOf(it) + 1)
+
             }
         }
-
-//        WidgetSpot1.text = widgetTasks[0].taskId.toString()
-//        WidgetSpot2.text = widgetTasks[1].taskId.toString()
-//        WidgetSpot3.text = widgetTasks[2].taskId.toString()
-//        WidgetSpot4.text = widgetTasks[3].taskId.toString()
-
     }
 
     override fun onResume() {
@@ -167,7 +169,6 @@ class MainActivity : ComponentActivity() {
     private fun updateWidgetViews(views: RemoteViews, buttonNumber: Int) {
         val buttons = listOf(R.id.widget_button1, R.id.widget_button2, R.id.widget_button3, R.id.widget_button4)
         buttons.forEachIndexed { index, buttonId ->
-            println("ButtonId: $buttonId is set to: ${if (index + 1 == buttonNumber) R.drawable.round_button_activ else R.drawable.round_button_inactiv}")
             views.setInt(buttonId, "setBackgroundResource", if (index + 1 == buttonNumber) R.drawable.round_button_activ else R.drawable.round_button_inactiv)
 
             // Get the AppWidgetManager instance
@@ -179,7 +180,6 @@ class MainActivity : ComponentActivity() {
             // Update the widget
             ids.forEach { id ->
                 appWidgetManager.updateAppWidget(id, views)
-
             }
         }
     }
