@@ -35,7 +35,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:hint="Select or Add Project"
+        android:hint="@string/select_or_add_project"
         android:inputType="text" />
 
     <AutoCompleteTextView
@@ -45,7 +45,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:hint="Select or Add Task"
+        android:hint="@string/select_or_add_task"
         android:inputType="text" />
 
     <LinearLayout
@@ -61,13 +61,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Start Date" />
+            android:text="@string/start_date" />
 
         <TextView
             android:id="@+id/textViewEndDate"
             android:layout_width="172dp"
             android:layout_height="wrap_content"
-            android:text="End Date"
+            android:text="@string/end_date"
             android:gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp" />
@@ -77,7 +77,7 @@
         android:id="@+id/textViewTotalTime"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="Total Time"
+        android:text="@string/total_time"
         android:gravity="center"
         android:layout_marginTop="8dp"/>
 
@@ -88,13 +88,15 @@
         android:gravity="center"
         android:layout_marginTop="8dp" >
 
+<!--        ToDo: Do we need this Button?-->
         <Button
             android:id="@+id/buttonPrint"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/actionColor"
-            android:text="Print"/>
+            android:text="@string/print"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/buttonExport"
@@ -102,8 +104,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/actionColor"
-            android:text="Export"
-            android:layout_marginStart="16dp"/>
+            android:text="@string/export"
+            android:layout_marginStart="16dp"
+            style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

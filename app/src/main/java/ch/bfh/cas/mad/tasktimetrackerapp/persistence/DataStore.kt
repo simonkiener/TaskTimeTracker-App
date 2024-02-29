@@ -73,6 +73,13 @@ object DataStore {
         Entry(41, taskId = 16, description = "Entry 41", timeStamp = 1234567890)
     )
 
+    val widgetTasks = mutableListOf(
+        WidgetTask(1, 1),
+        WidgetTask(2, 2),
+        WidgetTask(3, 3),
+        WidgetTask(4, 4)
+    )
+
     fun getEntriesForTask(taskId: Int): List<Entry> {
         return entries.filter { it.taskId == taskId }
     }

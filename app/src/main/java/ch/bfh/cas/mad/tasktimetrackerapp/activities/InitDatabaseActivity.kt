@@ -28,7 +28,7 @@ class InitDatabaseActivity : ComponentActivity() {
 
         val viewModelProvider = ViewModelProvider(
             this,
-            InitDatabaseViewModelFactory(DatabaseRepository(TTTDatabaseProvider.get(this).getProjectDao(), TTTDatabaseProvider.get(this).getTaskDao(),TTTDatabaseProvider.get(this).getEntryDao()))
+            InitDatabaseViewModelFactory(DatabaseRepository(TTTDatabaseProvider.get(this).getProjectDao(), TTTDatabaseProvider.get(this).getTaskDao(), TTTDatabaseProvider.get(this).getEntryDao(), TTTDatabaseProvider.get(this).getWidgetTaskDao()))
         )
 
         viewModel = viewModelProvider[InitDatabaseViewModel::class.java]

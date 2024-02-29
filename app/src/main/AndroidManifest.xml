@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+<!--    Permission for PDF Export-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -91,10 +94,6 @@
             android:theme="@style/Theme.TaskTimeTrackerApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.appwidget.action.ACTION_WIDGET_BUTTON_1" />
-                <action android:name="android.appwidget.action.ACTION_WIDGET_BUTTON_2" />
-                <action android:name="android.appwidget.action.ACTION_WIDGET_BUTTON_3" />
-                <action android:name="android.appwidget.action.ACTION_WIDGET_BUTTON_4" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

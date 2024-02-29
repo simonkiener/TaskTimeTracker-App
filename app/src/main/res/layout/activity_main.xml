@@ -42,7 +42,7 @@
             android:text="@string/task_1"
             android:layout_margin="10dp"
             android:textColor="@color/black"
-            android:background="@drawable/round_button_activ"
+            android:background="@drawable/round_button_inactiv"
             style="?android:attr/buttonBarButtonStyle" />
 
         <Button
