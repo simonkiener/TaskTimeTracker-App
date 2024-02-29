@@ -24,14 +24,15 @@ class MainViewModel (
 
     fun getTaskNames(lastWidgetTaskId: Int) {
         viewModelScope.launch {
-            var i = 0
-            while (i < lastWidgetTaskId) {
+            _taskNames.value.clear()
+            var i = 1
+            while (i <= lastWidgetTaskId) {
                 val task = widgetTaskRepository.getTaskForId(i)
                 if (task != null) {
                     _taskNames.value.add(task.name)
                 } else
                 {
-                    _taskNames.value.add("")
+                    _taskNames.value.add("NoTask")
                 }
                 i++
             }

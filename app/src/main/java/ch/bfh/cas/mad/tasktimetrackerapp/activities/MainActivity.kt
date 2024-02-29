@@ -181,21 +181,13 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-
-//        val sharedPreferences: SharedPreferences =
-//            getSharedPreferences("selectedTasks", Context.MODE_PRIVATE)
-//        val selectedTask1 = sharedPreferences.getString("selectedTask1", "")
-//        val selectedTask2 = sharedPreferences.getString("selectedTask2", "")
-//        val selectedTask3 = sharedPreferences.getString("selectedTask3", "")
-//        val selectedTask4 = sharedPreferences.getString("selectedTask4", "")
-
-        // Setzen Sie den Text der Buttons auf die ausgewählten Tasks
-        //TODO: Hier evt. schön machen
         viewModel.getTaskNames(4)
-        widgetSpot1.text = viewModel.taskNames.value[0]
-        widgetSpot2.text = viewModel.taskNames.value[1]
-        widgetSpot3.text = viewModel.taskNames.value[2]
-        widgetSpot4.text = viewModel.taskNames.value[3]
+        if(viewModel.taskNames.value.isNotEmpty()) {
+            widgetSpot1.text = viewModel.taskNames.value[0]
+            widgetSpot2.text = viewModel.taskNames.value[1]
+            widgetSpot3.text = viewModel.taskNames.value[2]
+            widgetSpot4.text = viewModel.taskNames.value[3]
+        }
         //update WidgetText
         updateWidgetName(RemoteViews(packageName, R.layout.widget_layout))
     }
