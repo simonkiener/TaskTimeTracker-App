@@ -14,8 +14,8 @@ interface WidgetTaskDao {
     @Query("SELECT * FROM widgetTask")
     suspend fun getAllWidgetTasks(): MutableList<WidgetTask>
 
-    @Query("SELECT taskId FROM widgetTask WHERE id = :widgetTaskId")
-    suspend fun getTaskIdForId(widgetTaskId: Int): Int
+//    @Query("SELECT taskId FROM widgetTask WHERE id = :widgetTaskId")
+//    suspend fun getTaskIdForId(widgetTaskId: Int): Int
 
     @Query("SELECT * FROM task JOIN widgetTask ON task.id = taskId WHERE widgetTask.id = :widgetTaskId")
     suspend fun getTaskForId(widgetTaskId: Int): MutableList<Task>

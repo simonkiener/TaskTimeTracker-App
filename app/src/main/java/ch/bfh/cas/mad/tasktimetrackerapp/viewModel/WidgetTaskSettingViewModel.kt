@@ -24,6 +24,11 @@ class WidgetTaskSettingViewModel (
 
     fun setTaskForId(widgetTaskId: Int, taskId: Int) {
         viewModelScope.launch {
+            // initially insert WidgetTask if needed
+            getAllWidgetTasks()
+            if (_widgetTasks.value.filter { it.id == widgetTaskId }.isEmpty()) {
+                widgetTaskRepository.insertWidgetTask(widgetTaskId = widgetTaskId)
+            }
             widgetTaskRepository.setTaskForId(widgetTaskId, taskId)
         }
     }
