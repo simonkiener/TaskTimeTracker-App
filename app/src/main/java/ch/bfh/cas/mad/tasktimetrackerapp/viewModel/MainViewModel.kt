@@ -2,13 +2,16 @@ package ch.bfh.cas.mad.tasktimetrackerapp.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.EntryRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.WidgetTask
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.WidgetTaskRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel (
-    private val widgetTaskRepository: WidgetTaskRepository
+    private val widgetTaskRepository: WidgetTaskRepository,
+    private val entryRepository: EntryRepository
 ) : ViewModel() {
     private var _widgetTasks = MutableStateFlow(emptyList<WidgetTask>().toMutableList())
     val widgetTasks: MutableStateFlow<MutableList<WidgetTask>> = _widgetTasks
@@ -35,6 +38,16 @@ class MainViewModel (
                     _taskNames.value.add("NoTask")
                 }
                 i++
+            }
+        }
+    }
+
+    fun addEntryForWidget(widgetTaskId: Int) {
+        viewModelScope.launch {
+            val task = widgetTaskRepository.getTaskForId(widgetTaskId)
+            val entry = task?.let { Entry(0, "", it.id, System.currentTimeMillis()) }
+            if (entry != null) {
+                entryRepository.addEntry(entry)
             }
         }
     }

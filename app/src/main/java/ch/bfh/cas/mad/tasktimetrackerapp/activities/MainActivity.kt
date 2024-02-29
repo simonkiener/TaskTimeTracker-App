@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import ch.bfh.cas.mad.tasktimetrackerapp.R
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.EntryRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.TTTDatabaseProvider
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.WidgetTask
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.WidgetTaskRepository
@@ -109,7 +110,7 @@ class MainActivity : ComponentActivity() {
 
         val viewModelProvider = ViewModelProvider(
             this,
-            MainViewModelFactory(WidgetTaskRepository(TTTDatabaseProvider.get(this).getWidgetTaskDao()))
+            MainViewModelFactory(WidgetTaskRepository(TTTDatabaseProvider.get(this).getWidgetTaskDao()), EntryRepository(TTTDatabaseProvider.get(this).getEntryDao()))
         )
 
         viewModel = viewModelProvider[MainViewModel::class.java]
