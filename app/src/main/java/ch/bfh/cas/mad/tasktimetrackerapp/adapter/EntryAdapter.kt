@@ -15,6 +15,9 @@ import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailEntryActivity
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Task
 import java.sql.Timestamp
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 class EntryAdapter(
     private var entries: List<Entry>,
@@ -37,7 +40,7 @@ class EntryAdapter(
         val entry = entries[position]
         holder.entryName.text = entry.description
         holder.taskName.text = getTaskName(entry.taskId)  // ToDo: change method to database query
-        holder.timeStamp.text = Timestamp(entry.timeStamp).toString()
+        holder.timeStamp.text = getTimeStampFormatted(entry.timeStamp)
 
         // Set background color based on position
         if (position % 2 == 0) {
@@ -58,6 +61,12 @@ class EntryAdapter(
     }
 
     override fun getItemCount() = entries.size
+
+    private fun getTimeStampFormatted(timeStamp: Long): String {
+        val currentDateTime = LocalDateTime.ofEpochSecond(timeStamp, 0, ZoneOffset.UTC)
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")
+        return currentDateTime.format(formatter)
+    }
 
     private fun getTaskName(taskId: Int): String {
         return tasks.find { it.id == taskId }?.name ?: ""

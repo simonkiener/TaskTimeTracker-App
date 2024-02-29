@@ -293,13 +293,12 @@ class EntryOverviewActivity : ComponentActivity() {
         inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
     }
 
-    private fun getTotalTimeText(totalTime: Long): String {
-        if (totalTime > 0) {
-            val seconds = totalTime / 1000
-            val minutes = seconds / 60
+    private fun getTotalTimeText(totalTimeInSeconds: Long): String {
+        if (totalTimeInSeconds > 0) {
+            val minutes = totalTimeInSeconds / 60
             val minutesLeft = minutes.mod(60)
             val hours = minutes / 60
-            val secondsLeft = seconds - (minutesLeft * 60) - (hours * 3600)
+            val secondsLeft = totalTimeInSeconds - (minutesLeft * 60) - (hours * 3600)
 
             return "Total time: " + hours.toString() + "h " + minutesLeft.toString() + "min " + secondsLeft.toString() + "s"
         }
