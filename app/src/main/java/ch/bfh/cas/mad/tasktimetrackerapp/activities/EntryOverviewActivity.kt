@@ -34,6 +34,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -146,15 +148,10 @@ class EntryOverviewActivity : ComponentActivity() {
             val datePickerDialog = DatePickerDialog(this,
                 { _, selectedYear, selectedMonth, selectedDay ->
                     textViewStartDate.text = "$selectedDay/${selectedMonth + 1}/$selectedYear"
-                    calendar.set(selectedYear, selectedMonth + 1, selectedDay, 0, 0, 0)
 
-                    println("------------------------------------------------")
-                    println("Year: " + selectedYear.toString())
-                    println("Month: " + (selectedMonth + 1).toString())
-                    println("Day: " + selectedDay.toString())
-                    println("------------------------------------------------")
-
-                    startDate = calendar.timeInMillis
+                    // why the hell do we have to add one month?
+                    startDate = LocalDateTime.of(selectedYear, selectedMonth + 1, selectedDay, 0, 0, 0).atZone(
+                        ZoneOffset.UTC).toEpochSecond()
 
                     getEntries()
                 }, year, month, day)
@@ -165,8 +162,9 @@ class EntryOverviewActivity : ComponentActivity() {
             val datePickerDialog = DatePickerDialog(this,
                 { _, selectedYear, selectedMonth, selectedDay ->
                     textViewEndDate.text = "$selectedDay/${selectedMonth + 1}/$selectedYear"
-                    calendar.set(selectedYear, selectedMonth + 1, selectedDay, 23, 59, 59)
-                    endDate = calendar.timeInMillis
+
+                    endDate = LocalDateTime.of(selectedYear, selectedMonth + 1, selectedDay, 23, 59, 59).atZone(
+                        ZoneOffset.UTC).toEpochSecond()
 
                     getEntries()
                 }, year, month, day)
