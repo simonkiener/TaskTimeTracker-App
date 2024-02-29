@@ -46,7 +46,7 @@ class MainViewModel (
         viewModelScope.launch {
             // Check if current action is start or stop
             val entries = entryRepository.getAllEntries()
-            val isStartAction = entries.size.mod(2) == 0
+            val isStartAction = entries.size.mod(2) == 1
 
             // get current timestamp for entries to have the same for each entry
             val timeStamp = System.currentTimeMillis()
