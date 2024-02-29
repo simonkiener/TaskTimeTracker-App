@@ -16,7 +16,7 @@ class WidgetTaskRepository(
     }
 
     suspend fun getTaskForId(widgetTaskId: Int): Task = withContext(Dispatchers.IO) {
-        return@withContext widgetTaskDao.getTaskForId(widgetTaskId)
+        return@withContext widgetTaskDao.getTaskForId(widgetTaskId)[0]
     }
 
     suspend fun setTaskForId(widgetTaskId: Int, taskId: Int) {
