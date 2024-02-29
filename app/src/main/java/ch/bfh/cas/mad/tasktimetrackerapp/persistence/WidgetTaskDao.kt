@@ -17,6 +17,9 @@ interface WidgetTaskDao {
     @Query("SELECT taskId FROM widgetTask WHERE id = :widgetTaskId")
     suspend fun getTaskIdForId(widgetTaskId: Int): Int
 
+    @Query("SELECT * FROM task JOIN widgetTask ON task.id = taskId WHERE id = :widgetTaskId")
+    suspend fun getTaskForId(widgetTaskId: Int): Task
+
     // Update
     @Query("UPDATE widgetTask SET taskId = :taskId WHERE id = :widgetTaskId")
     suspend fun setTaskForId(widgetTaskId: Int, taskId: Int)

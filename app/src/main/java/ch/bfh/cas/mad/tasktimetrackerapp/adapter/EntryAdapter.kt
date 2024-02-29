@@ -41,8 +41,10 @@ class EntryAdapter(
         // Set background color based on position
         if (position % 2 == 0) {
             holder.itemView.setBackgroundColor(Color.LTGRAY) // Change this to your desired color for even positions
+            holder.entryName.text = "Start"
         } else {
             holder.itemView.setBackgroundColor(Color.WHITE) // Change this to your desired color for odd positions
+            holder.entryName.text = "Stop"
         }
 
         holder.editButton.setOnClickListener {
