@@ -52,17 +52,21 @@ class MainViewModel (
             val timeStamp = System.currentTimeMillis()
 
             // add stop entry if needed
+            var stopEntryTaskId = -1
             if (!isStartAction) {
                 val lastEntryTaskId = entries.last().taskId
                 val stopEntry = Entry(0, "STOP", lastEntryTaskId, timeStamp)
+                stopEntryTaskId = stopEntry.taskId
                 entryRepository.addEntry(stopEntry)
             }
 
             // add start entry if needed
             val currentTask = widgetTaskRepository.getTaskForId(widgetTaskId)
             if (currentTask != null) {
-                val startEntry = Entry(0, "START", currentTask.id, timeStamp)
-                entryRepository.addEntry(startEntry)
+                if (isStartAction || stopEntryTaskId != currentTask.id) {
+                    val startEntry = Entry(0, "START", currentTask.id, timeStamp)
+                    entryRepository.addEntry(startEntry)
+                }
             }
         }
     }
