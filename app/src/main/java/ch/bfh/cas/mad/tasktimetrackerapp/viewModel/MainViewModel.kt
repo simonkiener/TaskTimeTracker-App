@@ -25,7 +25,9 @@ class MainViewModel (
     fun getTaskName(widgetTaskId: Int) {
         viewModelScope.launch {
             val task = widgetTaskRepository.getTaskForId(widgetTaskId)
-            _taskName.value = task.name
+            if (task != null) {
+                _taskName.value = task.name
+            }
         }
     }
 }
