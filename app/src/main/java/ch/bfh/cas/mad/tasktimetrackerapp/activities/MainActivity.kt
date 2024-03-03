@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.viewModelScope
 
 
 class MainActivity : AppCompatActivity() {
@@ -94,6 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("onCreate MainActivity")
         setContentView(R.layout.activity_main)
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
@@ -119,7 +121,6 @@ class MainActivity : AppCompatActivity() {
         )
 
         viewModel = viewModelProvider[MainViewModel::class.java]
-
 
         taskAssignmentButton = findViewById(R.id.TaskAssingmentButton)
         widgetSpot1 = findViewById(R.id.main_buttonTask1)
@@ -162,10 +163,8 @@ class MainActivity : AppCompatActivity() {
                         RemoteViews(packageName, R.layout.widget_layout),
                         widgetButtons.indexOf(button) + 1)
                 }
-
             }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -201,14 +200,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        println("onResume MainActivity")
+        viewModel.getAllWidgetTasks()
         lifecycleScope.launch {
             viewModel.getTaskNames(4)
-            if (viewModel.taskNames.value.isNotEmpty()) {
-                widgetSpot1.text = viewModel.taskNames.value[0]
-                widgetSpot2.text = viewModel.taskNames.value[1]
-                widgetSpot3.text = viewModel.taskNames.value[2]
-                widgetSpot4.text = viewModel.taskNames.value[3]
-            }
+            widgetSpot1.text = viewModel.taskNames.value?.get(0) ?: "NoTask"
+            widgetSpot2.text = viewModel.taskNames.value?.get(1) ?: "NoTask"
+            widgetSpot3.text = viewModel.taskNames.value?.get(2) ?: "NoTask"
+            widgetSpot4.text = viewModel.taskNames.value?.get(3) ?: "NoTask"
             //update WidgetText
             updateWidgetName(RemoteViews(packageName, R.layout.widget_layout))
         }

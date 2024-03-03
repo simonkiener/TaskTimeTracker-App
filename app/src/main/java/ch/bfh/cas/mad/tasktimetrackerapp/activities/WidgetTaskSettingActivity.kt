@@ -95,25 +95,25 @@ class WidgetTaskSettingActivity : ComponentActivity() {
         fieldSpot1.setOnItemClickListener{ parent, _, position, _ ->
             val selectedTaskName = parent.getItemAtPosition(position) as String
             val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
-            setTaskForId(1, selectedTask.id)
+            setTaskForId(1, selectedTask.id, fieldSpot1)
         }
 
         fieldSpot2.setOnItemClickListener{ parent, _, position, _ ->
             val selectedTaskName = parent.getItemAtPosition(position) as String
             val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
-            setTaskForId(2, selectedTask.id)
+            setTaskForId(2, selectedTask.id, fieldSpot2)
         }
 
         fieldSpot3.setOnItemClickListener{ parent, _, position, _ ->
             val selectedTaskName = parent.getItemAtPosition(position) as String
             val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
-            setTaskForId(3, selectedTask.id)
+            setTaskForId(3, selectedTask.id, fieldSpot3)
         }
 
         fieldSpot4.setOnItemClickListener{ parent, _, position, _ ->
             val selectedTaskName = parent.getItemAtPosition(position) as String
             val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
-            setTaskForId(4, selectedTask.id)
+            setTaskForId(4, selectedTask.id, fieldSpot4)
         }
 
         clearAllButton.setOnClickListener {
@@ -140,7 +140,16 @@ class WidgetTaskSettingActivity : ComponentActivity() {
         viewModel.getAllWidgetTasks()
     }
 
-    private fun setTaskForId(id: Int, taskId: Int) {
-        viewModel.setTaskForId(id, taskId)
+    private fun setTaskForId(id: Int, taskId: Int, field: AutoCompleteTextView) {
+        lifecycleScope.launch {
+            val widgetTasks = viewModel.widgetTasks.value
+            if (widgetTasks.any { it.taskId == taskId }) {
+                Toast.makeText(this@WidgetTaskSettingActivity, "Task already selected", Toast.LENGTH_SHORT).show()
+                field.setText("")
+                viewModel.setTaskForId(id, 0)
+            } else {
+                viewModel.setTaskForId(id, taskId)
+            }
+        }
     }
 }
