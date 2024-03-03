@@ -243,9 +243,9 @@ class EntryOverviewActivity : ComponentActivity() {
             }
         }
 
-        //TODO: Hier Daten aufbereiten (Project / Dauer) fuer CSV - Export is Working
+        //TODO: Hier Daten aufbereiten (Project / Dauer) fuer CSV - Export is Working fine
         exportButton.setOnClickListener {
-            val content = DataStore.entries.map { entry ->
+            val content = viewModel.entries.value.map { entry ->
                 listOf(
                     entry.id.toString(),
                     entry.description,
@@ -257,7 +257,7 @@ class EntryOverviewActivity : ComponentActivity() {
 
 
         printButton.setOnClickListener {
-            val content = DataStore.entries//viewModel.entries.value.joinToString("\n")
+            val content = viewModel.entries.value
             val pdfExportHelper = PdfExportHelper(this)
             pdfExportHelper.createAndSavePdf("$fileName.pdf" , content, projectName.text.toString() + " - " + taskName.text.toString())
         }

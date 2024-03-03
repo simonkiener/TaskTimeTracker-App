@@ -40,4 +40,18 @@
     <string name="select_or_add_task">Select or Add Task</string>
     <string name="edit">Edit</string>
     <string name="init_database">Init Database</string>
+    <string name="add_project">Add Project</string>
+    <string name="project_name">Project Name</string>
+    <string name="back">Back</string>
+    <string name="widget_settings">Widget Settings</string>
+    <string name="select_a_task_for_widget_spot_1">Select a Task for Widget Spot 1</string>
+    <string name="select_a_task_for_widget_spot_2">Select a Task for Widget Spot 2</string>
+    <string name="select_a_task_for_widget_spot_3">Select a Task for Widget Spot 3</string>
+    <string name="select_a_task_for_widget_spot_4">Select a Task for Widget Spot 4</string>
+    <string name="clear_all">Clear All</string>
+    <string name="add_new_task">Add new Task</string>
+    <string name="entry_details">Entry Details</string>
+    <string name="end_datetime">End DateTime</string>
+    <string name="start_datetime">Start DateTime</string>
+    <string name="project">Project</string>
 </resources>
