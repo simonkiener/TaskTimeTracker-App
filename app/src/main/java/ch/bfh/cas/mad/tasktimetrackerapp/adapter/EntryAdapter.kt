@@ -53,8 +53,10 @@ class EntryAdapter(
             holder.editButton.setOnClickListener {
                 val context = holder.itemView.context
                 val intent = Intent(context, DetailEntryActivity::class.java)
+                intent.putExtra("entryId", entry.id)
                 intent.putExtra("task", entry.description)
                 intent.putExtra("project", getProjectName(entry.taskId))
+                intent.putExtra("timestamp", getTimeStampFormatted(entry.timeStamp))
                 context.startActivity(intent)
             }
         }

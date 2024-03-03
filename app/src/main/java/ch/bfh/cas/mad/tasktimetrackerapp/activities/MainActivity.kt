@@ -6,16 +6,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.RemoteViews
-import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.room.InvalidationTracker
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.EntryRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.TTTDatabaseProvider
@@ -29,15 +28,15 @@ import ch.bfh.cas.mad.tasktimetrackerapp.widget.WidgetProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.viewModelScope
 
-class MainActivity : ComponentActivity() {
+
+class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var widgetTasks: List<WidgetTask>
-    private lateinit var taskNavigationButton: Button
-    private lateinit var projectNavigationButton: Button
-    private lateinit var entriesNavigationButton: Button
-    private lateinit var databaseInitButton: Button
 
     private lateinit var taskAssignmentButton: FloatingActionButton
     private lateinit var widgetSpot1: Button
@@ -45,6 +44,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var widgetSpot3: Button
     private lateinit var widgetSpot4: Button
     private var widgetButtons: List<Button> = listOf()
+
 
     private val localReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -95,6 +95,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("onCreate MainActivity")
         setContentView(R.layout.activity_main)
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
@@ -121,15 +122,15 @@ class MainActivity : ComponentActivity() {
 
         viewModel = viewModelProvider[MainViewModel::class.java]
 
-        taskNavigationButton = findViewById(R.id.main_buttonTasks)
-        projectNavigationButton = findViewById(R.id.main_buttonProjects)
-        entriesNavigationButton = findViewById(R.id.main_buttonEntries)
-        databaseInitButton = findViewById(R.id.main_buttonDatabaseInit)
         taskAssignmentButton = findViewById(R.id.TaskAssingmentButton)
         widgetSpot1 = findViewById(R.id.main_buttonTask1)
         widgetSpot2 = findViewById(R.id.main_buttonTask2)
         widgetSpot3 = findViewById(R.id.main_buttonTask3)
         widgetSpot4 = findViewById(R.id.main_buttonTask4)
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
 
         widgetButtons = listOf(widgetSpot1, widgetSpot2, widgetSpot3, widgetSpot4)
 
@@ -140,25 +141,6 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        taskNavigationButton.setOnClickListener {
-            val intent = Intent(this, TaskOverviewActivity::class.java)
-            startActivity(intent)
-        }
-
-        projectNavigationButton.setOnClickListener {
-            val intent = Intent(this, ProjectOverviewActivity::class.java)
-            startActivity(intent)
-        }
-
-        entriesNavigationButton.setOnClickListener {
-            val intent = Intent(this, EntryOverviewActivity::class.java)
-            startActivity(intent)
-        }
-
-        databaseInitButton.setOnClickListener {
-            val intent = Intent(this, InitDatabaseActivity::class.java)
-            startActivity(intent)
-        }
         taskAssignmentButton.setOnClickListener {
             val intent = Intent(this, WidgetTaskSettingActivity::class.java)
             startActivity(intent)
@@ -181,22 +163,51 @@ class MainActivity : ComponentActivity() {
                         RemoteViews(packageName, R.layout.widget_layout),
                         widgetButtons.indexOf(button) + 1)
                 }
-
             }
         }
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_tasks -> {
+                val intent = Intent(this, TaskOverviewActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.menu_projects -> {
+                val intent = Intent(this, ProjectOverviewActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.menu_entries -> {
+                val intent = Intent(this, EntryOverviewActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.menu_initDataBase -> {
+                val intent = Intent(this, InitDatabaseActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onResume() {
         super.onResume()
+        println("onResume MainActivity")
+        viewModel.getAllWidgetTasks()
         lifecycleScope.launch {
             viewModel.getTaskNames(4)
-            if (viewModel.taskNames.value.isNotEmpty()) {
-                widgetSpot1.text = viewModel.taskNames.value[0]
-                widgetSpot2.text = viewModel.taskNames.value[1]
-                widgetSpot3.text = viewModel.taskNames.value[2]
-                widgetSpot4.text = viewModel.taskNames.value[3]
-            }
+            widgetSpot1.text = viewModel.taskNames.value?.get(0) ?: "NoTask"
+            widgetSpot2.text = viewModel.taskNames.value?.get(1) ?: "NoTask"
+            widgetSpot3.text = viewModel.taskNames.value?.get(2) ?: "NoTask"
+            widgetSpot4.text = viewModel.taskNames.value?.get(3) ?: "NoTask"
             //update WidgetText
             updateWidgetName(RemoteViews(packageName, R.layout.widget_layout))
         }

@@ -67,7 +67,8 @@ class WidgetTaskSettingActivity : ComponentActivity() {
         lifecycleScope.launch {
             taskViewModel.tasks.collectLatest { tasks ->
                 this@WidgetTaskSettingActivity.tasks = tasks
-                val adapter = ArrayAdapter(this@WidgetTaskSettingActivity, android.R.layout.simple_dropdown_item_1line, tasks)
+                val taskNames = tasks.map { it.getTaskName() }
+                val adapter = ArrayAdapter(this@WidgetTaskSettingActivity, android.R.layout.simple_dropdown_item_1line, taskNames)
                 fieldSpot1.setAdapter(adapter)
                 fieldSpot2.setAdapter(adapter)
                 fieldSpot3.setAdapter(adapter)
@@ -80,10 +81,10 @@ class WidgetTaskSettingActivity : ComponentActivity() {
                         val currentTask = tasks.filter { it.id == widgetTasks[i].taskId }
                         i++
                         when (i) {
-                            1 -> fieldSpot1.setText(currentTask.firstOrNull()?.toString())
-                            2 -> fieldSpot2.setText(currentTask.firstOrNull()?.toString())
-                            3 -> fieldSpot3.setText(currentTask.firstOrNull()?.toString())
-                            4 -> fieldSpot4.setText(currentTask.firstOrNull()?.toString())
+                            1 -> fieldSpot1.setText(currentTask.firstOrNull()?.getTaskName())
+                            2 -> fieldSpot2.setText(currentTask.firstOrNull()?.getTaskName())
+                            3 -> fieldSpot3.setText(currentTask.firstOrNull()?.getTaskName())
+                            4 -> fieldSpot4.setText(currentTask.firstOrNull()?.getTaskName())
                         }
                     }
                 }
@@ -91,33 +92,28 @@ class WidgetTaskSettingActivity : ComponentActivity() {
         }
 
 
-
         fieldSpot1.setOnItemClickListener{ parent, _, position, _ ->
-            val item = parent.getItemAtPosition(position)
-            if (item is Task) {
-                setTaskForId(1, item.id)
-            }
+            val selectedTaskName = parent.getItemAtPosition(position) as String
+            val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
+            setTaskForId(1, selectedTask.id, fieldSpot1)
         }
 
         fieldSpot2.setOnItemClickListener{ parent, _, position, _ ->
-            val item = parent.getItemAtPosition(position)
-            if (item is Task) {
-                setTaskForId(2, item.id)
-            }
+            val selectedTaskName = parent.getItemAtPosition(position) as String
+            val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
+            setTaskForId(2, selectedTask.id, fieldSpot2)
         }
 
         fieldSpot3.setOnItemClickListener{ parent, _, position, _ ->
-            val item = parent.getItemAtPosition(position)
-            if (item is Task) {
-                setTaskForId(3, item.id)
-            }
+            val selectedTaskName = parent.getItemAtPosition(position) as String
+            val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
+            setTaskForId(3, selectedTask.id, fieldSpot3)
         }
 
         fieldSpot4.setOnItemClickListener{ parent, _, position, _ ->
-            val item = parent.getItemAtPosition(position)
-            if (item is Task) {
-                setTaskForId(4, item.id)
-            }
+            val selectedTaskName = parent.getItemAtPosition(position) as String
+            val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
+            setTaskForId(4, selectedTask.id, fieldSpot4)
         }
 
         clearAllButton.setOnClickListener {
@@ -144,23 +140,16 @@ class WidgetTaskSettingActivity : ComponentActivity() {
         viewModel.getAllWidgetTasks()
     }
 
-    private fun setTaskForId(id: Int, taskId: Int) {
-        viewModel.setTaskForId(id, taskId)
+    private fun setTaskForId(id: Int, taskId: Int, field: AutoCompleteTextView) {
+        lifecycleScope.launch {
+            val widgetTasks = viewModel.widgetTasks.value
+            if (widgetTasks.any { it.taskId == taskId }) {
+                Toast.makeText(this@WidgetTaskSettingActivity, "Task already selected", Toast.LENGTH_SHORT).show()
+                field.setText("")
+                viewModel.setTaskForId(id, 0)
+            } else {
+                viewModel.setTaskForId(id, taskId)
+            }
+        }
     }
-
-//    private fun checkTaskSelection(selectedTask: String, position: Int, sharedPreferences: SharedPreferences, autoCompleteTextView: AutoCompleteTextView) {
-//        val selectedTasks = listOf(
-//            sharedPreferences.getString("selectedTask1", ""),
-//            sharedPreferences.getString("selectedTask2", ""),
-//            sharedPreferences.getString("selectedTask3", ""),
-//            sharedPreferences.getString("selectedTask4", "")
-//        )
-//
-//        if (selectedTasks.filterNotNull().contains(selectedTask)) {
-//            autoCompleteTextView.setText("")
-//            Toast.makeText(this, "Task bereits ausgewählt", Toast.LENGTH_SHORT).show()
-//        } else {
-//            sharedPreferences.edit().putString("selectedTask${position + 1}", selectedTask).apply()
-//        }
-//    }
 }

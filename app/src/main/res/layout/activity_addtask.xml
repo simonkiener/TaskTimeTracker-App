@@ -28,25 +28,39 @@
         android:layout_marginBottom="20dp"
         android:textSize="24sp"/>
 
-    <EditText
-        android:id="@+id/taskName"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutTaskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/task_name"
-        android:inputType="text"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp">
 
-    <AutoCompleteTextView
-        android:id="@+id/projectName"
+        <EditText
+            android:id="@+id/taskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/task_name"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutProjectName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/select_or_add_project"
-        android:inputType="text"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/projectName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/select_or_add_project"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/addTaskButton"

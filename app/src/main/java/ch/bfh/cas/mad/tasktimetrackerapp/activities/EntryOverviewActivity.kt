@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ch.bfh.cas.mad.tasktimetrackerapp.csvExport.CSVExportHelper
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.pdfExport.PdfExportHelper
@@ -48,11 +49,14 @@ class EntryOverviewActivity : ComponentActivity() {
     private lateinit var addButton: FloatingActionButton
     private lateinit var backButton: FloatingActionButton
     private lateinit var exportButton: Button
+    private lateinit var printButton: Button
     private lateinit var projectName: AutoCompleteTextView
     private lateinit var taskName: AutoCompleteTextView
     private lateinit var totalTimeView: TextView
     private lateinit var project: Project
+    private lateinit var projects: List<Project>
     private lateinit var task: Task
+    private lateinit var tasks: List<Task>
     private var startDate: Long = Long.MIN_VALUE
     private var endDate: Long = Long.MAX_VALUE
     private var projectId: Int = -1
@@ -62,7 +66,8 @@ class EntryOverviewActivity : ComponentActivity() {
 
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
     private val dateStr = dateFormat.format(Date())
-    private val fileName = "TTT-Export-$dateStr.pdf"
+    private val fileName = "TTT-Export-$dateStr"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,6 +96,7 @@ class EntryOverviewActivity : ComponentActivity() {
         backButton = findViewById(R.id.fabBack)
 
         exportButton = findViewById(R.id.buttonExport)
+        printButton = findViewById(R.id.buttonPrint)
 
         projectName = findViewById(R.id.projectName)
         taskName = findViewById(R.id.taskName)
@@ -101,7 +107,9 @@ class EntryOverviewActivity : ComponentActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {
             taskViewModel.tasks.collectLatest { tasks ->
-                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, tasks)
+                this@EntryOverviewActivity.tasks = tasks
+                val taskNames = tasks.map { it.getTaskName() }
+                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, taskNames)
                 taskName.setAdapter(adapter)
 
                 // Innerhalb des Aufrufs, damit alle Daten vorhanden sind für EntryAdapter
@@ -115,7 +123,9 @@ class EntryOverviewActivity : ComponentActivity() {
         // getAllProjects
         lifecycleScope.launch {
             projectViewModel.projects.collectLatest { projects ->
-                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, projects)
+                this@EntryOverviewActivity.projects = projects
+                val projectNames = projects.map { it.getProjectName()}
+                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, projectNames)
                 projectName.setAdapter(adapter)
             }
         }
@@ -136,8 +146,8 @@ class EntryOverviewActivity : ComponentActivity() {
             }
         }
 
-        val textViewStartDate = findViewById<TextView>(R.id.textViewStartDate)
-        val textViewEndDate = findViewById<TextView>(R.id.textViewEndDate)
+        val textViewStartDate = findViewById<TextView>(R.id.editTextStartDate)
+        val textViewEndDate = findViewById<TextView>(R.id.editTextEndDate)
 
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -173,17 +183,13 @@ class EntryOverviewActivity : ComponentActivity() {
 
         projectName.setOnItemClickListener { parent, view, position, _ ->
             closeKeyboard(view)
-
-            val item = parent.getItemAtPosition(position)
-            if (item is Project) {
-                val project: Project = item
-                this@EntryOverviewActivity.project = project
-                this@EntryOverviewActivity.projectId = project.id
-                this@EntryOverviewActivity.taskId = -1
-                taskName.setText("")
-                projectChosen = true
-            }
-
+            val selectedProjectName = parent.getItemAtPosition(position) as String
+            val selectedProject = projects.first { it.getProjectName() == selectedProjectName }
+            this@EntryOverviewActivity.project = selectedProject
+            this@EntryOverviewActivity.projectId = selectedProject.id
+            this@EntryOverviewActivity.taskId = -1
+            taskName.setText("")
+            projectChosen = true
             getEntries()
             getTasks()
         }
@@ -211,15 +217,11 @@ class EntryOverviewActivity : ComponentActivity() {
 
         taskName.setOnItemClickListener { parent, view, position, _ ->
             closeKeyboard(view)
-
-            val item = parent.getItemAtPosition(position)
-            if (item is Task) {
-                val task: Task = item
-                this@EntryOverviewActivity.task = task
-                this@EntryOverviewActivity.taskId = task.id
-                taskChosen = true
-            }
-
+            val selectedTaskName = parent.getItemAtPosition(position) as String
+            val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
+            this@EntryOverviewActivity.task = selectedTask
+            this@EntryOverviewActivity.taskId = selectedTask.id
+            taskChosen = true
             getEntries()
         }
 
@@ -241,10 +243,23 @@ class EntryOverviewActivity : ComponentActivity() {
             }
         }
 
+        //TODO: Hier Daten aufbereiten (Project / Dauer) fuer CSV - Export is Working fine
         exportButton.setOnClickListener {
-            val content = DataStore.entries//viewModel.entries.value.joinToString("\n")
+            val content = viewModel.entries.value.map { entry ->
+                listOf(
+                    entry.id.toString(),
+                    entry.description,
+                    entry.taskId.toString(),
+                    entry.timeStamp.toString()
+                )}
+            val csvExportHelper = CSVExportHelper(this)
+            csvExportHelper.exportToCsv(content, "$fileName.csv")}
+
+
+        printButton.setOnClickListener {
+            val content = viewModel.entries.value
             val pdfExportHelper = PdfExportHelper(this)
-            pdfExportHelper.createAndSavePdf(fileName, content, projectName.text.toString() + " - " + taskName.text.toString())
+            pdfExportHelper.createAndSavePdf("$fileName.pdf" , content, projectName.text.toString() + " - " + taskName.text.toString())
         }
 
         addButton.setOnClickListener {
