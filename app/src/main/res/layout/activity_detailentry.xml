@@ -22,51 +22,76 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Entry Details"
+        android:text="@string/entry_details"
         android:gravity="center"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="20dp"
         android:textSize="24sp"/>
-    <EditText
-        android:id="@+id/editTextTaskName"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutTaskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Task Name"
-        android:inputType="text"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp">
 
-    <EditText
-        android:id="@+id/editTextProject"
+        <EditText
+            android:id="@+id/editTextTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/task_name"
+            android:inputType="text"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_marginBottom="8dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutProject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Project"
-        android:inputType="text"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/editTextProject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/project"
+            android:inputType="text"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints="@String/Project" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
         android:id="@+id/editTextStartDateTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Start DateTime"
+        android:hint="@string/start_datetime"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:autofillHints="StartDate"
+        android:inputType="date"/>
 
     <EditText
         android:id="@+id/editTextEndDateTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="End DateTime"
+        android:hint="@string/end_datetime"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:autofillHints="EndDate"
+        android:inputType="date" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/EditEntryButton"
@@ -78,7 +103,8 @@
         app:tint="@color/white"
         app:layout_anchorGravity="center"
         app:fabCustomSize="100dp"
-        app:backgroundTint="@color/actionColor" />
+        app:backgroundTint="@color/actionColor"
+        android:contentDescription="@string/edit" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabBack"
@@ -90,6 +116,7 @@
         app:tint="@color/white"
         app:layout_anchorGravity="bottom|start|end"
         app:fabCustomSize="56dp"
-        app:backgroundTint="@color/actionColor"/>
+        app:backgroundTint="@color/actionColor"
+        android:contentDescription="@string/edit" />
 
 </LinearLayout>

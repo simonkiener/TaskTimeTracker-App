@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Widget Settings"
+        android:text="@string/widget_settings"
         android:gravity="center"
         android:layout_marginTop="5dp"
         android:layout_marginStart="16dp"
@@ -29,45 +29,74 @@
         android:layout_marginBottom="20dp"
         android:textSize="24sp"/>
 
-    <AutoCompleteTextView
-        android:id="@+id/fieldSelectSpot1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Select a Task for Widget Spot 1"
-        android:inputType="text"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"/>
 
-    <AutoCompleteTextView
-        android:id="@+id/fieldSelectSpot2"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Select a Task for Widget Spot 2"
-        android:inputType="text"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp">
 
-    <AutoCompleteTextView
-        android:id="@+id/fieldSelectSpot3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Select a Task for Widget Spot 3"
-        android:inputType="text"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"/>
+        <AutoCompleteTextView
+            android:id="@+id/fieldSelectSpot1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/select_a_task_for_widget_spot_1"
+            android:inputType="text" />
 
-    <AutoCompleteTextView
-        android:id="@+id/fieldSelectSpot4"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Select a Task for Widget Spot 4"
-        android:inputType="text"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/fieldSelectSpot2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/select_a_task_for_widget_spot_2"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/fieldSelectSpot3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/select_a_task_for_widget_spot_3"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/fieldSelectSpot4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/select_a_task_for_widget_spot_4"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -81,19 +110,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
             android:layout_margin="16dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginEnd="25dp"
             android:src="@drawable/ic_back"
             app:tint="@color/white"
             app:layout_anchorGravity="bottom|start|end"
             app:fabCustomSize="56dp"
             app:backgroundTint="@color/actionColor"
-            android:contentDescription="BackButton" />
+            android:contentDescription="@string/back" />
 
         <Button
             android:id="@+id/buttonClearAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Clear All"
+            android:text="@string/clear_all"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginHorizontal="15dp"
@@ -104,7 +133,7 @@
             android:id="@+id/AddNewTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add new Task"
+            android:text="@string/add_new_task"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginHorizontal="15dp"

@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Project"
+        android:text="@string/add_project"
         android:gravity="center"
         android:layout_marginTop="5dp"
         android:layout_marginStart="16dp"
@@ -28,21 +28,29 @@
         android:layout_marginBottom="20dp"
         android:textSize="24sp"/>
 
-    <EditText
-        android:id="@+id/projectName"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutProject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Project Name"
-        android:inputType="text"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/projectName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/project_name"
+            android:inputType="text"
+            android:autofillHints="ProjectName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/addProjectButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Project"
+        android:text="@string/add_project"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"
@@ -59,7 +67,8 @@
         app:tint="@color/white"
         app:layout_anchorGravity="bottom|start|end"
         app:fabCustomSize="56dp"
-        app:backgroundTint="@color/actionColor"/>
+        app:backgroundTint="@color/actionColor"
+        android:contentDescription="@string/back" />
 
 
 </LinearLayout>

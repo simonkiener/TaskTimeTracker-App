@@ -146,8 +146,8 @@ class EntryOverviewActivity : ComponentActivity() {
             }
         }
 
-        val textViewStartDate = findViewById<TextView>(R.id.textViewStartDate)
-        val textViewEndDate = findViewById<TextView>(R.id.textViewEndDate)
+        val textViewStartDate = findViewById<TextView>(R.id.editTextStartDate)
+        val textViewEndDate = findViewById<TextView>(R.id.editTextEndDate)
 
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
