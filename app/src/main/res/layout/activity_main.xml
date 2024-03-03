@@ -6,17 +6,23 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/header"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/task_time_tracker"
-        android:textSize="32sp"
-        android:gravity="center"
         android:background="@color/mainColor"
-        android:textColor="#FFFFFF"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"/>
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_time_tracker"
+            android:textSize="32sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:layout_width="match_parent"
@@ -33,7 +39,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp">
 
         <Button
             android:id="@+id/main_buttonTask1"
@@ -90,51 +97,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"
         android:src="@drawable/ic_edit"
+        android:layout_marginTop="100dp"
         app:tint="@color/white"
-        app:fabCustomSize="56dp"
-        app:backgroundTint="@color/actionColor"/>
-
-    <Button
-        android:id="@+id/main_buttonTasks"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tasks"
-        android:padding="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="@color/actionColor" />
-
-    <Button
-        android:id="@+id/main_buttonProjects"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/projects"
-        android:padding="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="@color/actionColor" />
-
-    <Button
-        android:id="@+id/main_buttonEntries"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="@color/actionColor"
-        android:padding="20dp"
-        android:text="@string/entries" />
-
-    <Button
-        android:id="@+id/main_buttonDatabaseInit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/database"
-        android:padding="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="@color/actionColor"/>
+        app:fabCustomSize="100dp"
+        app:backgroundTint="@color/actionColor"
+        android:contentDescription="@string/edit" />
 </LinearLayout>

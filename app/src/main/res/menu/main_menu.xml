@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:popupTheme="@style/MenuTheme">
+    <item
+        android:id="@+id/menu_tasks"
+        android:title="@string/tasks"
+        android:icon="@drawable/ic_menu"/>
+    <item
+        android:id="@+id/menu_projects"
+        android:title="@string/projects"/>
+    <item
+        android:id="@+id/menu_entries"
+        android:title="@string/entries" />
+
+    <item
+        android:id="@+id/menu_initDataBase"
+        android:title="@string/init_database" />
+</menu>
