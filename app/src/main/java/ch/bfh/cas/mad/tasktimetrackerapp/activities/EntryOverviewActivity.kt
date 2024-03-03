@@ -54,7 +54,9 @@ class EntryOverviewActivity : ComponentActivity() {
     private lateinit var taskName: AutoCompleteTextView
     private lateinit var totalTimeView: TextView
     private lateinit var project: Project
+    private lateinit var projects: List<Project>
     private lateinit var task: Task
+    private lateinit var tasks: List<Task>
     private var startDate: Long = Long.MIN_VALUE
     private var endDate: Long = Long.MAX_VALUE
     private var projectId: Int = -1
@@ -105,7 +107,9 @@ class EntryOverviewActivity : ComponentActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {
             taskViewModel.tasks.collectLatest { tasks ->
-                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, tasks)
+                this@EntryOverviewActivity.tasks = tasks
+                val taskNames = tasks.map { it.getTaskName() }
+                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, taskNames)
                 taskName.setAdapter(adapter)
 
                 // Innerhalb des Aufrufs, damit alle Daten vorhanden sind für EntryAdapter
@@ -119,7 +123,9 @@ class EntryOverviewActivity : ComponentActivity() {
         // getAllProjects
         lifecycleScope.launch {
             projectViewModel.projects.collectLatest { projects ->
-                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, projects)
+                this@EntryOverviewActivity.projects = projects
+                val projectNames = projects.map { it.getProjectName()}
+                val adapter = ArrayAdapter(this@EntryOverviewActivity, android.R.layout.simple_dropdown_item_1line, projectNames)
                 projectName.setAdapter(adapter)
             }
         }
@@ -177,17 +183,13 @@ class EntryOverviewActivity : ComponentActivity() {
 
         projectName.setOnItemClickListener { parent, view, position, _ ->
             closeKeyboard(view)
-
-            val item = parent.getItemAtPosition(position)
-            if (item is Project) {
-                val project: Project = item
-                this@EntryOverviewActivity.project = project
-                this@EntryOverviewActivity.projectId = project.id
-                this@EntryOverviewActivity.taskId = -1
-                taskName.setText("")
-                projectChosen = true
-            }
-
+            val selectedProjectName = parent.getItemAtPosition(position) as String
+            val selectedProject = projects.first { it.getProjectName() == selectedProjectName }
+            this@EntryOverviewActivity.project = selectedProject
+            this@EntryOverviewActivity.projectId = selectedProject.id
+            this@EntryOverviewActivity.taskId = -1
+            taskName.setText("")
+            projectChosen = true
             getEntries()
             getTasks()
         }
@@ -215,15 +217,11 @@ class EntryOverviewActivity : ComponentActivity() {
 
         taskName.setOnItemClickListener { parent, view, position, _ ->
             closeKeyboard(view)
-
-            val item = parent.getItemAtPosition(position)
-            if (item is Task) {
-                val task: Task = item
-                this@EntryOverviewActivity.task = task
-                this@EntryOverviewActivity.taskId = task.id
-                taskChosen = true
-            }
-
+            val selectedTaskName = parent.getItemAtPosition(position) as String
+            val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
+            this@EntryOverviewActivity.task = selectedTask
+            this@EntryOverviewActivity.taskId = selectedTask.id
+            taskChosen = true
             getEntries()
         }
 

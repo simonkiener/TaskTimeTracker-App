@@ -7,4 +7,8 @@ import androidx.room.PrimaryKey
 data class Project (
     @PrimaryKey(autoGenerate = true) val id: Int,
     val name: String
-)
+){
+    fun getProjectName(): String {
+        return this.name
+    }
+}

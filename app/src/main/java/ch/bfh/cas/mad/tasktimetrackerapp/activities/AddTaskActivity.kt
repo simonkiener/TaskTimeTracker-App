@@ -31,6 +31,7 @@ class AddTaskActivity : ComponentActivity() {
     private lateinit var projectName: AutoCompleteTextView
     private lateinit var backButton: FloatingActionButton
     private lateinit var project: Project
+    private lateinit var projects: List<Project>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,18 +74,18 @@ class AddTaskActivity : ComponentActivity() {
         // getAllProjects
         lifecycleScope.launch {
             projectViewModel.projects.collectLatest { projects ->
-                val adapter = ArrayAdapter(this@AddTaskActivity, android.R.layout.simple_dropdown_item_1line, projects)
+                this@AddTaskActivity.projects = projects
+                val projectNames = projects.map { it.getProjectName()}
+                val adapter = ArrayAdapter(this@AddTaskActivity, android.R.layout.simple_dropdown_item_1line, projectNames)
                 projectName.setAdapter(adapter)
             }
         }
 
         // Variant 2, have a list of Project which is better to get item but not shown pretty in dropdown
         projectName.setOnItemClickListener{ parent, _, position, _ ->
-            val item = parent.getItemAtPosition(position)
-            if (item is Project) {
-                val project: Project = item
-                this@AddTaskActivity.project = project
-            }
+            val selectedProjectName = parent.getItemAtPosition(position) as String
+            val selectedProject = projects.first { it.getProjectName() == selectedProjectName }
+            this@AddTaskActivity.project = selectedProject
         }
 
         addTaskButton.setOnClickListener {

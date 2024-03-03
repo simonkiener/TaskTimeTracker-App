@@ -9,4 +9,8 @@ data class Task (
     val id: Int,
     val name: String,
     val projectId: Int
-)
+) {
+    fun getTaskName(): String {
+        return this.name
+    }
+}
