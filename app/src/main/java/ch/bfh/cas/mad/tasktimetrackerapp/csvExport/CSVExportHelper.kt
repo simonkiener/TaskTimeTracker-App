@@ -1,4 +1,4 @@
-package ch.bfh.cas.mad.tasktimetrackerapp.CSVExport
+package ch.bfh.cas.mad.tasktimetrackerapp.csvExport
 
 import com.opencsv.CSVWriter
 import java.io.FileWriter
