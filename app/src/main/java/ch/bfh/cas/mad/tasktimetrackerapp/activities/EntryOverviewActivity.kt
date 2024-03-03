@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ch.bfh.cas.mad.tasktimetrackerapp.CSVExport.CSVExportHelper
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.pdfExport.PdfExportHelper
@@ -48,6 +49,7 @@ class EntryOverviewActivity : ComponentActivity() {
     private lateinit var addButton: FloatingActionButton
     private lateinit var backButton: FloatingActionButton
     private lateinit var exportButton: Button
+    private lateinit var printButton: Button
     private lateinit var projectName: AutoCompleteTextView
     private lateinit var taskName: AutoCompleteTextView
     private lateinit var totalTimeView: TextView
@@ -62,7 +64,8 @@ class EntryOverviewActivity : ComponentActivity() {
 
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
     private val dateStr = dateFormat.format(Date())
-    private val fileName = "TTT-Export-$dateStr.pdf"
+    private val fileName = "TTT-Export-$dateStr"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,6 +94,7 @@ class EntryOverviewActivity : ComponentActivity() {
         backButton = findViewById(R.id.fabBack)
 
         exportButton = findViewById(R.id.buttonExport)
+        printButton = findViewById(R.id.buttonPrint)
 
         projectName = findViewById(R.id.projectName)
         taskName = findViewById(R.id.taskName)
@@ -241,10 +245,23 @@ class EntryOverviewActivity : ComponentActivity() {
             }
         }
 
+        //TODO: Hier Daten aufbereiten (Project / Dauer) fuer CSV - Export is Working
         exportButton.setOnClickListener {
+            val content = DataStore.entries.map { entry ->
+                listOf(
+                    entry.id.toString(),
+                    entry.description,
+                    entry.taskId.toString(),
+                    entry.timeStamp.toString()
+                )}
+            val csvExportHelper = CSVExportHelper(this)
+            csvExportHelper.exportToCsv(content, "$fileName.csv")}
+
+
+        printButton.setOnClickListener {
             val content = DataStore.entries//viewModel.entries.value.joinToString("\n")
             val pdfExportHelper = PdfExportHelper(this)
-            pdfExportHelper.createAndSavePdf(fileName, content, projectName.text.toString() + " - " + taskName.text.toString())
+            pdfExportHelper.createAndSavePdf("$fileName.pdf" , content, projectName.text.toString() + " - " + taskName.text.toString())
         }
 
         addButton.setOnClickListener {
