@@ -18,7 +18,6 @@ import ch.bfh.cas.mad.tasktimetrackerapp.csvExport.CSVExportHelper
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.adapter.EntryAdapter
 import ch.bfh.cas.mad.tasktimetrackerapp.pdfExport.PdfExportHelper
-import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.EntryRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Project
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.ProjectRepository
@@ -220,7 +219,7 @@ class EntryOverviewActivity : ComponentActivity() {
             val selectedTaskName = parent.getItemAtPosition(position) as String
             val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
             this@EntryOverviewActivity.task = selectedTask
-            this@EntryOverviewActivity.taskId = selectedTask.id
+            this@EntryOverviewActivity.taskId = selectedTask.taskId
             taskChosen = true
             getEntries()
         }

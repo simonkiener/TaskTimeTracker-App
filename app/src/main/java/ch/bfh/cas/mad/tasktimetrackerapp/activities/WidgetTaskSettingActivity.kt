@@ -1,7 +1,6 @@
 package ch.bfh.cas.mad.tasktimetrackerapp.activities
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -78,7 +77,7 @@ class WidgetTaskSettingActivity : ComponentActivity() {
                 viewModel.widgetTasks.collectLatest { widgetTasks ->
                     var i = 0
                     while (i < 4 && i < widgetTasks.size) {
-                        val currentTask = tasks.filter { it.id == widgetTasks[i].taskId }
+                        val currentTask = tasks.filter { it.taskId == widgetTasks[i].taskId }
                         i++
                         when (i) {
                             1 -> fieldSpot1.setText(currentTask.firstOrNull()?.getTaskName())
@@ -95,25 +94,25 @@ class WidgetTaskSettingActivity : ComponentActivity() {
         fieldSpot1.setOnItemClickListener{ parent, _, position, _ ->
             val selectedTaskName = parent.getItemAtPosition(position) as String
             val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
-            setTaskForId(1, selectedTask.id, fieldSpot1)
+            setTaskForId(1, selectedTask.taskId, fieldSpot1)
         }
 
         fieldSpot2.setOnItemClickListener{ parent, _, position, _ ->
             val selectedTaskName = parent.getItemAtPosition(position) as String
             val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
-            setTaskForId(2, selectedTask.id, fieldSpot2)
+            setTaskForId(2, selectedTask.taskId, fieldSpot2)
         }
 
         fieldSpot3.setOnItemClickListener{ parent, _, position, _ ->
             val selectedTaskName = parent.getItemAtPosition(position) as String
             val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
-            setTaskForId(3, selectedTask.id, fieldSpot3)
+            setTaskForId(3, selectedTask.taskId, fieldSpot3)
         }
 
         fieldSpot4.setOnItemClickListener{ parent, _, position, _ ->
             val selectedTaskName = parent.getItemAtPosition(position) as String
             val selectedTask = tasks.first { it.getTaskName() == selectedTaskName }
-            setTaskForId(4, selectedTask.id, fieldSpot4)
+            setTaskForId(4, selectedTask.taskId, fieldSpot4)
         }
 
         clearAllButton.setOnClickListener {

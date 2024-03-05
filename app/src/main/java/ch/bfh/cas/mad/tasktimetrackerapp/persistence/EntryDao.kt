@@ -3,7 +3,6 @@ package ch.bfh.cas.mad.tasktimetrackerapp.persistence
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import java.util.Date
 
 @Dao
 interface EntryDao {
@@ -24,10 +23,10 @@ interface EntryDao {
     @Query("SELECT * FROM entry WHERE timeStamp >= :startDate AND timeStamp <= :endDate AND taskId = :taskId")
     suspend fun getEntriesForTask(startDate: Long, endDate: Long, taskId: Int): MutableList<Entry>
 
-    @Query("SELECT * FROM entry JOIN task ON entry.taskId = task.id WHERE task.projectId = :projectId")
+    @Query("SELECT * FROM entry JOIN task ON entry.taskId = task.taskId WHERE task.projectId = :projectId")
     suspend fun getEntriesForProject(projectId: Int): MutableList<Entry>
 
-    @Query("SELECT * FROM entry JOIN task ON entry.taskId = task.id WHERE timeStamp >= :startDate AND timeStamp <= :endDate AND task.projectId = :projectId")
+    @Query("SELECT * FROM entry JOIN task ON entry.taskId = task.taskId WHERE timeStamp >= :startDate AND timeStamp <= :endDate AND task.projectId = :projectId")
     suspend fun getEntriesForProject(startDate: Long, endDate: Long, projectId: Int): MutableList<Entry>
 
     // Update

@@ -8,13 +8,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getEntriesForTask
-import ch.bfh.cas.mad.tasktimetrackerapp.persistence.DataStore.getProjectName
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.activities.DetailEntryActivity
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Task
-import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -55,7 +52,7 @@ class EntryAdapter(
                 val intent = Intent(context, DetailEntryActivity::class.java)
                 intent.putExtra("entryId", entry.id)
                 intent.putExtra("task", entry.description)
-                intent.putExtra("project", getProjectName(entry.taskId))
+                //intent.putExtra("project", getProjectName(entry.taskId))
                 intent.putExtra("timestamp", getTimeStampFormatted(entry.timeStamp))
                 context.startActivity(intent)
             }
@@ -71,18 +68,6 @@ class EntryAdapter(
     }
 
     private fun getTaskName(taskId: Int): String {
-        return tasks.find { it.id == taskId }?.name ?: ""
-    }
-
-    fun filterList(task: String, project: String) {
-        val filteredList = entries.filter { it.description == task && getProjectName(it.taskId) == project }
-        this.entries = filteredList
-        notifyDataSetChanged()
-    }
-
-    fun updateEntries(taskId: Int) {
-        val entries = getEntriesForTask(taskId)
-        this.entries = entries
-        notifyDataSetChanged()
+        return tasks.find { it.taskId == taskId }?.name ?: ""
     }
 }

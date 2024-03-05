@@ -1,11 +1,8 @@
 package ch.bfh.cas.mad.tasktimetrackerapp.viewModel
 
-import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import ch.bfh.cas.mad.tasktimetrackerapp.R
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.EntryRepository
 import ch.bfh.cas.mad.tasktimetrackerapp.persistence.WidgetTask
@@ -17,7 +14,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 import androidx.lifecycle.MutableLiveData
 
 
@@ -95,8 +91,8 @@ class MainViewModel (
             // add start entry if needed
             val currentTask = widgetTaskRepository.getTaskForId(widgetTaskId)
             if (currentTask != null) {
-                if (isStartAction || stopEntryTaskId != currentTask.id) {
-                    val startEntry = Entry(0, "START", currentTask.id, currentDateTimeInSeconds)
+                if (isStartAction || stopEntryTaskId != currentTask.taskId) {
+                    val startEntry = Entry(0, "START", currentTask.taskId, currentDateTimeInSeconds)
                     entryRepository.addEntry(startEntry)
                 }
             }

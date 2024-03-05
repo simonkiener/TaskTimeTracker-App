@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "task")
 data class Task (
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val taskId: Int,  // must be named as taskId (or simply different from widgetTask.id), because otherwise SQL Join between task and widgetTask will build a wrong Task object with id from widgetTask!
     val name: String,
     val projectId: Int
 ) {

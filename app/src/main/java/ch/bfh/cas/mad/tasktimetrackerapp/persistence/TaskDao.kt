@@ -12,7 +12,7 @@ interface TaskDao {
     suspend fun insert(task: Task)
 
     // Read
-    @Query("Select * FROM task WHERE id = :taskId")
+    @Query("Select * FROM task WHERE taskId = :taskId")
     suspend fun getTask(taskId: Int): Task
 
     @Query("Select * FROM task WHERE projectId = :projectId")

@@ -37,7 +37,7 @@ class TaskAdapter(
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailTaskActivity::class.java)
-            intent.putExtra("taskId", task.id)
+            intent.putExtra("taskId", task.taskId)
             holder.itemView.context.startActivity(intent)
         }
     }
