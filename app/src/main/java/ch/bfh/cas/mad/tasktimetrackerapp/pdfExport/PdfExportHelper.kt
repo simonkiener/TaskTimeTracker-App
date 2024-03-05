@@ -64,6 +64,19 @@ class PdfExportHelper(private val context: Context) {
         }
     }
 
+    /**
+     * This function saves the generated PDF file to the Downloads directory.
+     *
+     * @param fileName The name of the file to be saved.
+     * @param pdfContent The content of the PDF file in byte array format.
+     *
+     * The function first creates a ContentValues object and sets the necessary attributes for the file.
+     * It then gets a content resolver and inserts a new record into the MediaStore's Downloads directory.
+     * If the URI returned from the insert operation is not null, it opens an output stream and writes the PDF content to it.
+     * If the URI is null or any other IOException occurs, it throws an IOException.
+     * After the PDF is successfully saved, it shows a Toast message indicating the success of the operation.
+     * If any error occurs during the process, it shows a Toast message indicating the failure of the operation.
+     */
     private fun savePdfToDownloads(fileName: String, pdfContent: ByteArray) {
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)

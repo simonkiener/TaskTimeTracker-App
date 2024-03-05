@@ -6,6 +6,12 @@ import android.content.BroadcastReceiver
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 open class BroadcastReceiver: BroadcastReceiver() {
+    /**
+     * Dieser Receiver empfängt die Klick-Events der Buttons des Widgets und sendet ein lokales Broadcast-Intent.
+     * Der lokale Intent wird von der MainActivity empfangen und dort verarbeitet.
+     *  @param context Der Kontext, in dem der Broadcast empfangen wird.
+     *  @param intent Der empfangene Broadcast-Intent.
+     */
      override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 WidgetProvider.ACTION_WIDGET_BUTTON_1 -> {

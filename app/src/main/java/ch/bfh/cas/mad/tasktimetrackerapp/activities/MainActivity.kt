@@ -30,8 +30,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.viewModelScope
-import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -47,6 +46,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var widgetSpot4: Button
     private var widgetButtons: List<Button> = listOf()
 
+    /**
+     * Dieser Receiver empfängt die Klick-Events der Buttons des Widgets und sendet ein lokales Broadcast-Intent.
+     * Der lokale Intent wird von der MainActivity empfangen und dort verarbeitet.
+     */
     private val localReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
@@ -96,21 +99,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        println("onCreate MainActivity")
         setContentView(R.layout.activity_main)
 
+        // Register the BroadcastReceiver for Widget Button 1
         LocalBroadcastManager.getInstance(this).registerReceiver(
         localReceiver,
         IntentFilter("ACTION_WIDGET_BUTTON_1_RECEIVED")
         )
+        // Register the BroadcastReceiver for Widget Button 2
         LocalBroadcastManager.getInstance(this).registerReceiver(
         localReceiver,
         IntentFilter("ACTION_WIDGET_BUTTON_2_RECEIVED")
         )
+        // Register the BroadcastReceiver for Widget Button 3
         LocalBroadcastManager.getInstance(this).registerReceiver(
         localReceiver,
         IntentFilter("ACTION_WIDGET_BUTTON_3_RECEIVED")
         )
+        // Register the BroadcastReceiver for Widget Button 4
         LocalBroadcastManager.getInstance(this).registerReceiver(
         localReceiver,
         IntentFilter("ACTION_WIDGET_BUTTON_4_RECEIVED")
@@ -148,6 +154,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Change the background of the buttons if Task is selected to recording
+        /**
+         * Setzt die Klick-Listener für die Buttons der MainActivity.
+         * Bei Klick auf einen Button wird die Methode addEntryForWidget aufgerufen und der Button-Status aktualisiert.
+         * @see MainViewModel
+         */
         widgetButtons.forEach { button ->
             button.setOnClickListener {
                 val isActive = button.isActivated
@@ -173,6 +184,12 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    /**
+     * Diese Funktion wird aufgerufen, wenn ein Menü-Item ausgewählt wird.
+     * Sie startet die entsprechende Activity, abhängig vom ausgewählten Menü-Item.
+     * @param item Das ausgewählte Menü-Item.
+     * @return true, wenn das Menü-Item verarbeitet wurde, ansonsten false.
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_tasks -> {
@@ -204,10 +221,10 @@ class MainActivity : AppCompatActivity() {
         println("onResume MainActivity")
         viewModel.getAllWidgetTasks()
 
-        // Update WidgetTask texts
+        // Update WidgetTask texts in MainActivity
         updateWidgetTaskTexts()
 
-        //update WidgetText
+        //update WidgetText in Widget
         updateWidgetViews(RemoteViews(packageName, R.layout.widget_layout),0)
     }
 
@@ -216,6 +233,10 @@ class MainActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(localReceiver)
     }
 
+    /**
+     * Aktualisiert die Texte der Buttons in der MainActivity.
+     * Wenn keine WidgetTasks vorhanden sind, wird "No Task" angezeigt.
+     */
     private fun updateWidgetTaskTexts() {
         val noTask = "No Task"
         var index = 0
@@ -238,6 +259,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Diese Funktion aktualisiert die Ansicht des Widgets, indem sie die Hintergrundfarbe und den Text der Buttons aktualisiert.
+     * @param views Die RemoteViews, die die Ansicht des Widgets repräsentieren.
+     * @param buttonNumber Die Nummer des Buttons, der aktualisiert werden soll.
+     */
     private fun updateWidgetViews(views: RemoteViews, buttonNumber: Int) {
         val buttons = listOf(R.id.widget_button1, R.id.widget_button2, R.id.widget_button3, R.id.widget_button4)
         buttons.forEachIndexed { index, buttonId ->
@@ -257,6 +283,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Diese Funktion aktualisiert die WidgetSpots in der Mainactivity,
+     * indem sie die Hintergrundfarbe und den Text der Buttons aktualisiert.
+     */
     private fun updateButtonState(button: Button, isActive: Boolean) {
         if (isActive) {
             // First set all buttons to inactive
