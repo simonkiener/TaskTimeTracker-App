@@ -208,7 +208,7 @@ class MainActivity : AppCompatActivity() {
         updateWidgetTaskTexts()
 
         //update WidgetText
-        updateWidgetName(RemoteViews(packageName, R.layout.widget_layout))
+        updateWidgetViews(RemoteViews(packageName, R.layout.widget_layout),0)
     }
 
     override fun onDestroy() {
