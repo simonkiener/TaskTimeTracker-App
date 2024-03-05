@@ -31,12 +31,14 @@ import kotlinx.coroutines.launch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.viewModelScope
+import ch.bfh.cas.mad.tasktimetrackerapp.persistence.Entry
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var widgetTasks: List<WidgetTask>
+    private val noOfWidgetTasks = 4
 
     private lateinit var taskAssignmentButton: FloatingActionButton
     private lateinit var widgetSpot1: Button
@@ -44,7 +46,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var widgetSpot3: Button
     private lateinit var widgetSpot4: Button
     private var widgetButtons: List<Button> = listOf()
-
 
     private val localReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -202,20 +203,32 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         println("onResume MainActivity")
         viewModel.getAllWidgetTasks()
-        lifecycleScope.launch {
-            viewModel.getTaskNames(4)
-            widgetSpot1.text = viewModel.taskNames.value?.get(0) ?: "NoTask"
-            widgetSpot2.text = viewModel.taskNames.value?.get(1) ?: "NoTask"
-            widgetSpot3.text = viewModel.taskNames.value?.get(2) ?: "NoTask"
-            widgetSpot4.text = viewModel.taskNames.value?.get(3) ?: "NoTask"
-            //update WidgetText
-            updateWidgetName(RemoteViews(packageName, R.layout.widget_layout))
-        }
+
+        // Update WidgetTask texts
+        updateWidgetTaskTexts()
+
+        //update WidgetText
+        updateWidgetName(RemoteViews(packageName, R.layout.widget_layout))
     }
 
     override fun onDestroy() {
         super.onDestroy()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(localReceiver)
+    }
+
+    private fun updateWidgetTaskTexts() {
+        val noTask = "No Task"
+        var index = 0
+
+        while (index < noOfWidgetTasks) {
+            val currentWidgetTask = widgetTasks.elementAtOrNull(index)
+            if (currentWidgetTask != null) {
+                widgetButtons[index].text = currentWidgetTask.taskId.toString()
+            } else {
+                widgetButtons[index].text = noTask
+            }
+            index++
+        }
     }
 
     private fun updateWidgetName(views: RemoteViews){
@@ -272,7 +285,6 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
-
 
     @Preview(showBackground = true)
     @Composable
