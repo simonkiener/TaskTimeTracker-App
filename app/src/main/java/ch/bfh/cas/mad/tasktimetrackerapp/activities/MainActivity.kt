@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-
+import androidx.lifecycle.viewModelScope
 
 
 class MainActivity : AppCompatActivity() {
@@ -233,20 +233,30 @@ class MainActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(localReceiver)
     }
 
+    private fun getTaskNameForWidgetTaskId(widgetTaskId: Int): String {
+        var taskName = "NoTask"
+        viewModel.viewModelScope.launch {
+            val task = viewModel.widgetTaskRepository.getTaskForId(widgetTaskId)
+            if (task != null) {
+                taskName = task.name
+            }
+        }
+        return taskName
+    }
+
     /**
      * Aktualisiert die Texte der Buttons in der MainActivity.
      * Wenn keine WidgetTasks vorhanden sind, wird "No Task" angezeigt.
      */
     private fun updateWidgetTaskTexts() {
-        val noTask = "No Task"
         var index = 0
 
         while (index < noOfWidgetTasks) {
             val currentWidgetTask = widgetTasks.elementAtOrNull(index)
             if (currentWidgetTask != null) {
-                widgetButtons[index].text = currentWidgetTask.taskId.toString()
-            } else {
-                widgetButtons[index].text = noTask
+                val taskName = getTaskNameForWidgetTaskId(currentWidgetTask.id)
+                if (taskName != "NoTask")
+                    widgetButtons[index].text = taskName
             }
             index++
         }
