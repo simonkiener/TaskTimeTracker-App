@@ -31,12 +31,11 @@ import kotlinx.coroutines.launch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
-
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var widgetTasks: List<WidgetTask>
+    private lateinit var taskNames: MutableList<String>
     private val noOfWidgetTasks = 4
 
     private lateinit var taskAssignmentButton: FloatingActionButton
@@ -148,6 +147,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // getTaskNames
+        lifecycleScope.launch {
+            viewModel.taskNames.collectLatest { taskNames ->
+                this@MainActivity.taskNames = taskNames
+            }
+        }
+
         taskAssignmentButton.setOnClickListener {
             val intent = Intent(this, WidgetTaskSettingActivity::class.java)
             startActivity(intent)
@@ -218,8 +224,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        println("onResume MainActivity")
+
         viewModel.getAllWidgetTasks()
+        viewModel.getTaskNames(noOfWidgetTasks)
 
         // Update WidgetTask texts in MainActivity
         updateWidgetTaskTexts()
@@ -244,18 +251,12 @@ class MainActivity : AppCompatActivity() {
         while (index < noOfWidgetTasks) {
             val currentWidgetTask = widgetTasks.elementAtOrNull(index)
             if (currentWidgetTask != null) {
-                widgetButtons[index].text = currentWidgetTask.taskId.toString()
+                //widgetButtons[index].text = currentWidgetTask.taskId.toString()
+                widgetButtons[index].text = taskNames.elementAtOrNull(index)
             } else {
                 widgetButtons[index].text = noTask
             }
             index++
-        }
-    }
-
-    private fun updateWidgetName(views: RemoteViews){
-        val buttons = listOf(R.id.widget_button1, R.id.widget_button2, R.id.widget_button3, R.id.widget_button4)
-        buttons.forEachIndexed { index, buttonId ->
-            views.setTextViewText(buttonId, widgetButtons[index].text)
         }
     }
 
