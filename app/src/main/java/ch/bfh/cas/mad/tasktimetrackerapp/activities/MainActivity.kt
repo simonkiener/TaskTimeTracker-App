@@ -240,12 +240,22 @@ class MainActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(localReceiver)
     }
 
+    private fun getTaskNameForWidgetTaskId(widgetTaskId: Int): String {
+        var taskName = "NoTask"
+        viewModel.viewModelScope.launch {
+            val task = viewModel.widgetTaskRepository.getTaskForId(widgetTaskId)
+            if (task != null) {
+                taskName = task.name
+            }
+        }
+        return taskName
+    }
+
     /**
      * Aktualisiert die Texte der Buttons in der MainActivity.
      * Wenn keine WidgetTasks vorhanden sind, wird "No Task" angezeigt.
      */
     private fun updateWidgetTaskTexts() {
-        val noTask = "No Task"
         var index = 0
 
         while (index < noOfWidgetTasks) {

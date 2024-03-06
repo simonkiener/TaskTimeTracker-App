@@ -13,7 +13,7 @@ import java.time.ZoneOffset
 
 
 class MainViewModel (
-    private val widgetTaskRepository: WidgetTaskRepository,
+    val widgetTaskRepository: WidgetTaskRepository,
     private val entryRepository: EntryRepository
 ) : ViewModel() {
     private var _widgetTasks = MutableStateFlow(emptyList<WidgetTask>().toMutableList())
