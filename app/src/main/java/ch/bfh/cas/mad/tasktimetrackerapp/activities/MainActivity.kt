@@ -102,23 +102,23 @@ class MainActivity : AppCompatActivity() {
 
         // Register the BroadcastReceiver for Widget Button 1
         LocalBroadcastManager.getInstance(this).registerReceiver(
-        localReceiver,
-        IntentFilter("ACTION_WIDGET_BUTTON_1_RECEIVED")
+            localReceiver,
+            IntentFilter("ACTION_WIDGET_BUTTON_1_RECEIVED")
         )
         // Register the BroadcastReceiver for Widget Button 2
         LocalBroadcastManager.getInstance(this).registerReceiver(
-        localReceiver,
-        IntentFilter("ACTION_WIDGET_BUTTON_2_RECEIVED")
+            localReceiver,
+            IntentFilter("ACTION_WIDGET_BUTTON_2_RECEIVED")
         )
         // Register the BroadcastReceiver for Widget Button 3
         LocalBroadcastManager.getInstance(this).registerReceiver(
-        localReceiver,
-        IntentFilter("ACTION_WIDGET_BUTTON_3_RECEIVED")
+            localReceiver,
+            IntentFilter("ACTION_WIDGET_BUTTON_3_RECEIVED")
         )
         // Register the BroadcastReceiver for Widget Button 4
         LocalBroadcastManager.getInstance(this).registerReceiver(
-        localReceiver,
-        IntentFilter("ACTION_WIDGET_BUTTON_4_RECEIVED")
+            localReceiver,
+            IntentFilter("ACTION_WIDGET_BUTTON_4_RECEIVED")
         )
 
         val viewModelProvider = ViewModelProvider(
@@ -240,22 +240,12 @@ class MainActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(localReceiver)
     }
 
-    private fun getTaskNameForWidgetTaskId(widgetTaskId: Int): String {
-        var taskName = "NoTask"
-        viewModel.viewModelScope.launch {
-            val task = viewModel.widgetTaskRepository.getTaskForId(widgetTaskId)
-            if (task != null) {
-                taskName = task.name
-            }
-        }
-        return taskName
-    }
-
     /**
      * Aktualisiert die Texte der Buttons in der MainActivity.
      * Wenn keine WidgetTasks vorhanden sind, wird "No Task" angezeigt.
      */
     private fun updateWidgetTaskTexts() {
+        val noTask = "No Task"
         var index = 0
 
         while (index < noOfWidgetTasks) {
