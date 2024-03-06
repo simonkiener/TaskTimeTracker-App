@@ -55,4 +55,5 @@
     <string name="start_datetime">Start DateTime</string>
     <string name="project">Project</string>
     <string name="edit_timestamp">Edit TimeStamp</string>
+    <string name="no_task">No Task</string>
 </resources>
