@@ -7,7 +7,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.widget.Button
 import android.widget.RemoteViews
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 
@@ -28,12 +27,24 @@ class WidgetProvider : AppWidgetProvider() {
         }
     }
 
+    /**
+     * Diese Funktion wird aufgerufen, wenn das Widget aktualisiert wird.
+     * Sie erstellt einen Intent für jeden Button und verpackt ihn in ein PendingIntent.
+     * Das PendingIntent wird dann an den Button übergeben.
+     */
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         appWidgetIds.forEach { appWidgetId ->
             val views = RemoteViews(context.packageName, R.layout.widget_layout)
 
-            // Intent für jeden Button
+            /**
+             * Erstellen eines Intent für jeden Button
+             * Der Intent enthält die Aktion, die der BroadcastReceiver ausführen soll, wenn der Button geklickt wird.
+             * Der Intent enthält auch die Widget-ID, damit der BroadcastReceiver weiss, welches Widget geklickt wurde.
+             * Der Intent wird dann in ein PendingIntent verpackt, das an den Button übergeben wird.
+             * Das PendingIntent wird verwendet, um den BroadcastReceiver zu starten, wenn der Button geklickt wird.
+             * Der BroadcastReceiver empfängt den Intent und sendet ein lokales Broadcast-Intent an die MainActivity.
+             */
             val button1Intent = Intent(context, BroadcastReceiver::class.java).apply {
                 action = ACTION_WIDGET_BUTTON_1
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
@@ -52,7 +63,6 @@ class WidgetProvider : AppWidgetProvider() {
             }
 
 
-
             // PendingIntent für jeden Button
             val pendingIntent1 = PendingIntent.getBroadcast(context, 0, button1Intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             val pendingIntent2 = PendingIntent.getBroadcast(context, 0, button2Intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
@@ -68,6 +78,13 @@ class WidgetProvider : AppWidgetProvider() {
         }
     }
 
+    /**
+     * Diese Funktion wird aufgerufen, wenn der BroadcastReceiver ein Intent empfängt.
+     * Sie aktualisiert die Ansicht des Widgets, indem sie die Hintergrundfarbe und den Text der Buttons aktualisiert.
+     * @param context Der Kontext, in dem der BroadcastReceiver empfangen wird.
+     * @param intent Der empfangene Broadcast-Intent.
+     * @see BroadcastReceiver
+     */
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         this.context = context
@@ -93,6 +110,11 @@ class WidgetProvider : AppWidgetProvider() {
         }
     }
 
+    /**
+     * Diese Funktion aktualisiert die Ansicht des Widgets, indem sie die Hintergrundfarbe und den Text der Buttons aktualisiert.
+     * @param views Die RemoteViews, die die Ansicht des Widgets repräsentieren.
+     * @param buttonNumber Die Nummer des Buttons, der aktualisiert werden soll.
+     */
     private fun updateWidgetViews(views: RemoteViews, buttonNumber: Int) {
         val buttons = listOf(R.id.widget_button1, R.id.widget_button2, R.id.widget_button3, R.id.widget_button4)
         buttons.forEachIndexed { index, buttonId ->

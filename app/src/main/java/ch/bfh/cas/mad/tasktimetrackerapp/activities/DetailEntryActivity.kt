@@ -10,7 +10,6 @@ import androidx.activity.ComponentActivity
 
 import ch.bfh.cas.mad.tasktimetrackerapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoField
 
@@ -36,7 +35,7 @@ class DetailEntryActivity : ComponentActivity() {
         textViewProject = findViewById(R.id.editTextProject)
         timeEdit = findViewById(R.id.editTime)
         dateEdit = findViewById(R.id.editDate)
-        saveButton = findViewById(R.id.saveButton);
+        saveButton = findViewById(R.id.saveButton)
         backButton = findViewById(R.id.fabBack)
 
         textViewTaskName.text = task
